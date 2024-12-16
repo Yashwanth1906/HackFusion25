@@ -18,7 +18,7 @@ datasource db {
 model User{
   id String @id @default(uuid())
   name String
-  email String
+  email String @unique
 }
 
 model Member{
@@ -38,16 +38,16 @@ model Team{
   id String @id @default(uuid())
   name String
   members Member[]
-  teamSubmissionId String @unique
-  teamSubmisison TeamSubmission @relation(fields: [teamSubmissionId],references: [id])
+  teamSubmissionId String? @unique
+  teamSubmisison TeamSubmission?
 }
 
 model TeamSubmission{
   id String @id @default(uuid())
-  teamId String
+  teamId String @unique
   solutionTitle String
   description String
-  team Team?
+  team Team @relation(fields: [teamId],references: [id])
   problemId String
   problem ProblemStatement @relation(fields: [problemId],references: [id])
 }
