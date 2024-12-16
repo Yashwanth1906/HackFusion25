@@ -32,12 +32,12 @@ const Navbar = () => {
       duration-300 
       ease-in-out
       ${isScrolled ? 'backdrop-blur-[8px] bg-white/30' : 'bg-transparent'}
-    `}>
+    `}> 
       <div className="flex items-center">
         <img 
           src="/logo1.png" 
           alt="Logo" 
-          className="h-10 w-auto"
+          className="h-16 w-24"
         />
       </div>
 
