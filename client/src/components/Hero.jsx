@@ -13,6 +13,7 @@ export default function Hero() {
       >
         Welcome to HackFusion 2025!
       </motion.h1>
+      
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -21,6 +22,7 @@ export default function Hero() {
       >
         Innovate. Create. Collaborate.
       </motion.p>
+      
       <CountDown targetDate={"2025-01-01T10:00:00"} />
       <motion.button
         whileHover={{ scale: 1.1 }}
@@ -29,6 +31,7 @@ export default function Hero() {
       >
         Register Now
       </motion.button>
+      
     </section>
   )
 }
