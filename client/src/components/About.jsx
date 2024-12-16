@@ -187,7 +187,7 @@
 //   )
 // }
 'use client'
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useEffect } from 'react'
 
 export default function About() {
@@ -229,7 +229,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="bg-gray-50">
+    <div id="about" className="bg-gray-50">
       {/* Event Introduction */}
       <motion.section 
         initial="offscreen"

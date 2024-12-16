@@ -16,6 +16,13 @@ const Navbar = () => {
     };
   }, []);
 
+  const scrollToSection = (elementId) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className={`
       fixed 
@@ -42,27 +49,27 @@ const Navbar = () => {
       </div>
 
       <div className="flex space-x-6">
-        <a 
-          href="#home" 
+        <button 
+          onClick={() => scrollToSection('home')}
           className="flex items-center space-x-2 text-black hover:underline transition"
         >
           <Home size={20} />
           <span>Home</span>
-        </a>
-        <a 
-          href="#about" 
+        </button>
+        <button 
+          onClick={() => scrollToSection('about')}
           className="flex items-center space-x-2 text-black hover:underline transition"
         >
           <Info size={20} />
           <span>About</span>
-        </a>
-        <a 
-          href="#contact" 
+        </button>
+        <button 
+          onClick={() => scrollToSection('contact')}
           className="flex items-center space-x-2 text-black hover:underline transition"
         >
           <Contact size={20} />
           <span>Contact</span>
-        </a>
+        </button>
       </div>
     </nav>
   );
