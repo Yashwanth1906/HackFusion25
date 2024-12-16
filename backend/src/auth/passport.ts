@@ -1,22 +1,22 @@
 import passport from "passport";
 //@ts-ignore
 import {Strategy as GoogleStartegy} from "passport-google-oauth20";
-import bcrypt from "bcryptjs"
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID? process.env.GOOGLE_CLIENT_ID : "";
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET? process.env.GOOGLE_CLIENT_SECRET : "";
+// const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID? process.env.GOOGLE_CLIENT_ID : "hello";
+// const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET? process.env.GOOGLE_CLIENT_SECRET : "hello";
 
-console.log(GOOGLE_CLIENT_ID)
+
 
 export const initPassport =()=>{
+    console.log(process.env.GOOGLE_CLIENT_ID)
     passport.use(
         new GoogleStartegy(
             {
-                clientID : GOOGLE_CLIENT_ID || "87001147804-h6dkm6rev6b5pb53p2obtu4l2l1n2ihq.apps.googleusercontent.com",
-                clientSecret: GOOGLE_CLIENT_SECRET || "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",
-                callbackURL:"/api/v1/google/callback"
+                clientID : process.env.GOOGLE_CLIENT_ID || "",
+                clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+                callbackURL:"/api/users/google/callback"
             },async(accessToken :string,refreshToken : string,profile : any,done : any)=>{
                 const user = await prisma.user.upsert({
                     //@ts-ignore

@@ -4,6 +4,7 @@ import cors from "cors"
 import session from "express-session";
 import { initPassport } from "./auth/passport";
 import { userRouter } from "./routes/userRoute";
+import dotenv from "dotenv"
 
 
 const app = express();
@@ -21,8 +22,9 @@ app.use(session({
     saveUninitialized:false,
     cookie:{secure:false,maxAge:24 * 60 * 60 * 1000}
 }))
-
+dotenv.config();
 initPassport();
+
 
 app.use(passport.initialize());
 app.use(passport.authenticate("session"));

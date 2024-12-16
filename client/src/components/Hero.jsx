@@ -1,8 +1,15 @@
 'use client'
 import { motion } from "motion/react"
 import CountDown from "./CountDown"
+import axios from "axios"
+import {BACKEND_URL} from "../config/cosntants.js"
 
 export default function Hero() {
+
+  const googleAuth = async()=>{
+    window.open(`${BACKEND_URL}/users/signin`,"__self");
+  }
+
   return (
     <section id="home" className="h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-blue-600 to-purple-700 text-white">
       <motion.h1
@@ -28,6 +35,7 @@ export default function Hero() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
+        onClick={googleAuth}
       >
         Register Now
       </motion.button>
