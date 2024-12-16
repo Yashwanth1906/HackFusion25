@@ -322,49 +322,6 @@ export default function About() {
           </div>
         </div>
       </motion.section>
-
-      {/* Call to Action */}
-      <motion.section 
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: false, amount: 0.3 }}
-        className="py-16 px-8 bg-gray-400 text-white"
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 
-            custom={-1}
-            variants={scrollVariants}
-            className="text-4xl font-bold mb-4"
-          >
-            Join HackFusion-24!
-          </motion.h2>
-          <motion.p 
-            custom={1}
-            variants={scrollVariants}
-            className="text-lg mb-6"
-          >
-            We encourage all students to seize this opportunity to innovate and showcase their talents. Let's code, collaborate, and create!
-          </motion.p>
-          <div className="flex justify-center space-x-4">
-            <motion.button 
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              className="bg-white text-gray-700 px-6 py-3 rounded-lg hover:bg-blue-50 transition duration-300"
-            >
-              Register Now
-            </motion.button>
-            <motion.button 
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              className="border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
-            >
-              Learn More
-            </motion.button>
-          </div>
-        </div>
-      </motion.section>
     </div>
   )
 }
