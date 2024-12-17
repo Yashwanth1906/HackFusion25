@@ -47,3 +47,5 @@ app.get("/delete",async(req:any,res:any) =>{
         res.send(e);
     }
 })
+
+app.get("/check",(req,res)=>{res.send("APP Running")})
