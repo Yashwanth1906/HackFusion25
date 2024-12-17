@@ -42,7 +42,7 @@ const Navbar = () => {
     `}> 
       <div className="flex items-center">
         <img 
-          src="/logo1.png" 
+          src="/hackfusion_logo.png" 
           alt="Logo" 
           className="h-16 w-24"
         />
