@@ -290,6 +290,144 @@ export default function About() {
           </div>
         </div>
       </motion.section>
+
+      <motion.section
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: false, amount: 0.3 }}
+        className="py-16 px-8 bg-gray-100"
+      >
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            custom={-1}
+            variants={scrollVariants}
+            className="text-3xl text-center font-bold mb-6 text-blue-800"
+          >
+            Rules and Regulations
+          </motion.h2>
+
+          <motion.div
+            custom={1}
+            variants={scrollVariants}
+            className="bg-white p-8 rounded-xl shadow-md"
+          >
+            {[
+              {
+                number: 1,
+                title: 'Team Composition',
+                description: 'Teams must have 5 members, with at least one female participant.'
+              },
+              {
+                number: 2,
+                title: 'Registration',
+                description: 'The team leader must handle the registration and abstract submission.'
+              },
+              {
+                number: 3,
+                title: 'Submission Deadline',
+                description: 'Abstract submissions close at 10:00 AM on 22nd February 2024.'
+              },
+              {
+                number: 4,
+                title: 'Problem Domain',
+                description: 'Teams may choose problem statements from any provided domain.'
+              },
+              {
+                number: 5,
+                title: 'Selection Process',
+                description: 'Shortlisted teams will move to the presentation and final hackathon rounds.'
+              },
+              {
+                number: 6,
+                title: 'Team Diversity',
+                description: 'Inter-departmental teams are encouraged.'
+              }
+            ].map((rule, index) => (
+              <motion.div
+                key={rule.number}
+                custom={index % 2 === 0 ? -1 : 1}
+                variants={scrollVariants}
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: false, amount: 0.3 }}
+                className="flex items-start mb-4 last:mb-0"
+              >
+                <span className="bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center mr-4 flex-shrink-0">
+                  {rule.number}
+                </span>
+                <div>
+                  <h3 className="font-semibold text-blue-700">{rule.title}</h3>
+                  <p className="text-gray-600">{rule.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Benefits of HackFusion Section */}
+      <motion.section
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: false, amount: 0.3 }}
+        className="py-16 px-8 bg-gray-100"
+      >
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            custom={-1}
+            variants={scrollVariants}
+            className="text-3xl text-center font-bold mb-6 text-blue-800"
+          >
+            What does HackFusion do for Students?
+          </motion.h2>
+
+          <motion.div
+            custom={1}
+            variants={scrollVariants}
+            className="bg-white p-8 rounded-xl shadow-md"
+          >
+            <p className="text-lg text-gray-700 leading-relaxed mb-4">
+              HackFusion-24 is a transformative experience that equips students to excel academically and professionally:
+            </p>
+
+            {[
+              {
+                title: 'Encourages Collaboration',
+                description: 'Students form interdisciplinary teams, learn to share ideas, respect diverse perspectives, and achieve collective goals.'
+              },
+              {
+                title: 'Ignites Innovation',
+                description: 'By tackling challenging problems, students unlock their creativity and bring unique solutions to life.'
+              },
+              {
+                title: 'Builds Confidence',
+                description: 'Presenting solutions to expert panels helps students improve communication, overcome fear, and gain confidence in their abilities.'
+              },
+              {
+                title: 'Bridges Academia and Industry',
+                description: 'The structured format introduces students to industry practices such as brainstorming, project design, prototyping, and evaluation—skills critical for future endeavors.'
+              },
+              {
+                title: 'Prepares Future Leaders',
+                description: 'From team management to problem-solving, HackFusion trains students to lead projects, adapt to dynamic challenges, and excel under pressure.'
+              },
+              {
+                title: 'Encourages Inclusivity and Diversity',
+                description: 'By mandating interdisciplinary teams with gender inclusivity, HackFusion promotes equal opportunities for all students, fostering a culture of respect and collaboration.'
+              }
+            ].map((benefit, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="mb-4 p-4 bg-blue-50 rounded-lg"
+              >
+                <h3 className="font-bold text-blue-800 mb-2">{benefit.title}</h3>
+                <p className="text-gray-700">{benefit.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
     </div>
   )
 }
