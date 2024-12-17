@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { redirect } from "next/navigation"
 
 export default function Hero() {
-  const [isAuth,setAuth] = useState(false);
+  const [isAuth,setAuth] = useState(true);
   const googleAuth = async()=>{
     window.open(`${BACKEND_URL}/api/users/signin`,"__self");
   }

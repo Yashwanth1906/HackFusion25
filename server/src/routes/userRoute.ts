@@ -7,7 +7,7 @@ export const userRouter = express.Router();
 
 userRouter.get("/signin", passport.authenticate("google", { scope: ['profile', 'email'] }));
 userRouter.get("/google/callback", passport.authenticate("google", {
-  successRedirect: "https://hack-fusion25.vercel.app",
+  successRedirect: "https://hack-fusion25.vercel.app/",
   failureRedirect: "https://hack-fusion25.vercel.app/error"
 }))
 
