@@ -1,10 +1,10 @@
-
 'use client'
 import { useState } from "react"
 import { Plus, Trash2, Users, UserPlus } from "lucide-react"
 
 export default function RegisterPage() {
   const [teamName, setTeamName] = useState('');
+  const [teamDescription, setTeamDescription] = useState('');
   const [teamLeader, setTeamLeader] = useState({
     name: '',
     regNo: '',
@@ -47,6 +47,7 @@ export default function RegisterPage() {
     e.preventDefault();
     const payload = {
       teamName,
+      teamDescription,
       teamLeader,
       members
     };
@@ -96,9 +97,9 @@ export default function RegisterPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br   from-blue-50 to-blue-100 flex items-center justify-center p-16">
-      <div className="w-full max-w-4xl  bg-white shadow-2xl rounded-2xl overflow-hidden">
-        <div className="bg-blue-600  text-white p-6 flex items-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-16">
+      <div className="w-full max-w-4xl bg-white shadow-2xl rounded-2xl overflow-hidden">
+        <div className="bg-blue-600 text-white p-6 flex items-center">
           <Users className="mr-4" size={40} />
           <div>
             <h1 className="text-3xl font-bold">Team Registration</h1>
@@ -108,20 +109,41 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           {/* Team Name */}
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Team Name
-            </label>
-            {renderInputField(
-              'teamName', 
-              teamName, 
-              (e) => setTeamName(e.target.value), 
-              'Enter your team name',
-              'text',
-              'text-lg'
-            )}
+          <div className="space-y-4">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Team Name
+              </label>
+              {renderInputField(
+                'teamName', 
+                teamName, 
+                (e) => setTeamName(e.target.value), 
+                'Enter your team name',
+                'text',
+                'text-lg'
+              )}
+            </div>
+
+            {/* Team Description */}
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Abstract
+              </label>
+              <textarea
+                name="teamDescription"
+                value={teamDescription}
+                onChange={(e) => setTeamDescription(e.target.value)}
+                placeholder="Describe your team's goals, interests, or project"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md 
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 
+                  transition duration-200 ease-in-out 
+                  min-h-[100px] text-base"
+                required
+              />
+            </div>
           </div>
 
+          {/* Rest of the code remains the same as in the previous version */}
           {/* Team Leader Section */}
           <div className="bg-blue-50 p-6 rounded-lg">
             <div className="flex items-center mb-4">
@@ -148,7 +170,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Team Members Section */}
+          {/* Team Members Section - Remains the same */}
           <div>
             <div className="flex items-center mb-4">
               <Users className="mr-3 text-blue-600" size={28} />
