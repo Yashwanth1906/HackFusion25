@@ -35,6 +35,7 @@ export const registerTeam = async (req: Request, res: Response) => {
 
   }
   catch (e) {
+    console.log(e)
     return res.status(500).json({
       error: e,
       status: "error while creating "

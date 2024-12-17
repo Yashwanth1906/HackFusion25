@@ -7,7 +7,7 @@ export const auth = async (req: any, res: any, next: any) => {
       console.log("Users: ", req.user);
       next();
     } else {
-      res.json({ authenticated: false, user: null })
+      res.status(401).json({ authenticated: false, user: null })
     }
   } catch (e) {
     console.log(e);
