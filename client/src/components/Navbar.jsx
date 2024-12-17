@@ -1,9 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Home, Info, Contact } from 'lucide-react';
+import { Home, Info, Contact, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +21,12 @@ const Navbar = () => {
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
     }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -48,7 +54,7 @@ const Navbar = () => {
         />
       </div>
 
-      <div className="flex space-x-6">
+      <div className="hidden md:flex space-x-6">
         <button 
           onClick={() => scrollToSection('home')}
           className={`
@@ -92,6 +98,57 @@ const Navbar = () => {
           <span>Contact</span>
         </button>
       </div>
+
+      {/* Mobile Menu Toggle */}
+      <div className="md:hidden">
+        <button 
+          onClick={toggleMobileMenu}
+          className={`
+            z-50 
+            relative 
+            ${isScrolled ? 'text-black' : 'text-white'}
+          `}
+        >
+          {isMobileMenuOpen ? <X className='text-black' size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {isMobileMenuOpen && (
+        <div className="
+          md:hidden 
+          fixed 
+          inset-0 
+          bg-white 
+          flex 
+          flex-col 
+          items-center 
+          justify-center 
+          space-y-6 
+          z-40
+        ">
+          <button 
+            onClick={() => scrollToSection('home')}
+            className="flex items-center space-x-2 text-2xl"
+          >
+            <Home size={24} />
+            <span>Home</span>
+          </button>
+          <button 
+            onClick={() => scrollToSection('about')}
+            className="flex items-center space-x-2 text-2xl"
+          >
+            <Info size={24} />
+            <span>About</span>
+          </button>
+          <button 
+            onClick={() => scrollToSection('contact')}
+            className="flex items-center space-x-2 text-2xl"
+          >
+            <Contact size={24} />
+            <span>Contact</span>
+          </button>
+        </div>
+      )}
     </nav>
   );
 };
