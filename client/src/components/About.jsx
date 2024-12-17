@@ -199,28 +199,39 @@ export default function About() {
             </div>
           </div>
 
-          <motion.h2
-            custom={-1}
-            variants={scrollVariants}
-            className="text-4xl pt-10 font-bold mb-6 text-blue-800"
-          >
-            What is HackFusion?
-          </motion.h2>
-          <motion.div
-            custom={1}
-            variants={scrollVariants}
-            className="bg-white p-8 rounded-xl shadow-md text-left"
-          >
-            <p className="text-lg text-gray-700 leading-relaxed mb-4">
-              Greetings from the School of Computing at Chennai Institute of Technology! 
-            </p>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              HackFusion-24 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
-            </p>
-            <p className="text-lg text-gray-600 leading-relaxed mt-4">
-              Whether it's a software application, a hardware prototype, or a unique tech concept, HackFusion-24 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
-            </p>
-          </motion.div>
+          <motion.section
+  initial="offscreen"
+  whileInView="onscreen"
+  viewport={{ once: false, amount: 0.3 }}
+  className="py-8 px-4 md:py-16 md:px-8 bg-gray-100"
+>
+  <div className="max-w-4xl mx-auto">
+    <motion.h2
+      custom={-1}
+      variants={scrollVariants}
+      className="text-3xl md:text-4xl pt-10 font-bold mb-6 text-blue-800 text-center"
+    >
+      What is HackFusion?
+    </motion.h2>
+    
+    <motion.div
+      custom={1}
+      variants={scrollVariants}
+      className="bg-white p-6 md:p-8 rounded-xl shadow-md text-left"
+    >
+      <p className="text-lg text-gray-700 leading-relaxed mb-4">
+        Greetings from the School of Computing at Chennai Institute of Technology! 
+      </p>
+      <p className="text-lg text-gray-600 leading-relaxed">
+        HackFusion-24 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
+      </p>
+      <p className="text-lg text-gray-600 leading-relaxed mt-4">
+        Whether it's a software application, a hardware prototype, or a unique tech concept, HackFusion-24 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
+      </p>
+    </motion.div>
+  </div>
+</motion.section>
+
         </div>
       </motion.section>
 
@@ -367,67 +378,67 @@ export default function About() {
 
       {/* Benefits of HackFusion Section */}
       <motion.section
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: false, amount: 0.3 }}
-        className="py-16 px-8 bg-gray-100"
-      >
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
-            custom={-1}
-            variants={scrollVariants}
-            className="text-3xl text-center font-bold mb-6 text-blue-800"
-          >
-            What does HackFusion do for Students?
-          </motion.h2>
+  initial="offscreen"
+  whileInView="onscreen"
+  viewport={{ once: false, amount: 0.3 }}
+  className="py-8 px-4 md:py-16 md:px-8 bg-gray-100"
+>
+  <div className="max-w-4xl mx-auto">
+    <motion.h2
+      custom={-1}
+      variants={scrollVariants}
+      className="text-2xl md:text-3xl text-center font-bold mb-6 text-blue-800"
+    >
+      What does HackFusion do for Students?
+    </motion.h2>
 
-          <motion.div
-            custom={1}
-            variants={scrollVariants}
-            className="bg-white p-8 rounded-xl shadow-md"
-          >
-            <p className="text-lg text-gray-700 leading-relaxed mb-4">
-              HackFusion-24 is a transformative experience that equips students to excel academically and professionally:
-            </p>
+    <motion.div
+      custom={1}
+      variants={scrollVariants}
+      className="bg-white p-6 md:p-8 rounded-xl shadow-md"
+    >
+      <p className="text-lg text-gray-700 leading-relaxed mb-4">
+        HackFusion-24 is a transformative experience that equips students to excel academically and professionally:
+      </p>
 
-            {[
-              {
-                title: 'Encourages Collaboration',
-                description: 'Students form interdisciplinary teams, learn to share ideas, respect diverse perspectives, and achieve collective goals.'
-              },
-              {
-                title: 'Ignites Innovation',
-                description: 'By tackling challenging problems, students unlock their creativity and bring unique solutions to life.'
-              },
-              {
-                title: 'Builds Confidence',
-                description: 'Presenting solutions to expert panels helps students improve communication, overcome fear, and gain confidence in their abilities.'
-              },
-              {
-                title: 'Bridges Academia and Industry',
-                description: 'The structured format introduces students to industry practices such as brainstorming, project design, prototyping, and evaluation—skills critical for future endeavors.'
-              },
-              {
-                title: 'Prepares Future Leaders',
-                description: 'From team management to problem-solving, HackFusion trains students to lead projects, adapt to dynamic challenges, and excel under pressure.'
-              },
-              {
-                title: 'Encourages Inclusivity and Diversity',
-                description: 'By mandating interdisciplinary teams with gender inclusivity, HackFusion promotes equal opportunities for all students, fostering a culture of respect and collaboration.'
-              }
-            ].map((benefit, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="mb-4 p-4 bg-blue-50 rounded-lg"
-              >
-                <h3 className="font-bold text-blue-800 mb-2">{benefit.title}</h3>
-                <p className="text-gray-700">{benefit.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
+      {[
+        {
+          title: 'Encourages Collaboration',
+          description: 'Students form interdisciplinary teams, learn to share ideas, respect diverse perspectives, and achieve collective goals.'
+        },
+        {
+          title: 'Ignites Innovation',
+          description: 'By tackling challenging problems, students unlock their creativity and bring unique solutions to life.'
+        },
+        {
+          title: 'Builds Confidence',
+          description: 'Presenting solutions to expert panels helps students improve communication, overcome fear, and gain confidence in their abilities.'
+        },
+        {
+          title: 'Bridges Academia and Industry',
+          description: 'The structured format introduces students to industry practices such as brainstorming, project design, prototyping, and evaluation—skills critical for future endeavors.'
+        },
+        {
+          title: 'Prepares Future Leaders',
+          description: 'From team management to problem-solving, HackFusion trains students to lead projects, adapt to dynamic challenges, and excel under pressure.'
+        },
+        {
+          title: 'Encourages Inclusivity and Diversity',
+          description: 'By mandating interdisciplinary teams with gender inclusivity, HackFusion promotes equal opportunities for all students, fostering a culture of respect and collaboration.'
+        }
+      ].map((benefit, index) => (
+        <motion.div
+          key={index}
+          variants={itemVariants}
+          className="mb-4 p-4 bg-blue-50 rounded-lg"
+        >
+          <h3 className="font-bold text-blue-800 mb-2">{benefit.title}</h3>
+          <p className="text-gray-700">{benefit.description}</p>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</motion.section>
     </div>
   )
 }
