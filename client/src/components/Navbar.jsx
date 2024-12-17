@@ -186,19 +186,31 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition-all duration-300 ease-in-out ${
-      isScrolled ? 'backdrop-blur-[8px] bg-white/30' : 'bg-transparent'
-    }`}>
-      <div className="flex items-center">
-        <img 
-          src="/hackfusion_logo.png" 
-          alt="Logo" 
-          className="h-12 w-20 md:h-16 md:w-24" // Smaller logo for mobile
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition-all duration-300 ease-in-out ${
+        isScrolled ? 'backdrop-blur-[8px] bg-white/30' : 'bg-transparent'
+      }`}
+    >
+      {/* Logo and Mobile Menu Button */}
+      <div className="flex items-center justify-between w-full md:w-auto">
+        <img
+          src="/hackfusion_logo.png"
+          alt="Logo"
+          className="h-12 w-12 md:h-16 md:w-16"
         />
+        <button
+          onClick={toggleMobileMenu}
+          className={`md:hidden ml-auto ${
+            isScrolled ? 'text-black' : 'text-white'
+          }`}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
 
+      {/* Desktop Navigation */}
       <div className="hidden md:flex space-x-6">
-        <button 
+        <button
           onClick={() => scrollToSection('home')}
           className={`flex items-center space-x-2 hover:underline transition ${
             isScrolled ? 'text-black' : 'text-white'
@@ -207,7 +219,7 @@ const Navbar = () => {
           <Home size={20} />
           <span>Home</span>
         </button>
-        <button 
+        <button
           onClick={() => scrollToSection('about')}
           className={`flex items-center space-x-2 hover:underline transition ${
             isScrolled ? 'text-black' : 'text-white'
@@ -216,7 +228,7 @@ const Navbar = () => {
           <Info size={20} />
           <span>About</span>
         </button>
-        <button 
+        <button
           onClick={() => scrollToSection('contact')}
           className={`flex items-center space-x-2 hover:underline transition ${
             isScrolled ? 'text-black' : 'text-white'
@@ -227,50 +239,28 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu Toggle */}
-      <div className="md:hidden">
-        <button 
-          onClick={toggleMobileMenu}
-          className={`z-50 relative ${isScrolled ? 'text-black' : 'text-white'}`}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="
-          md:hidden 
-          fixed 
-          inset-0 
-          bg-white 
-          flex 
-          flex-col 
-          items-center 
-          justify-center 
-          space-y-4 
-          z-40 
-          p-4
-        ">
-          <button 
+        <div className="md:hidden fixed inset-0 bg-white flex flex-col items-center justify-center space-y-4 z-40 p-4">
+          <button
             onClick={() => scrollToSection('home')}
-            className="flex items-center space-x-2 text-lg" // Reduced font size
+            className="flex items-center space-x-2 text-lg"
           >
-            <Home size={20} />
+            <Home size={24} />
             <span>Home</span>
           </button>
-          <button 
+          <button
             onClick={() => scrollToSection('about')}
             className="flex items-center space-x-2 text-lg"
           >
-            <Info size={20} />
+            <Info size={24} />
             <span>About</span>
           </button>
-          <button 
+          <button
             onClick={() => scrollToSection('contact')}
             className="flex items-center space-x-2 text-lg"
           >
-            <Contact size={20} />
+            <Contact size={24} />
             <span>Contact</span>
           </button>
         </div>

@@ -39,6 +39,14 @@ export default function Hero() {
         transition={{ duration: 1 }}
         className="text-6xl font-bold"
       >
+        School Of Computing Presents
+      </motion.h1>
+      <motion.h1
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-6xl font-bold"
+      >
         Welcome to HackFusion 2025!
       </motion.h1>
       
