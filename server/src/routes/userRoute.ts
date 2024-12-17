@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { auth } from "../middleware/middleware";
-import { registerTeam, submitIdea } from "../controllers/userController";
+import { getTeam, registerTeam, submitIdea } from "../controllers/userController";
 
 export const userRouter = express.Router();
 
@@ -14,4 +14,4 @@ userRouter.get("/google/callback", passport.authenticate("google", {
 //@ts-ignore
 userRouter.post("/register",auth,registerTeam);
 userRouter.post("/submit",auth,submitIdea);
-
+userRouter.get("/getteam",auth,getTeam)
