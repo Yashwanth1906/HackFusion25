@@ -11,7 +11,9 @@ export default function Hero() {
   }
 
   return (
-    <section id="home" className="h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-blue-600 to-purple-700 text-white">
+    <section id="home" className="h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-blue-600 to-purple-700 text-white"
+    style={{ backgroundImage: 'url(/bg4.jpeg)' }} 
+    >
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}

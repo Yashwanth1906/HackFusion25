@@ -5,6 +5,7 @@ import session from "express-session";
 import { initPassport } from "./auth/passport";
 import { userRouter } from "./routes/userRoute";
 import dotenv from "dotenv"
+import { prisma } from "./db";
 
 
 const app = express();
@@ -35,3 +36,14 @@ app.use("/api/users",userRouter);
 app.listen(6969,()=>{
     console.log("Running");
 });
+
+
+app.get("/delete",async(req:any,res:any) =>{
+    try{
+        await prisma.member.deleteMany({});
+        res.send("Deleted successfully");
+    }catch(e){
+        console.log(e);
+        res.send(e);
+    }
+})

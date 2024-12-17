@@ -24,10 +24,10 @@ model User{
 model Member{
   id String @id @default(uuid())
   name String
-  regNo String
+  regNo String @unique
   dept String
   year String
-  email String?
+  email String? @unique
   phoneno String
   isTeamLead Boolean
   teamId String
