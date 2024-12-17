@@ -1,8 +1,36 @@
 'use client'
-import { motion } from "motion/react"
-import { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from "framer-motion"
+import { Building, BookOpenCheck, Globe, StarIcon } from 'lucide-react';
 
 export default function About() {
+  // Carousel state and logic
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  
+  // Sample image placeholders - replace with actual image paths
+  const images = [
+    "/WhatsApp Image 2024-12-17 at 13.44.12_be07e14f.jpg",
+    "/WhatsApp Image 2024-12-17 at 13.44.33_f132f6ba.jpg",
+    "/WhatsApp Image 2024-12-17 at 13.45.20_408bf04b.jpg",
+    "/WhatsApp Image 2024-12-17 at 13.45.37_67c70875.jpg",
+    "/WhatsApp Image 2024-12-17 at 13.46.06_604df4df.jpg",
+    "/WhatsApp Image 2024-12-17 at 13.46.52_4dfe6e17.jpg",
+    "/WhatsApp Image 2024-12-17 at 13.47.23_a81b3222.jpg",
+  ]
+
+  useEffect(() => {
+    // Auto-scroll interval
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        (prevIndex + 1) % images.length
+      )
+    }, 3000) // Change image every 3 seconds
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval)
+  }, [images.length])
+
+  // Existing animation variants
   const scrollVariants = {
     offscreen: (direction) => ({
       x: direction < 0 ? -100 : 100,
@@ -18,6 +46,30 @@ export default function About() {
       }
     }
   };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100
+      }
+    }
+  }
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -39,20 +91,136 @@ export default function About() {
         className="py-16 px-8 bg-gradient-to-b from-blue-50 to-gray-100"
       >
         <div className="max-w-4xl mx-auto text-center">
+          <div className="min-h-[80vh] bg-gradient-to-br from-blue-50 to-white rounded-3xl shadow-lg overflow-hidden">
+            <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+              {/* Left Column - Text Content */}
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+                className="space-y-6"
+              >
+                <motion.h1 
+                  variants={itemVariants}
+                  className="text-3xl font-extrabold text-blue-900 tracking-tight leading-tight"
+                >
+                  Chennai Institute of Technology
+                </motion.h1>
+
+                <motion.div 
+                  variants={itemVariants}
+                  className="relative bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600"
+                >
+                  <p className="text-xl text-gray-700 leading-relaxed italic">
+                    "HackFusion-24: Where Innovation Meets Opportunity"
+                  </p>
+                </motion.div>
+
+               
+                <motion.div 
+                  variants={containerVariants}
+                  className="grid grid-cols-2 gap-4"
+                >
+                  {[
+                    { 
+                      icon: Building, 
+                      title: "Multidisciplinary", 
+                      description: "Open to all departments, embracing diverse perspectives" 
+                    },
+                    { 
+                      icon: BookOpenCheck, 
+                      title: "Three-Round Challenge", 
+                      description: "Rigorous evaluation process for innovative solutions" 
+                    },
+                    { 
+                      icon: Globe, 
+                      title: "Real-World Impact", 
+                      description: "Transform ideas into practical technological solutions" 
+                    },
+                    { 
+                      icon: StarIcon, 
+                      title: "Professional Growth", 
+                      description: "Develop skills beyond traditional classroom learning" 
+                    }
+                  ].map((feature, index) => (
+                    <motion.div 
+                      key={index}
+                      variants={itemVariants}
+                      className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-all"
+                    >
+                      <feature.icon className="w-10 h-10 text-blue-600 mb-3" />
+                      <h3 className="font-bold text-blue-800 mb-2">{feature.title}</h3>
+                      <p className="text-sm text-gray-600">{feature.description}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+               
+              </motion.div>
+
+              {/* Right Column - Carousel */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="hidden md:block relative w-full h-[500px] overflow-hidden rounded-xl"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImageIndex}
+                    src={images[currentImageIndex]}
+                    alt={`Hackathon image ${currentImageIndex + 1}`}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ 
+                      duration: 0.5,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </AnimatePresence>
+
+                {/* Navigation dots */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        currentImageIndex === index 
+                          ? 'bg-blue-600 scale-125' 
+                          : 'bg-gray-300 hover:bg-blue-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
           <motion.h2
             custom={-1}
             variants={scrollVariants}
-            className="text-4xl font-bold mb-4 text-blue-800"
+            className="text-4xl pt-10 font-bold mb-6 text-blue-800"
           >
-            Greetings from Chennai Institute of Technology
+            What is HackFusion?
           </motion.h2>
-          <motion.p
+          <motion.div
             custom={1}
             variants={scrollVariants}
-            className="text-lg text-gray-700"
+            className="bg-white p-8 rounded-xl shadow-md text-left"
           >
-            We are thrilled to announce our upcoming hackathon, "HackFusion-25". A platform designed to transform your innovative ideas into reality.
-          </motion.p>
+            <p className="text-lg text-gray-700 leading-relaxed mb-4">
+              Greetings from the School of Computing at Chennai Institute of Technology! 
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              HackFusion-24 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed mt-4">
+              Whether it's a software application, a hardware prototype, or a unique tech concept, HackFusion-24 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
+            </p>
+          </motion.div>
         </div>
       </motion.section>
 
