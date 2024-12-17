@@ -13,6 +13,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     message: ''
   });
 
@@ -32,6 +33,7 @@ const Contact = () => {
     setFormData({
       name: '',
       email: '',
+      phone: '', // Reset phone field
       message: ''
     });
   };
@@ -44,7 +46,7 @@ const Contact = () => {
     >
       <div 
         className="flex w-full max-w-5xl bg-white shadow-2xl 
-          rounded-3xl overflow-hidden border-2 border-green-100"
+          rounded-3xl overflow-hidden border-2 border-blue-100"
       >
         {/* Contact Form */}
         <div className="w-1/2 p-12 bg-white">
@@ -52,7 +54,7 @@ const Contact = () => {
             <h2 
               className="text-3xl font-bold mb-2 
                 text-transparent bg-clip-text 
-                bg-gradient-to-r from-green-500 to-emerald-600"
+                bg-gradient-to-r from-blue-500 to-blue-600"
             >
               Get in Touch
             </h2>
@@ -69,7 +71,7 @@ const Contact = () => {
                 Your Name
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
-                <User className="ml-3 text-green-500" size={20} />
+                <User className="ml-3 text-blue-500" size={20} />
                 <input
                   type="text"
                   id="name"
@@ -77,7 +79,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-3 py-3 pl-2 rounded-lg 
-                    focus:outline-none focus:ring-2 focus:ring-green-500"
+                    focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="John Doe"
                   required
                 />
@@ -93,7 +95,7 @@ const Contact = () => {
                 Your Email
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
-                <Mail className="ml-3 text-green-500" size={20} />
+                <Mail className="ml-3 text-blue-500" size={20} />
                 <input
                   type="email"
                   id="email"
@@ -101,12 +103,35 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-3 py-3 pl-2 rounded-lg 
-                    focus:outline-none focus:ring-2 focus:ring-green-500"
+                    focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="you@example.com"
                   required
                 />
               </div>
             </div>
+            <div className="relative">
+              <label 
+                htmlFor="phone" 
+                className="absolute -top-2 left-3 bg-white 
+                  px-1 text-sm text-gray-500"
+              >
+                Your Phone Number
+              </label>
+              <div className="flex items-center border border-gray-300 rounded-lg">
+                <Phone className="ml-3 text-blue-500" size={20} />
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-3 py-3 pl-2 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="+0123456789"
+                  required
+                />
+              </div>
+              </div>
 
             <div className="relative">
               <label 
@@ -124,7 +149,7 @@ const Contact = () => {
                 rows={4}
                 className="w-full px-3 py-3 border border-gray-300 
                   rounded-lg focus:outline-none focus:ring-2 
-                  focus:ring-green-500 resize-none"
+                  focus:ring-blue-500 resize-none"
                 placeholder="What would you like to discuss?"
                 required
               />
@@ -132,8 +157,8 @@ const Contact = () => {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 
-                hover:from-green-600 hover:to-emerald-700 text-white 
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 
+                hover:from-blue-600 hover:to-blue-700 text-white 
                 font-semibold py-3 px-4 rounded-lg transition duration-300 
                 ease-in-out transform hover:scale-[1.02] flex 
                 items-center justify-center space-x-2"
@@ -146,7 +171,7 @@ const Contact = () => {
 
         {/* Contact Information */}
         <div 
-          className="w-1/2 bg-gradient-to-br from-green-500 to-emerald-600 
+          className="w-1/2 bg-gradient-to-br from-blue-500 to-blue-600 
             text-white flex flex-col justify-center items-center p-12 
             text-center relative overflow-hidden"
         >
@@ -171,8 +196,8 @@ const Contact = () => {
                 <Phone className="text-white" size={24} />
                 <div>
                   <p className="font-semibold">Phone Numbers</p>
-                  <p className="text-white/80">+91 93454 89016</p>
-                  <p className="text-white/80">+91 86102 53720</p>
+                  <p className="text-white/80">Sanjay - +91 93454 89016</p>
+                  <p className="text-white/80">Rishikesh - +91 86102 53720</p>
                 </div>
               </div>
 
