@@ -14,7 +14,7 @@ export const initPassport =()=>{
             {
                 clientID : process.env.GOOGLE_CLIENT_ID || "",
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-                callbackURL:"/api/users/google/callback"
+                callbackURL:"https://hack-fusion25-backend.vercel.app/api/users/google/callback"
             },async(accessToken :string,refreshToken : string,profile : any,done : any)=>{
                 const user = await prisma.user.upsert({
                     //@ts-ignore
