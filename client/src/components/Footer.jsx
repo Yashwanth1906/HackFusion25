@@ -48,7 +48,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <section className="relative  py-12 px-5 bg-gray-400 text-white">
+    <section className="relative  py-12 px-5 bg-gray-800 text-white">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4">
           Join HackFusion-24!
@@ -59,16 +59,13 @@ const Footer = () => {
         <p className="text-lg mb-4">
         showcase their talents. Let's code, collaborate, and create!</p>
         <div className="flex justify-center space-x-4">
-          <button 
-            className="bg-white text-gray-700 px-6 py-3 rounded-lg hover:bg-blue-50 transition duration-300"
-          >
-            Register Now
-          </button>
-          <button 
-            className="border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            Learn More
-          </button>
+        <button className="px-6 py-3 text-lg font-medium text-green-400 bg-transparent border-2 border-green-400 rounded-lg cursor-pointer shadow-[0_0_10px_#00FF00,inset_0_0_5px_#00FF00] transition-all duration-300 hover:bg-green-400 hover:text-black hover:shadow-[0_0_20px_#00FF00]">
+          Register Now
+        </button>
+        <button className="px-6 py-3 text-lg font-medium text-green-400 bg-transparent border-2 border-green-400 rounded-lg cursor-pointer shadow-[0_0_10px_#00FF00,inset_0_0_5px_#00FF00] transition-all duration-300 hover:bg-green-400 hover:text-black hover:shadow-[0_0_20px_#00FF00]">
+          Learn More
+        </button>
+
         </div>
       </div>
       
