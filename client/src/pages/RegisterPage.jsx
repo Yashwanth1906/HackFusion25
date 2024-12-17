@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
-import { Plus, Trash2, Users, UserPlus } from "lucide-react"
+import { Plus, Trash2, Users, UserPlus, Home } from "lucide-react"
+import Link from "next/link"
 
 export default function RegisterPage() {
   const [teamName, setTeamName] = useState('');
@@ -100,16 +101,26 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-16">
       <div className="w-full max-w-4xl bg-white shadow-2xl rounded-2xl overflow-hidden">
-        <div className="bg-blue-600 text-white p-6 flex items-center">
-          <Users className="mr-4" size={40} />
-          <div>
-            <h1 className="text-3xl font-bold">Team Registration</h1>
-            <p className="text-blue-100">Create your team for the event</p>
+        <div className="bg-blue-600 text-white p-6 flex items-center justify-between">
+          <div className="flex items-center">
+            <Users className="mr-4" size={40} />
+            <div>
+              <h1 className="text-3xl font-bold">Team Registration</h1>
+              <p className="text-blue-100">Create your team for the event</p>
+            </div>
           </div>
+          <Link 
+            href="/" 
+            className="hover:bg-blue-700 p-2 rounded-full transition-colors duration-200"
+            title="Back to Home"
+          >
+            <Home size={28} />
+          </Link>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          {/* Team Name */}
+         
+         
           <div className="space-y-4">
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
@@ -125,7 +136,7 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Team Description */}
+           
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
                 Abstract
@@ -144,8 +155,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Rest of the code remains the same as in the previous version */}
-          {/* Team Leader Section */}
+          
           <div className="bg-blue-50 p-6 rounded-lg">
             <div className="flex items-center mb-4">
               <UserPlus className="mr-3 text-blue-600" size={28} />
@@ -171,7 +181,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Team Members Section - Remains the same */}
+          
           <div>
             <div className="flex items-center mb-4">
               <Users className="mr-3 text-blue-600" size={28} />
@@ -218,7 +228,7 @@ export default function RegisterPage() {
                   </div>
                 </div>
                 
-                {/* Add Member Button - Appears after each member except the last */}
+                
                 {index === members.length - 1 && members.length < 3 && (
                   <div className="mt-2 flex justify-center">
                     <button
@@ -234,7 +244,7 @@ export default function RegisterPage() {
               </div>
             ))}
 
-            {/* Fallback Add Member Button - Appears if no members added */}
+            
             {members.length === 0 && (
               <div className="flex justify-center mt-4">
                 <button
@@ -249,7 +259,6 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white 
