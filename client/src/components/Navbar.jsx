@@ -192,7 +192,7 @@ const Navbar = () => {
       }`}
     >
       {/* Logo and Mobile Menu Button */}
-      <div className="flex items-center justify-between w-full md:w-auto">
+      <div className="flex items-center justify-between md:w-auto">
         <img
           src="/hackfusion_logo.png"
           alt="Logo"
