@@ -57,7 +57,7 @@ const Navbar = () => {
             space-x-2 
             hover:underline 
             transition
-            ${isScrolled ? 'text-[#1E90FF]' : 'text-white'}
+            ${isScrolled ? 'text-black' : 'text-white'}
           `}
         >
           <Home size={20} />
@@ -71,7 +71,7 @@ const Navbar = () => {
             space-x-2 
             hover:underline 
             transition
-            ${isScrolled ? 'text-[#1E90FF]' : 'text-white'}
+            ${isScrolled ? 'text-black' : 'text-white'}
           `}
         >
           <Info size={20} />
@@ -85,7 +85,7 @@ const Navbar = () => {
             space-x-2 
             hover:underline 
             transition
-            ${isScrolled ? 'text-[#318beb]' : 'text-white'}
+            ${isScrolled ? 'text-black' : 'text-white'}
           `}
         >
           <Contact size={20} />
