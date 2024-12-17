@@ -9,10 +9,10 @@ import { redirect } from "next/navigation"
 export default function Hero() {
   const [isAuth,setAuth] = useState(false);
   const googleAuth = async()=>{
-    window.open(`${BACKEND_URL}/users/signin`,"__self");
+    window.open(`${BACKEND_URL}/api/users/signin`,"__self");
   }
   const auth = async()=>{
-    const response = await fetch('http://localhost:6969/api/users/isauth', {
+    const response = await fetch(`${BACKEND_URL}/api/users/isauth`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
