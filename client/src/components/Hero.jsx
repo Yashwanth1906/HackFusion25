@@ -3,13 +3,31 @@ import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import CountDown from "./CountDown"
 import {BACKEND_URL} from "../config/cosntants.js"
+import { useEffect, useState } from "react"
+import { redirect } from "next/navigation"
 
 export default function Hero() {
-  const router = useRouter();
-
-  const handleRegister = () => {
-    router.push('/register');
+  const [isAuth,setAuth] = useState(false);
+  const googleAuth = async()=>{
+    window.open(`${BACKEND_URL}/users/signin`,"__self");
   }
+  const auth = async()=>{
+    const response = await fetch('http://localhost:6969/api/users/isauth', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials:'include',
+    });
+    if(response.ok){
+      setAuth(true);
+      const data = await response.json();
+      alert(data.user.name);
+    }
+  }
+  useEffect(()=>{
+    auth();
+  },[]);
 
   return (
     <section id="home" className="h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-blue-600 to-purple-700 text-white"
@@ -34,14 +52,22 @@ export default function Hero() {
       </motion.p>
       
       <CountDown targetDate={"2025-01-01T10:00:00"} />
-      <motion.button
+      {isAuth && (<motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
-        onClick={handleRegister}
+        onClick={()=>{redirect("/register")}}
       >
         Register Now
-      </motion.button>
+      </motion.button>)}
+      {!isAuth && <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
+      onClick={googleAuth}
+      >
+        Login With Google
+        </motion.button>}
       
     </section>
   )

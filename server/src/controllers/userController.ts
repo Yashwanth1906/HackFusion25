@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { prisma } from "../db";
+// import { authenticate } from "passport";
 
 export const registerTeam = async (req: Request, res: Response) => {
 
@@ -159,5 +160,26 @@ export const getTeam = async(req:any,res:any) =>{
   } catch(e){
     console.log(e);
     return res.json({"error":e})
+  }
+}
+
+
+export const globalAuth = async (req: any, res: any) => {
+  try {
+    if (req.isAuthenticated()) {
+      const user = await prisma.user.findUnique({
+        where:{
+          id:req.user.id
+        }
+      })
+      return res.status(200).json({authenticated : true,user : user})
+      // console.log("Users: ", req.user);
+      // next();
+    } else {
+      res.status(500).json({ authenticated: false, user: null })
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({authenticated:false,user:null})
   }
 }
