@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/auth/passport.ts","./src/controllers/userController.ts","./src/db/index.ts","./src/middleware/middleware.ts","./src/routes/userRoute.ts"],"version":"5.7.2"}
