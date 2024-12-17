@@ -173,10 +173,8 @@ export const globalAuth = async (req: any, res: any) => {
         }
       })
       return res.status(200).json({authenticated : true,user : user})
-      // console.log("Users: ", req.user);
-      // next();
     } else {
-      res.status(500).json({ authenticated: false, user: null })
+      res.status(500).json({ authenticated: false, user: req.user })
     }
   } catch (e) {
     console.log(e);
