@@ -112,7 +112,7 @@ export default function About() {
                   className="relative bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600"
                 >
                   <p className="text-xl text-gray-700 leading-relaxed italic">
-                    "HackFusion-24: Where Innovation Meets Opportunity"
+                    "HackFusion-25: Where Innovation Meets Opportunity"
                   </p>
                 </motion.div>
 
@@ -224,10 +224,10 @@ export default function About() {
         Greetings from the School of Computing at Chennai Institute of Technology! 
       </p>
       <p className="text-lg text-gray-600 leading-relaxed">
-        HackFusion-24 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
+        HackFusion-25 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
       </p>
       <p className="text-lg text-gray-600 leading-relaxed mt-4">
-        Whether it's a software application, a hardware prototype, or a unique tech concept, HackFusion-24 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
+        Whether it's a software application, a hardware prototype, or a unique tech concept, HackFusion-25 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
       </p>
     </motion.div>
   </div>
@@ -265,13 +265,13 @@ export default function About() {
                 number: 1,
                 color: 'green',
                 title: 'Round 1: Abstract Submission',
-                description: 'Fill in the form and submit your written abstract by 10 AM on 22nd February 2024.'
+                description: 'Fill in the form and submit your written abstract by 10 AM on 25th December 2025.'
               },
               {
                 number: 2,
                 color: 'green',
                 title: 'Round 2: Presentation',
-                description: 'Shortlisted students will present their problem statement and innovative solution to an expert panel on 27th-28th February.'
+                description: 'Shortlisted students will present their problem statement and innovative solution to an expert panel on 6th-8th January.'
               },
               {
                 number: 3,
@@ -337,9 +337,8 @@ export default function About() {
               {
                 number: 3,
                 title: 'Submission Deadline',
-                description: 'Abstract submissions close at 10:00 AM on 22nd February 2024.'
-              },
-              {
+                description: 'Abstract submissions close at 10:00 AM on January 2025',
+              },{
                 number: 4,
                 title: 'Problem Domain',
                 description: 'Teams may choose problem statements from any provided domain.'
@@ -399,7 +398,7 @@ export default function About() {
       className="bg-white p-6 md:p-8 rounded-xl shadow-md"
     >
       <p className="text-lg text-gray-700 leading-relaxed mb-4">
-        HackFusion-24 is a transformative experience that equips students to excel academically and professionally:
+        HackFusion-25 is a transformative experience that equips students to excel academically and professionally:
       </p>
 
       {[
