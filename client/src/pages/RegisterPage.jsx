@@ -46,6 +46,7 @@ export default function RegisterPage() {
     };
 
     try {
+      console.log(payload);
       const response = await fetch('http://localhost:6969/api/users/register', {
         method: 'POST',
         credentials: 'include',

@@ -1,9 +1,7 @@
 import passport from "passport";
 //@ts-ignore
 import {Strategy as GoogleStartegy} from "passport-google-oauth20";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
+import { prisma } from "../db";
 // const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID? process.env.GOOGLE_CLIENT_ID : "hello";
 // const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET? process.env.GOOGLE_CLIENT_SECRET : "hello";
 
