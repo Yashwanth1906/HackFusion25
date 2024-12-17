@@ -4,13 +4,14 @@ import { prisma } from "../db";
 export const registerTeam = async (req: Request, res: Response) => {
 
   try {
-    const { teamLeaderDetails, memberDetails, name } = req.body;
-    const isUserinAnotherTeam = await prisma.member.findUnique({
+  
+    const { teamLeader, members, teamName } = req.body;
+    const isUserinAnotherTeam = await prisma.member.findFirst({
       //@ts-ignore
       where:{
         OR:[
-          {regNo:teamLeaderDetails.regNo},
-          {email : teamLeaderDetails.email}
+          {regNo:teamLeader.regNo},
+          {email : teamLeader.email}
         ]
       }
     })
@@ -18,8 +19,8 @@ export const registerTeam = async (req: Request, res: Response) => {
       return res.status(500).json({message:"You are already in a team"});
     }
     let isMemberInAnotherTeam : any= [];
-    memberDetails.forEach(async(member:any)=>{
-      const isMember = await prisma.member.findUnique({
+    members.forEach(async(member:any)=>{
+      const isMember = await prisma.member.findFirst({
         //@ts-ignore
         where:{
           OR:[
@@ -42,15 +43,16 @@ export const registerTeam = async (req: Request, res: Response) => {
       const team = await tx.team.create({
         //@ts-ignore
         data: {
-          name
+          name:teamName
         }
       })
-      teamLeaderDetails.teamId = team.id;
-      console.log(teamLeaderDetails)
+      teamLeader.isTeamLead = true;
+      teamLeader.teamId = team.id;
+      console.log(teamLeader)
       await tx.member.create({
-        data: teamLeaderDetails
+        data: teamLeader
       });
-      for (const member of memberDetails) {
+      for (const member of members) {
         console.log(member);
         await tx.member.create({
           data: {
@@ -85,10 +87,17 @@ export const registerTeam = async (req: Request, res: Response) => {
 export const submitIdea = async(req:any,res: any)=>{
   try{
     const {solutionTitle,description,problemId} = req.body;
-    console.log(req.user.email);
+    // console.log(req.user.email);
+    const user = await prisma.user.findUnique({
+      where:{
+        id : req.user.id
+      },select:{
+        email:true
+      }
+    })
     const teamId = await prisma.member.findUnique({
       where:{
-        email:req.user.email
+        email: user?.email
       },select:{
         teamId:true
       }
@@ -108,5 +117,47 @@ export const submitIdea = async(req:any,res: any)=>{
     }
   } catch(e){
     return res.status(500).json({"error":e})
+  }
+}
+
+
+export const getTeam = async(req:any,res:any) =>{
+  try{
+    const user = await prisma.user.findUnique({
+      where:{
+        id : req.user.id
+      },select:{
+        email:true
+      }
+    })
+    if(user){
+      const memberinATeam = await prisma.member.findUnique({
+        where:{
+          email:user.email
+        },select:{
+          team:{
+            select:{
+              name:true,
+              members:true,
+              teamSubmisison:{
+                select:{
+                  solutionTitle:true,
+                  description:true
+                }
+              }
+            }
+          }
+        }
+      })
+      if(memberinATeam){
+        return res.status(200).json({"team":memberinATeam})
+      } else{
+        return res.status(500).json({"message":"Create or join a team"});
+      }
+    }
+    return res.status(500).json({"message":"User not found"})
+  } catch(e){
+    console.log(e);
+    return res.json({"error":e})
   }
 }
