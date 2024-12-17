@@ -163,7 +163,7 @@ export default function About() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="hidden md:block relative w-full h-[500px] overflow-hidden rounded-xl"
+                className="hidden md:block relative w-full h-[500px] overflow-visible rounded-xl"
               >
                 <AnimatePresence mode="wait">
                   <motion.img
