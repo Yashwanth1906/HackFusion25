@@ -34,7 +34,7 @@ export default function CountDown({ targetDate }) {
   };
 
   return (
-    <div className="mt-4  text-7xl font-bold">
+    <div className="mt-4  text-4xl font-bold">
       <div className="flex space-x-7 justify-center">
         {['Days', 'Hours', 'Minutes', 'Seconds'].map((unit, index) => (
           <div key={unit} className="text-center mx-2">
