@@ -34,10 +34,10 @@ export default function Hero() {
     style={{ backgroundImage: 'url(/bg4.jpeg)' }} 
     >
       <motion.h1
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="text-6xl font-bold"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+        className="mt-4 text-2xl"
       >
         School Of Computing Presents
       </motion.h1>
