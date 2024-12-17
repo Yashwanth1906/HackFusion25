@@ -33,7 +33,7 @@ const Contact = () => {
     setFormData({
       name: '',
       email: '',
-      phone: '', // Reset phone field
+      phone: '',
       message: ''
     });
   };
@@ -45,28 +45,29 @@ const Contact = () => {
         bg-gradient-to-br bg-gray-100 p-4"
     >
       <div 
-        className="flex w-full max-w-5xl bg-white shadow-2xl 
-          rounded-3xl overflow-hidden border-2 border-blue-100"
+        className="flex flex-col md:flex-row w-full max-w-5xl 
+          bg-white shadow-2xl rounded-3xl overflow-hidden 
+          border-2 border-blue-100"
       >
         {/* Contact Form */}
-        <div className="w-1/2 p-12 bg-white">
+        <div className="w-full md:w-1/2 p-6 md:p-12 bg-white">
           <div className="mb-8 text-center">
             <h2 
-              className="text-3xl font-bold mb-2 
+              className="text-2xl md:text-3xl font-bold mb-2 
                 text-transparent bg-clip-text 
                 bg-gradient-to-r from-blue-500 to-blue-600"
             >
               Get in Touch
             </h2>
-            <p className="text-gray-500">We're eager to hear from you!</p>
+            <p className="text-gray-500 text-sm md:text-base">We're eager to hear from you!</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             <div className="relative">
               <label 
                 htmlFor="name" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-gray-500"
               >
                 Your Name
               </label>
@@ -78,8 +79,9 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-3 py-3 pl-2 rounded-lg 
-                    focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-2 py-2 md:px-3 md:py-3 pl-2 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 
+                    text-sm md:text-base"
                   placeholder="John Doe"
                   required
                 />
@@ -90,7 +92,7 @@ const Contact = () => {
               <label 
                 htmlFor="email" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-gray-500"
               >
                 Your Email
               </label>
@@ -102,18 +104,20 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-3 py-3 pl-2 rounded-lg 
-                    focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-2 py-2 md:px-3 md:py-3 pl-2 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 
+                    text-sm md:text-base"
                   placeholder="you@example.com"
                   required
                 />
               </div>
             </div>
+
             <div className="relative">
               <label 
                 htmlFor="phone" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-gray-500"
               >
                 Your Phone Number
               </label>
@@ -125,19 +129,20 @@ const Contact = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-3 py-3 pl-2 rounded-lg 
-                    focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-2 py-2 md:px-3 md:py-3 pl-2 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 
+                    text-sm md:text-base"
                   placeholder="+0123456789"
                   required
                 />
               </div>
-              </div>
+            </div>
 
             <div className="relative">
               <label 
                 htmlFor="message" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-gray-500"
               >
                 Your Message
               </label>
@@ -147,9 +152,10 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-3 py-3 border border-gray-300 
+                className="w-full px-2 py-2 md:px-3 md:py-3 border border-gray-300 
                   rounded-lg focus:outline-none focus:ring-2 
-                  focus:ring-blue-500 resize-none"
+                  focus:ring-blue-500 resize-none 
+                  text-sm md:text-base"
                 placeholder="What would you like to discuss?"
                 required
               />
@@ -159,11 +165,11 @@ const Contact = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-blue-500 to-blue-600 
                 hover:from-blue-600 hover:to-blue-700 text-white 
-                font-semibold py-3 px-4 rounded-lg transition duration-300 
+                font-semibold py-2 md:py-3 px-4 rounded-lg transition duration-300 
                 ease-in-out transform hover:scale-[1.02] flex 
-                items-center justify-center space-x-2"
+                items-center justify-center space-x-2 text-sm md:text-base"
             >
-              <Send size={20} />
+              <Send size={16} md={20} />
               <span>Send Message</span>
             </button>
           </form>
@@ -171,9 +177,9 @@ const Contact = () => {
 
         {/* Contact Information */}
         <div 
-          className="w-1/2 bg-gradient-to-br from-blue-500 to-blue-600 
-            text-white flex flex-col justify-center items-center p-12 
-            text-center relative overflow-hidden"
+          className="w-full md:w-1/2 bg-gradient-to-br from-blue-500 to-blue-600 
+            text-white flex flex-col justify-center items-center 
+            p-6 md:p-12 text-center relative overflow-hidden"
         >
           {/* Subtle background pattern */}
           <div 
@@ -185,35 +191,35 @@ const Contact = () => {
           />
 
           <div className="relative z-10">
-            <Smile size={80} className="mx-auto mb-6 text-white/90" />
-            <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
-            <p className="text-white/80 mb-6">
+            <Smile size={60} md={80} className="mx-auto mb-4 md:mb-6 text-white/90" />
+            <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">Contact Information</h3>
+            <p className="text-white/80 mb-4 md:mb-6 text-sm md:text-base">
               Feel free to reach out. We're here to help!
             </p>
 
-            <div className="space-y-4 text-left">
-              <div className="flex items-center space-x-4">
-                <Phone className="text-white" size={24} />
+            <div className="space-y-3 md:space-y-4 text-left w-full">
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <Phone className="text-white" size={20} md={24} />
                 <div>
-                  <p className="font-semibold">Phone Numbers</p>
-                  <p className="text-white/80">Sanjay - +91 93454 89016</p>
-                  <p className="text-white/80">Rishikesh - +91 86102 53720</p>
+                  <p className="font-semibold text-sm md:text-base">Phone Numbers</p>
+                  <p className="text-white/80 text-xs md:text-sm">Sanjay - +91 93454 89016</p>
+                  <p className="text-white/80 text-xs md:text-sm">Rishikesh - +91 86102 53720</p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <MapPin className="text-white" size={24} />
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <MapPin className="text-white" size={20} md={24} />
                 <div>
-                  <p className="font-semibold">Location</p>
-                  <p className="text-white/80">Kundrathur, Chennai</p>
+                  <p className="font-semibold text-sm md:text-base">Location</p>
+                  <p className="text-white/80 text-xs md:text-sm">Kundrathur, Chennai</p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <Mail className="text-white" size={24} />
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <Mail className="text-white" size={20} md={24} />
                 <div>
-                  <p className="font-semibold">Email</p>
-                  <p className="text-white/80">hackerz@citchennai.net</p>
+                  <p className="font-semibold text-sm md:text-base">Email</p>
+                  <p className="text-white/80 text-xs md:text-sm">hackerz@citchennai.net</p>
                 </div>
               </div>
             </div>
