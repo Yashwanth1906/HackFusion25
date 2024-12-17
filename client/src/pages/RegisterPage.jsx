@@ -111,7 +111,8 @@ export default function RegisterPage() {
           </div>
           <Link 
             href="/" 
-            className="hover:bg-blue-700 p-2 rounded-full transition-colors duration-200"
+            className="hover:bg-blue-700 p-2 rounded-full transition-all duration-200
+            animate-bounce" // Added continuous bounce animation
             title="Back to Home"
           >
             <Home size={28} />
