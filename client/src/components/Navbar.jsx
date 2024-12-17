@@ -51,21 +51,21 @@ const Navbar = () => {
       <div className="flex space-x-6">
         <button 
           onClick={() => scrollToSection('home')}
-          className="flex items-center space-x-2 text-black hover:underline transition"
+          className="flex items-center space-x-2 text-[#1E90FF] hover:underline transition"
         >
           <Home size={20} />
           <span>Home</span>
         </button>
         <button 
           onClick={() => scrollToSection('about')}
-          className="flex items-center space-x-2 text-black hover:underline transition"
+          className="flex items-center space-x-2 text-[#1E90FF] hover:underline transition"
         >
           <Info size={20} />
           <span>About</span>
         </button>
         <button 
           onClick={() => scrollToSection('contact')}
-          className="flex items-center space-x-2 text-black hover:underline transition"
+          className="flex items-center space-x-2 text-[#318beb] hover:underline transition"
         >
           <Contact size={20} />
           <span>Contact</span>

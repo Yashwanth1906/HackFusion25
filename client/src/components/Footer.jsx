@@ -51,7 +51,7 @@ const Footer = () => {
     <section className="relative  py-12 px-5 bg-gray-800 text-white">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4">
-          Join HackFusion-24!
+          Join HackFusion-25!
         </h2>
         <p className="text-lg mb-4">
           We encourage all students to seize this opportunity to innovate and 
