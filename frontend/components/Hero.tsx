@@ -64,17 +64,17 @@ export default  function Hero() {
       </motion.p>
       
       <CountDown targetDate={"2025-01-01T10:00:00"} />
-       (<motion.button
+       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
 
-        className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
+        className="mt-8 px-6 py-3 font-sans bg-white text-blue-600 font-semibold rounded-lg shadow-md"
         onClick={handle}
 
        
       >
         Register Now
-      </motion.button>)
+      </motion.button>
     
       
     </section>
