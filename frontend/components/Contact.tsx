@@ -41,7 +41,7 @@ const Contact = () => {
   return (
     <div 
       id="contact" 
-      className="flex items-center justify-center min-h-screen 
+      className="flex font-sans items-center justify-center min-h-screen 
         bg-gradient-to-br bg-gray-100 p-4"
     >
       <div 

@@ -327,7 +327,7 @@ export default function About() {
               {
                 number: 1,
                 title: 'Team Composition',
-                description: 'Teams must have 5 members, with at least one female participant.'
+                description: 'Teams must have 4-5 members, with at least one female participant.'
               },
               {
                 number: 2,

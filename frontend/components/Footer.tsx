@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <section className="relative py-8 md:py-12 px-4 md:px-5 bg-gray-800 text-white">
+    <section className="relative font-sans py-8 md:py-12 px-4 md:px-5 bg-gray-800 text-white">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">
           Join HackFusion-25!
@@ -51,6 +51,8 @@ const Footer = () => {
             loop
             autoplay
           ></dotlottie-player>
+
+
         </div>
       </div>
     </section>
