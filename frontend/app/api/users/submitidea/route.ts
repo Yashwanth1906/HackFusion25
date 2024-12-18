@@ -7,7 +7,6 @@ import { authOptions } from "@/lib/auth";
 export const POST = async(req:NextRequest)=>{
     try{
       const {solutionTitle,description,problemId}:any = req.body;
-      // console.log(req.user.email);
       const session = await getServerSession(authOptions);
       const userId = session?.user.id;
       if(!userId){
