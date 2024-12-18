@@ -225,6 +225,7 @@ export interface teamDetailsType {
 }
 
 function App() {
+<<<<<<< HEAD
   const [inTeam, setInTeam] = useState(false);
   const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
   const { data: session } = useSession();
@@ -232,6 +233,13 @@ function App() {
 
   const getTeam = async () => {
     if (!session) {
+=======
+  const [inteam,setInTeam]  = useState(true);
+  const [teamDetails,setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
+  const getTeam = async() =>{
+    const session = await getServerSession(authOptions);
+    if(!session){
+>>>>>>> 737bfc6 (sigin refactor)
       alert("Login First");
       router.push("/");
       return;
