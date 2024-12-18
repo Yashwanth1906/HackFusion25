@@ -34,7 +34,7 @@ model Member {
   year       String
   gender     String
   email      String  @unique
-  phoneno    String
+  phoneno    String?
   isTeamLead Boolean
   teamId     String
   team       Team    @relation(fields: [teamId], references: [id])
@@ -44,7 +44,6 @@ model Team {
   id               String          @id @default(uuid())
   name             String
   members          Member[]
-  teamSubmissionId String?         @unique
   teamSubmisison   TeamSubmission?
 }
 
