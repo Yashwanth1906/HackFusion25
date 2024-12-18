@@ -10,17 +10,13 @@ import Footer from "@/components/Footer";
 // import { authOptions } from "@/lib/auth";
 // import { signIn, signOut } from "next-auth/react";
 
-export default  function Home() {
-  return(
+export default function Home() {
+  return (
     <>
       <Hero />
       <About />
       <Contact />
       <Footer />
     </>
-    
-
-
-
   )
 }

@@ -13,6 +13,20 @@ export const authOptions = {
   callbacks: {
     //@ts-ignore
     async signIn({ user, account, profile }) {
+
+      // Check if user is an admin
+      const isAdmin = await prisma.admin.findUnique({
+        where: { email: user.email },
+      });
+      console.log(isAdmin)
+      if (isAdmin) {
+        user.isAdmin = true
+        return true
+      }
+
+      if (!profile.email.endsWith("@citchennai.net")) {
+        return false
+      }
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email },
       });
@@ -33,19 +47,14 @@ export const authOptions = {
         user.id = newUser.id;
       }
 
-      // Check if user is an admin
-      const isAdmin = await prisma.admin.findUnique({
-        where: { email: user.email },
-      });
 
-      user.isAdmin = Boolean(isAdmin); // Add admin status to the user object
       return true;
     },
     //@ts-ignore
     async session({ token, session }) {
-      console.log(session)
       session.user.id = token.sub
       session.user.isAdmin = token.isAdmin
+      console.log(session)
 
       return session
     },
@@ -55,6 +64,7 @@ export const authOptions = {
         token.sub = user.id;
         token.isAdmin = user.isAdmin || false;
       }
+      return token
     },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       return `${baseUrl}/user/register`

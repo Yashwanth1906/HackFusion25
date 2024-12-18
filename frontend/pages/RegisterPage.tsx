@@ -77,10 +77,10 @@ export default function RegisterPage() {
   //     alert('Something went wrong. Please try again.');
   //   }
   // };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Check if all required fields are filled
     if (!teamName || !teamDescription) {
       alert('Please fill in all required fields');
@@ -95,7 +95,7 @@ export default function RegisterPage() {
     }
 
     // Validate members fields if any members are added
-    const membersValid = members.every(member => 
+    const membersValid = members.every(member =>
       Object.values(member).every(field => field.trim() !== '')
     );
     if (members.length > 0 && !membersValid) {
@@ -224,7 +224,7 @@ export default function RegisterPage() {
               <div className="flex items-center mb-4">
                 <Users className="mr-3 text-blue-600" size={28} />
                 <h2 className="text-xl font-semibold text-blue-800">
-                  Team Members 
+                  Team Members
                   <span className="text-sm text-gray-500 ml-2">
                     ({members.length}/3)
                   </span>
