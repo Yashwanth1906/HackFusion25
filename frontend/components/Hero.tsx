@@ -5,29 +5,28 @@ import CountDown from "./CountDown"
 import {BACKEND_URL} from "../config/cosntants"
 import { useEffect, useState } from "react"
 import { redirect } from "next/navigation"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
+import { useSession } from "next-auth/react"
 
-export default function Hero() {
-  const [isAuth,setAuth] = useState(true);
-  const googleAuth = async()=>{
-    window.open(`${BACKEND_URL}/api/users/signin`,"__self");
-  }
-  const auth = async()=>{
-    const response = await fetch(`${BACKEND_URL}/api/users/isauth`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials:'include',
-    });
-    if(response.ok){
-      setAuth(true);
-      const data = await response.json();
-      alert(data.user.name);
+export default  function Hero() {
+    const {data,status}=useSession()
+    const router=useRouter();
+      if(status==='loading')
+      {
+        return <div>loading..</div>
+      }
+      
+    const handle=()=>{
+      if(!data)
+      {
+        router.push("/user/signin")
+      }
+      else
+      {
+        router.push("/user/register")
+      }
     }
-  }
-  useEffect(()=>{
-    auth();
-  },[]);
 
   return (
     <section id="home" className="h-screen flex flex-col items-center justify-center text-center  bg-gradient-to-b from-blue-600 to-purple-700 text-white"
@@ -70,22 +69,18 @@ export default function Hero() {
       </motion.p>
       
       <CountDown targetDate={"2025-01-01T10:00:00"} />
-      {isAuth && (<motion.button
+       (<motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="mt-8 font-sans px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
-        onClick={()=>{redirect("/register")}}
+
+        className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
+        onClick={handle}
+
+       
       >
         Register Now
-      </motion.button>)}
-      {!isAuth && <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-      className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
-      onClick={googleAuth}
-      >
-        Login With Google
-        </motion.button>}
+      </motion.button>)
+    
       
     </section>
   )

@@ -1,6 +1,7 @@
 import { prisma } from "@/prisma/db";
 
 import GoogleProvider from "next-auth/providers/google";
+
 export const authOptions={
     providers:[
       GoogleProvider({
@@ -41,10 +42,14 @@ export const authOptions={
        },
        //@ts-ignore
        async session({ token, session }) {
-       
+          console.log(session)
            session.user.id = token.sub
           
            return session
-       }
+       },
+       async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
+          return `${baseUrl}/user/register`
+      }
+      
    },
 }

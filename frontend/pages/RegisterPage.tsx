@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Plus, Trash2, Users, UserPlus, Home, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export default function RegisterPage() {
   const [teamName, setTeamName] = useState('');
@@ -283,6 +284,7 @@ export default function RegisterPage() {
           </form>
         )}
       </div>
+      <button onClick={signOut}>logout</button>
     </div>
   );
 }

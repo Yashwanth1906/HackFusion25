@@ -6,10 +6,11 @@ import { authOptions } from "@/lib/auth"
 export const GET = async(req:NextRequest) =>{
     try{
         const session = await getServerSession(authOptions);
-        const userId = session?.user.id;
-        if(!userId){
+        if(!session){
             return NextResponse.json({message:"Login first"},{status:500})
         }
+        console.log(session.user)
+        const userId=session.user.id
       const user = await prisma.user.findUnique({
         where:{
           id : userId
@@ -37,14 +38,14 @@ export const GET = async(req:NextRequest) =>{
           }
         })
         if(memberinATeam){
-          return res.status(200).json({"team":memberinATeam})
+          return NextResponse.json({"team":memberinATeam},{status:200})
         } else{
-          return res.status(500).json({"message":"Create or join a team"});
+          return NextResponse.json({"message":"Create or join a team"},{status:500});
         }
       }
-      return res.status(500).json({"message":"User not found"})
+      return NextResponse.json({"message":"User not found"},{status:500})
     } catch(e){
       console.log(e);
-      return res.json({"error":e})
+      return NextResponse.json({"error":e})
     }
   }
