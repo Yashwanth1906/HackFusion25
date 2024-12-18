@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
+//@ts-ignore
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 

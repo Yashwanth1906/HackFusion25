@@ -202,7 +202,11 @@ const Contact = () => {
                 <Phone className="text-white" size={20} md={24} />
                 <div>
                   <p className="font-semibold text-sm md:text-base">Phone Numbers</p>
-                  <p className="text-white/80 text-xs md:text-sm">Sanjay - +91 93454 89016</p>
+                  <p className="text-white text-xs md:text-sm">Staff Coordinators:</p>
+                  <p className="text-white/80 text-xs md:text-sm">Bavani - +91 77083 77850</p>
+                  <p className="text-white text-xs md:text-sm ">Student Coordinators:</p>
+
+                  <p className="text-white/80 text-xs md:text-sm">Roopa - +91 86376 25516</p>
                   <p className="text-white/80 text-xs md:text-sm">Rishikesh - +91 86102 53720</p>
                 </div>
               </div>

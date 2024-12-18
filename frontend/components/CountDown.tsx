@@ -51,7 +51,7 @@ export default function CountDown({ targetDate }) {
                 {timeLeft[Object.keys(timeLeft)[index]]}
               </motion.div>
             </AnimatePresence>
-            <div className="text-center text-xl">{unit}</div>
+            <div className="text-center font-sans text-xl">{unit}</div>
           </div>
         ))}
       </div>
