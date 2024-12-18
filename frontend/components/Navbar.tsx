@@ -17,7 +17,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
+  //@ts-ignore
   const scrollToSection = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -32,16 +32,16 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition-all duration-300 ease-in-out ${
+      className={`fixed font-sans top-0 left-0 right-0 z-50 flex justify-between items-center  transition-all duration-300 ease-in-out ${
         isScrolled ? 'backdrop-blur-[8px] bg-white/30' : 'bg-transparent'
       }`}
     >
       {/* Logo and Mobile Menu Button */}
       <div className="flex items-center justify-between md:w-auto">
         <img
-          src="/hackfusion_logo.png"
+          src="/cit1.png"
           alt="Logo"
-          className="h-12 w-12 md:h-16 md:w-16"
+          className="p-2 h-14 w-30 md:h-24 md:w-44"
         />
         <button
           onClick={toggleMobileMenu}
@@ -54,7 +54,7 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex space-x-6">
+      <div className="hidden md:flex justify-center items-center space-x-20">
         <button
           onClick={() => scrollToSection('home')}
           className={`flex items-center space-x-2 hover:underline transition ${
@@ -110,6 +110,13 @@ const Navbar = () => {
           </button>
         </div>
       )}
+      <div className="flex items-center justify-between md:w-auto">
+        <img
+          src="/hackfusion_logo.png"
+          alt="Logo"
+          className="p-2 h-12 w-16 md:h-16 md:w-20"
+        />
+      </div>
     </nav>
   );
 };

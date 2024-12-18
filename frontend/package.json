@@ -13,7 +13,9 @@
     "@prisma/client": "^6.1.0",
     "@radix-ui/react-slot": "^1.1.1",
     "axios": "^1.7.9",
+
     "class-variance-authority": "^0.7.1",
+
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
     "lucide-react": "^0.468.0",
@@ -28,8 +30,10 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+
     "@eslint/eslintrc": "^3",
     "@prisma/client": "^6.1.0",
+
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

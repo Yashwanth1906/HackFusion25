@@ -10,7 +10,7 @@ export default function About() {
   // Sample image placeholders - replace with actual image paths
   const images = [
     "/WhatsApp Image 2024-12-17 at 13.44.12_be07e14f.jpg",
-    "/WhatsApp Image 2024-12-17 at 13.44.33_f132f6ba.jpg",
+    "/WhatsApp Image 2024-12-17 at 22.25.58_7b555a5b.jpg",
     "/WhatsApp Image 2024-12-17 at 13.45.20_408bf04b.jpg",
     "/WhatsApp Image 2024-12-17 at 13.45.37_67c70875.jpg",
     "/WhatsApp Image 2024-12-17 at 13.46.06_604df4df.jpg",
@@ -31,7 +31,9 @@ export default function About() {
   }, [images.length])
 
   // Existing animation variants
+  
   const scrollVariants = {
+    //@ts-ignore
     offscreen: (direction) => ({
       x: direction < 0 ? -100 : 100,
       opacity: 0
@@ -83,7 +85,7 @@ export default function About() {
   }, []);
 
   return (
-    <div id="about" className="bg-gray-50">
+    <div id="about" className="font-sans bg-gray-50">
       <motion.section
         initial="offscreen"
         whileInView="onscreen"
@@ -102,7 +104,7 @@ export default function About() {
               >
                 <motion.h1 
                   variants={itemVariants}
-                  className="text-3xl font-extrabold text-blue-900 tracking-tight leading-tight"
+                  className="text-3xl font-bold text-blue-900 tracking-tight leading-tight"
                 >
                   Chennai Institute of Technology
                 </motion.h1>
@@ -124,7 +126,7 @@ export default function About() {
                   {[
                     { 
                       icon: Building, 
-                      title: "Multidisciplinary", 
+                      title: "Inclusive", 
                       description: "Open to all departments, embracing diverse perspectives" 
                     },
                     { 
@@ -220,9 +222,7 @@ export default function About() {
       variants={scrollVariants}
       className="bg-white p-6 md:p-8 rounded-xl shadow-md text-left"
     >
-      <p className="text-lg text-gray-700 leading-relaxed mb-4">
-        Greetings from the School of Computing at Chennai Institute of Technology! 
-      </p>
+      
       <p className="text-lg text-gray-600 leading-relaxed">
         HackFusion-25 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
       </p>
@@ -265,7 +265,7 @@ export default function About() {
                 number: 1,
                 color: 'green',
                 title: 'Round 1: Abstract Submission',
-                description: 'Fill in the form and submit your written abstract by 10 AM on 25th December 2025.'
+                description: 'Fill in the form and submit your written abstract by 10 AM on 25th December 2024.'
               },
               {
                 number: 2,
@@ -327,7 +327,7 @@ export default function About() {
               {
                 number: 1,
                 title: 'Team Composition',
-                description: 'Teams must have 5 members, with at least one female participant.'
+                description: 'Teams must have 4-5 members, with at least one female participant.'
               },
               {
                 number: 2,

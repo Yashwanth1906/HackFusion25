@@ -29,31 +29,41 @@ export default  function Hero() {
     }
 
   return (
-    <section id="home" className="h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-blue-600 to-purple-700 text-white"
-    style={{ backgroundImage: 'url(/bg4.jpeg)' }} 
+    <section id="home" className="h-screen flex flex-col items-center justify-center text-center  bg-gradient-to-b from-blue-600 to-purple-700 text-white"
+    style={{ backgroundImage: 'url(/xx.jpeg)', backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat', }} 
     >
       <motion.h1
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className="mt-4 text-2xl"
+        className=" mt-4 font-sans text-6xl font-bold"
       >
-        School Of Computing Presents
+        School Of Computing 
+      </motion.h1>
+      <motion.h1
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+        className="mt-4 font-sans text-xl"
+      >
+        Presents 
       </motion.h1>
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="text-3xl mt-4 font-bold"
+        className="text-3xl font-sans mt-4 font-bold"
       >
-        Welcome to HackFusion 2025!
+        HackFusion 2025!
       </motion.h1>
       
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className="mt-4 text-xl"
+        className=" mt-4 font-sans text-xl"
       >
         Innovate. Create. Collaborate.
       </motion.p>
@@ -62,8 +72,11 @@ export default  function Hero() {
        (<motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
+
         className="mt-8 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md"
         onClick={handle}
+
+       
       >
         Register Now
       </motion.button>)

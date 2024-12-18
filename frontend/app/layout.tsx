@@ -16,7 +16,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export default function RootLayout({ children }:{children:React.ReactNode}):JSX.Element {
+
   const pathname = usePathname();
 
   return (
