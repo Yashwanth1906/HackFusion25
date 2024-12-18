@@ -4,13 +4,13 @@ import GoogleProvider from "next-auth/providers/google";
 export const authOptions={
     providers:[
       GoogleProvider({
-           clientId: process.env.GOOGLE_CLIENT_ID || "",
+          clientId: process.env.GOOGLE_CLIENT_ID || "",
           clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
       })
-  
   ],
   secret:process.env.JWT_SECRET ||"hackfusion",
   callbacks: {
+      //@ts-ignore
       async signIn({user,account,profile}){
            const res =await prisma.user.findUnique({
                where:{
@@ -37,11 +37,9 @@ export const authOptions={
              })
              
              user.id=temp.id;
-  
-            
              return true
-  
        },
+       //@ts-ignore
        async session({ token, session }) {
        
            session.user.id = token.sub
@@ -49,5 +47,4 @@ export const authOptions={
            return session
        }
    },
-  
-  }
+}
