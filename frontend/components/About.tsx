@@ -85,15 +85,15 @@ export default function About() {
   }, []);
 
   return (
-    <div id="about" className="font-sans bg-gray-50">
+    <div id="about" className="font-sans ">
       <motion.section
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: false, amount: 0.3 }}
-        className="py-16 px-8 bg-gradient-to-b from-blue-50 to-gray-100"
+        className="py-16 px-8 "
       >
         <div className="max-w-4xl mx-auto text-center">
-          <div className="min-h-[80vh] bg-gradient-to-br from-blue-50 to-white rounded-3xl shadow-lg overflow-hidden">
+          <div className="min-h-[80vh] b rounded-3xl shadow-lg overflow-hidden">
             <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
               {/* Left Column - Text Content */}
               <motion.div 
@@ -148,7 +148,7 @@ export default function About() {
                     <motion.div 
                       key={index}
                       variants={itemVariants}
-                      className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-all"
+                      className=" p-4 rounded-lg shadow-md hover:shadow-xl transition-all"
                     >
                       <feature.icon className="w-10 h-10 text-blue-600 mb-3" />
                       <h3 className="font-bold text-blue-800 mb-2">{feature.title}</h3>
@@ -206,7 +206,7 @@ export default function About() {
   initial="offscreen"
   whileInView="onscreen"
   viewport={{ once: false, amount: 0.3 }}
-  className="py-8 px-4 md:py-16 md:px-8 bg-gray-100"
+  className="py-8 px-4 md:py-16 md:px-8 "
 >
   <div className="max-w-4xl mx-auto">
     <motion.h2
@@ -220,7 +220,7 @@ export default function About() {
     <motion.div
       custom={1}
       variants={scrollVariants}
-      className="bg-white p-6 md:p-8 rounded-xl shadow-md text-left"
+      className=" p-6 md:p-8 rounded-xl shadow-md text-left"
     >
       
       <p className="text-lg text-gray-600 leading-relaxed">
@@ -240,7 +240,7 @@ export default function About() {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: false, amount: 0.3 }}
-        className="py-16 px-8 bg-gray-100"
+        className="py-16 px-8 "
       >
         <div className="max-w-4xl mx-auto">
           <motion.h2
@@ -259,7 +259,7 @@ export default function About() {
             scrolling="no"
           ></iframe>
 
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className=" p-6 rounded-lg shadow-md">
             {[
               {
                 number: 1,
@@ -307,7 +307,7 @@ export default function About() {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: false, amount: 0.3 }}
-        className="py-16 px-8 bg-gray-100"
+        className="py-16 px-8 "
       >
         <div className="max-w-4xl mx-auto">
           <motion.h2
@@ -321,7 +321,7 @@ export default function About() {
           <motion.div
             custom={1}
             variants={scrollVariants}
-            className="bg-white p-8 rounded-xl shadow-md"
+            className=" p-8 rounded-xl shadow-md"
           >
             {[
               {
@@ -381,7 +381,7 @@ export default function About() {
   initial="offscreen"
   whileInView="onscreen"
   viewport={{ once: false, amount: 0.3 }}
-  className="py-8 px-4 md:py-16 md:px-8 bg-gray-100"
+  className="py-8 px-4 md:py-16 md:px-8"
 >
   <div className="max-w-4xl mx-auto">
     <motion.h2
@@ -395,7 +395,7 @@ export default function About() {
     <motion.div
       custom={1}
       variants={scrollVariants}
-      className="bg-white p-6 md:p-8 rounded-xl shadow-md"
+      className=" p-6 md:p-8 rounded-xl shadow-md"
     >
       <p className="text-lg text-gray-700 leading-relaxed mb-4">
         HackFusion-25 is a transformative experience that equips students to excel academically and professionally:
