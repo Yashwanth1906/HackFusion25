@@ -2,11 +2,6 @@
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import CountDown from "./CountDown"
-import {BACKEND_URL} from "../config/cosntants"
-import { useEffect, useState } from "react"
-import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
 import { useSession } from "next-auth/react"
 
 export default  function Hero() {
