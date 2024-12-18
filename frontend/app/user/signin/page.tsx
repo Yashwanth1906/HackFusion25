@@ -1,20 +1,23 @@
 'use client'
 import { motion } from "framer-motion";
 import { useState } from "react"
-// import Link from "next/link"
-// import { Input } from "@/components/ui/input"
+
 import { Meteors } from "@/components/acertinity/meteors"
 import { AnimeatedButton } from "@/components/acertinity/button"
 import { StarsBackground } from "@/components/acertinity/stars-background"
 import { ShootingStars } from "@/components/acertinity/shooting-stars"
-// import { FaGoogle } from 'react-icons/fa'
+
 import { AuroraBackground } from "@/components/acertinity/aurora-backgorund";
 export default function Signin() {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
 
   return (
-    <AuroraBackground>
+    <>
+    <div className="fixed inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072')] bg-cover opacity-10 pointer-events-none" />
+    <div className="bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900">
+
+  
       <motion.div
         initial={{ opacity: 0.0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -30,12 +33,12 @@ export default function Signin() {
       <StarsBackground />
       
       <div className="w-full max-w-md px-4 sm:px-0">
-        <div className="relative shadow-xl bg-white border-4 border-blue-500 px-4 py-8 overflow-hidden rounded-2xl flex flex-col justify-end items-start">
-          <h1 className="font-bold text-xl text-black mb-4 relative z-50 w-full text-center">
+        <div className="relative shadow-xl bg-gray-900/60 bg-gray-500 border-blue-500  border-4 px-4 py-8 overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+          <h1 className="font-bold text-xl text-white mb-4 relative z-50 w-full text-center">
             HACK FUSION'25
           </h1>
           
-          <h2 className="font-bold text-xl text-black w-full text-center">Join the ultimate coding experience!</h2>
+          <h2 className="font-bold text-xl text-white w-full text-center">Join the ultimate coding experience!</h2>
 
           
           <div className="mt-8 w-full">
@@ -53,7 +56,9 @@ export default function Signin() {
         </div>
       </div>
     </div>
-    </AuroraBackground >
+    </div>
+    </>
+
   )
 }
 
