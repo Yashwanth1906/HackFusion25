@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { usePathname } from "next/navigation";
+import { Providers } from "@/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,10 +20,13 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className="font-mono">
-        {pathname !== "/register" && <Navbar/>}
-        {children}
-      </body>
+      <Providers>
+        <body className="font-mono">
+          {pathname !== "/register" && <Navbar/>}
+          {children}
+        </body>  
+      </Providers>
+      
     </html>
   );
 }
