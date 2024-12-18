@@ -67,7 +67,7 @@ export const authOptions = {
       return token
     },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
-      return `${baseUrl}/user/register`
+      return `${baseUrl}/user/home`
     }
 
   },

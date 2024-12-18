@@ -1,13 +1,13 @@
 'use client'
 import { motion } from "framer-motion";
 import { useState } from "react"
-import Link from "next/link"
-import { Input } from "@/components/ui/input"
+// import Link from "next/link"
+// import { Input } from "@/components/ui/input"
 import { Meteors } from "@/components/acertinity/meteors"
 import { AnimeatedButton } from "@/components/acertinity/button"
 import { StarsBackground } from "@/components/acertinity/stars-background"
 import { ShootingStars } from "@/components/acertinity/shooting-stars"
-import { FaGoogle } from 'react-icons/fa'
+// import { FaGoogle } from 'react-icons/fa'
 import { AuroraBackground } from "@/components/acertinity/aurora-backgorund";
 export default function Signin() {
   const [email, setEmail] = useState<string>("")
