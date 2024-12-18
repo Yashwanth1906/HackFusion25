@@ -23,6 +23,9 @@ export default function Hero() {
       setAuth(true);
       const data = await response.json();
       alert(data.user.name);
+    } else{
+      const data = response.json();
+      alert(data);
     }
   }
   useEffect(()=>{
