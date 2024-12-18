@@ -28,10 +28,10 @@ export const GET = async(req:NextRequest) =>{
             }
         })
         if (!memberteam) {
-            return NextResponse.json({ message: "No team found for this member" }, { status: 200 });
+            return NextResponse.json({ message: "No team found for this member" }, { status: 404 });
         }
         return NextResponse.json({teamdetails:memberteam},{status:200});
-    }  catch(e){
+    }  catch(e:any){
         console.log(e);
         return NextResponse.json({ message: e.message || "Something went wrong" }, { status: 500 });
     }
