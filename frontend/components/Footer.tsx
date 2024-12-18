@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <section className="relative font-sans py-8 md:py-12 px-4 md:px-5 bg-gray-800 text-white">
+    <section className="relative font-sans py-8 md:py-12 px-4 md:px-5  ">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">
           Join HackFusion-25!
@@ -32,28 +32,6 @@ const Footer = () => {
           </button>
         </div>
         
-        {/* Lottie Player - Responsive Positioning */}
-        <div className="flex justify-center md:absolute md:bottom-0 md:right-0">
-          <script
-            src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
-            type="module"
-          ></script>
-          <dotlottie-player
-            src="https://lottie.host/b16bfff1-7378-466a-9692-f3ed3ed529b5/KnNE15ZbS7.lottie"
-            background="transparent"
-            speed="1"
-            style={{ 
-              width: "200px", 
-              height: "200px",
-              display: "block",
-              margin: "0 auto"
-            }}
-            loop
-            autoplay
-          ></dotlottie-player>
-
-
-        </div>
       </div>
     </section>
   );

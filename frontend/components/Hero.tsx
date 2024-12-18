@@ -24,10 +24,10 @@ export default  function Hero() {
     }
 
   return (
-    <section id="home" className="h-screen flex flex-col items-center justify-center text-center  bg-gradient-to-b from-blue-600 to-purple-700 text-white"
-    style={{ backgroundImage: 'url(/xx.jpeg)', backgroundSize: 'cover', 
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat', }} 
+    <section id="home" className="h-screen flex flex-col items-center justify-center text-center  text-white"
+    // style={{ backgroundImage: 'url(/xx.jpeg)', backgroundSize: 'cover', 
+    //   backgroundPosition: 'center',
+    //   backgroundRepeat: 'no-repeat', }} 
     >
       <motion.h1
         initial={{ opacity: 0 }}

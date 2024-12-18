@@ -42,7 +42,7 @@ const Contact = () => {
     <div 
       id="contact" 
       className="flex font-sans items-center justify-center min-h-screen 
-        bg-gradient-to-br bg-gray-100 p-4"
+        p-4"
     >
       <div 
         className="flex flex-col md:flex-row w-full max-w-5xl 
@@ -50,7 +50,7 @@ const Contact = () => {
           border-2 border-blue-100"
       >
         {/* Contact Form */}
-        <div className="w-full md:w-1/2 p-6 md:p-12 bg-white">
+        <div className="w-full md:w-1/2 p-6 md:p-12 from-gray-900 via-blue-900 to-purple-900">
           <div className="mb-8 text-center">
             <h2 
               className="text-2xl md:text-3xl font-bold mb-2 
