@@ -6,9 +6,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async(req:NextRequest) =>{
     try{
         //@ts-ignore
-        const email = req.headers['email'];
+        const email = req.headers.get("email");
         const memberteam = await prisma.member.findUnique({
             where:{
+                //@ts-ignore
                 email:email
             },select:{
                 team:{
@@ -26,9 +27,12 @@ export const GET = async(req:NextRequest) =>{
                 }
             }
         })
+        if (!memberteam) {
+            return NextResponse.json({ message: "No team found for this member" }, { status: 200 });
+        }
         return NextResponse.json({teamdetails:memberteam},{status:200});
     }  catch(e){
         console.log(e);
-        return NextResponse.json({message:e})
+        return NextResponse.json({ message: e.message || "Something went wrong" }, { status: 500 });
     }
 }
