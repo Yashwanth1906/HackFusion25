@@ -32,6 +32,7 @@ model Member {
   regNo      String  @unique
   dept       String
   year       String
+  gender     String
   email      String  @unique
   phoneno    String
   isTeamLead Boolean
