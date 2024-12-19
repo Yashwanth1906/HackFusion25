@@ -1,22 +1,27 @@
 import { prisma } from "@/prisma/db";
+import { isinaTeamSchema, SubmitSchema } from "@/zod/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
-
-        const { solutionTitle, description, problemId }: any = body;
+        const valid=SubmitSchema.safeParse(body)
+        // const { solutionTitle, description, problemId }: any = body;
         const email = req.headers.get("email");
+        const valid2=isinaTeamSchema.safeParse(email)
 
-        if (!solutionTitle || !description || !problemId || !email) {
+        if (!valid.success) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
+        if(!valid2.success){
+          return NextResponse.json({ message:"Email headers missing" }, { status: 400 });
 
+        }
         const teamData = await prisma.member.findFirst({
             where: {
                 AND: [
-                    //@ts-ignore
-                    { email: email },
+                    
+                    { email: valid2.data.email },
                     { isTeamLead: true },
                 ],
             },
@@ -38,9 +43,9 @@ export const POST = async (req: NextRequest) => {
             await prisma.teamSubmission.create({
               data: {
                   teamId: teamData.teamId,
-                  solutionTitle: solutionTitle,
-                  description: description,
-                  problemId: problemId,
+                  solutionTitle: valid.data.solutionTitle,
+                  description: valid.data.description,
+                  problemId: valid.data.problemId,
               },
             });
             return NextResponse.json({ success:true,message: "Idea successfully submitted" }, { status: 200 });

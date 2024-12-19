@@ -1,8 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import {prisma} from "../../../../prisma/db"
+import { createTeamSchema, TeamLeadSchema } from "@/zod/types";
 export const POST = async(req:NextRequest) =>{
   try{
-    const {teamName,teamLead} = await req.json();
+    
+    const body = await req.json();
+    const teamNameparse=createTeamSchema.safeParse(body.teamName)
+    if(! teamNameparse.success){
+      return NextResponse.json({message:"Invalid Team Name"},
+        {status:500}
+      )
+    }
+    const teamLeadParse=TeamLeadSchema.safeParse(body.teamLead)
+    if(! teamLeadParse.success){
+      return NextResponse.json({message:"Invalid TeamLead Name"},
+        {status:500}
+      )
+    }
+    const teamName=teamNameparse.data
+    const teamLead=teamLeadParse.data
+
     console.log(teamLead.name,teamLead.email,teamLead.gender,teamLead.regNo)
     const user = await prisma.member.findFirst({
       where:{
@@ -19,11 +36,11 @@ export const POST = async(req:NextRequest) =>{
     const response = await prisma.$transaction(async(tx)=>{
       const newTeam = await tx.team.create({
         data:{
-          name:teamName,
+          name:teamName.teamName,
         }
       })
       const leaderAdd = await tx.member.create({
-        //@ts-ignore
+      
         data:{
           name:teamLead.name, 
           email:teamLead.email, 

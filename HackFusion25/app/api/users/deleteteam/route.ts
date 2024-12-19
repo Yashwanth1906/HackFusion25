@@ -1,15 +1,17 @@
 import { prisma } from "@/prisma/db";
+import { deleteTeamSchema } from "@/zod/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
     try {
         const email = req.headers.get('email');
-        if (!email) {
+        const valid=deleteTeamSchema.safeParse(email)
+        if (!valid.success) {
             return NextResponse.json({ success: false, message: "Email header is missing" }, { status: 400 });
         }
         const member = await prisma.member.findUnique({
             where: {
-                email: email,
+                email: valid.data.email,
             },
             select: {
                 team: {

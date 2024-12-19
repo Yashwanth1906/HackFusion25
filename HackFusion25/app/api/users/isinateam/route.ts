@@ -1,14 +1,19 @@
 import { prisma } from "@/prisma/db";
+import { isinaTeamSchema } from "@/zod/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async(req:NextRequest) =>{
     try{
-        //@ts-ignore
         const email = req.headers.get("email");
+        const valid=isinaTeamSchema.safeParse(email)
+        if(!valid.success){
+            return NextResponse.json({message:"Invalid Email"},
+                {status:500}
+              )
+        }
         const memberteam = await prisma.member.findUnique({
-            where:{
-                //@ts-ignore
-                email:email
+            where:{  
+                email:valid.data.email
             },select:{
                 team:{
                     select:{
@@ -30,7 +35,7 @@ export const GET = async(req:NextRequest) =>{
             return NextResponse.json({ success:false,message: "No team found for this member" }, { status: 200 });
         }
         let isTeamLead = false;
-        //@ts-ignore
+       
         console.log(email);
         memberteam.team?.members.forEach((x)=>{
             console.log(x)
