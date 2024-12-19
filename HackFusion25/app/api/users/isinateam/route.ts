@@ -32,7 +32,7 @@ export const GET = async(req:NextRequest) =>{
         }
         return NextResponse.json({teamdetails:memberteam},{status:200});
     }  catch(e:any){
-        console.log(e);
+        // console.log(e);
         return NextResponse.json({ message: e.message || "Something went wrong" }, { status: 500 });
     }
 }

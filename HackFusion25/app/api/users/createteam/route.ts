@@ -28,7 +28,7 @@ export const POST = async(req:NextRequest) =>{
     })
     return NextResponse.json({teamId:response},{status:200})
   } catch(e:any){
-    console.log(e) 
+
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Unknown error" },
       { status: 500 }
