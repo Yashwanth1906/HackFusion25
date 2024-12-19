@@ -1,50 +1,65 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 import {prisma} from "../../../../prisma/db"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/lib/auth"
-
-export const GET = async(req:NextRequest) =>{
-    try{
-        const session = await getServerSession(authOptions);
-        if(!session){
-            return NextResponse.json({success:false,message:"Login first"})
+import { createTeamSchema ,TeamLeadSchema} from "@/zod/types";
+export const POST = async(req:NextRequest) =>{
+  try{
+    
+    const body = await req.json();
+        const teamNameparse=createTeamSchema.safeParse(body.teamName)
+        if(! teamNameparse.success){
+          return NextResponse.json({message:"Invalid Team Name"},
+            {status:500}
+          )
         }
-        console.log(session.user)
-        const userId=session.user.id
-      const user = await prisma.user.findUnique({
-        where:{
-          id : userId
-        },select:{
-          email:true
+        const teamLeadParse=TeamLeadSchema.safeParse(body.teamLead)
+        if(! teamLeadParse.success){
+          return NextResponse.json({message:"Invalid TeamLead Name"},
+            {status:500}
+          )
+        }
+        const teamName=teamNameparse.data
+        const teamLead=teamLeadParse.data
+    console.log(teamLead.name,teamLead.email,teamLead.gender,teamLead.regNo)
+    const user = await prisma.member.findFirst({
+      where:{
+        OR:[
+          {email:teamLead.email},{regNo:teamLead.regNo}
+        ]
+      },select:{
+        team:true
+      }
+    });
+    if(user){
+      return NextResponse.json({success:false,message:"You have already in a team"})
+    }
+    const response = await prisma.$transaction(async(tx)=>{
+      const newTeam = await tx.team.create({
+        data:{
+          name:teamName.teamName,
         }
       })
-      if(user){
-        const memberinATeam = await prisma.member.findUnique({
-          where:{
-            email:user.email
-          },select:{
-            team:{
-              select:{
-                name:true,
-                members:true,
-                teamSubmisison:{
-                  select:{
-                    solutionTitle:true,
-                    description:true
-                  }
-                }
-              }
-            }
-          }
-        })
-        if(memberinATeam){
-          return NextResponse.json({success:true,"team":memberinATeam},{status:200})
-        } else{
-          return NextResponse.json({success:false,"message":"Create or join a team"});
+      const leaderAdd = await tx.member.create({
+        //@ts-ignore
+        data:{
+          name:teamLead.name, 
+          email:teamLead.email, 
+          gender:teamLead.gender, 
+          regNo:teamLead.regNo, 
+          dept:teamLead.dept, 
+          year:teamLead.year, 
+          phoneno:teamLead.phoneno, 
+          isTeamLead:true, 
+          teamId:newTeam.id 
         }
-      }
-      return NextResponse.json({success:false,"message":"User not found"})
-    } catch(e){
-      return NextResponse.json({"error":e})
-    }
+      })
+      return newTeam.id;
+    })
+    return NextResponse.json({teamId:response,success:true},{status:200})
+  } catch(e:any){
+
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Unknown error" },
+      { status: 500 }
+    );
   }
+}

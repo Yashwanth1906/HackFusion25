@@ -55,7 +55,7 @@ const Contact = () => {
             <h2 
               className="text-2xl md:text-3xl font-bold mb-2 
                 text-transparent bg-clip-text 
-                bg-gradient-to-r from-blue-500 to-blue-600"
+                bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900"
             >
               Get in Touch
             </h2>
@@ -67,12 +67,12 @@ const Contact = () => {
               <label 
                 htmlFor="name" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-xs md:text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Name
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
-                <User className="ml-3 text-blue-500" size={20} />
+                <User className="ml-3 text-violet-900" size={20} />
                 <input
                   type="text"
                   id="name"
@@ -92,12 +92,12 @@ const Contact = () => {
               <label 
                 htmlFor="email" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-xs md:text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Email
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
-                <Mail className="ml-3 text-blue-500" size={20} />
+                <Mail className="ml-3 text-violet-900" size={20} />
                 <input
                   type="email"
                   id="email"
@@ -117,12 +117,12 @@ const Contact = () => {
               <label 
                 htmlFor="phone" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-xs md:text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Phone Number
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg">
-                <Phone className="ml-3 text-blue-500" size={20} />
+                <Phone className="ml-3 text-violet-900" size={20} />
                 <input
                   type="tel"
                   id="phone"
@@ -142,7 +142,7 @@ const Contact = () => {
               <label 
                 htmlFor="message" 
                 className="absolute -top-2 left-3 bg-white 
-                  px-1 text-xs md:text-sm text-gray-500"
+                  px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Message
               </label>
@@ -163,7 +163,7 @@ const Contact = () => {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 
+              className="w-full bg-gradient-to-b from-gray-900 to-purple-900
                 hover:from-blue-600 hover:to-blue-700 text-white 
                 font-semibold py-2 md:py-3 px-4 rounded-lg transition duration-300 
                 ease-in-out transform hover:scale-[1.02] flex 
@@ -177,9 +177,10 @@ const Contact = () => {
 
         {/* Contact Information */}
         <div 
-          className="w-full md:w-1/2 bg-gradient-to-br from-blue-500 to-blue-600 
-            text-white flex flex-col justify-center items-center 
-            p-6 md:p-12 text-center relative overflow-hidden"
+          className="w-full md:w-1/2 bg-gradient-to-b from-gray-900  to-purple-900
+          text-white flex flex-col justify-center items-center 
+          p-6 md:p-12 text-center relative overflow-hidden"
+
         >
           {/* Subtle background pattern */}
           <div 

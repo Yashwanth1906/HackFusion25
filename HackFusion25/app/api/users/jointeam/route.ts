@@ -1,11 +1,12 @@
 import { prisma } from "@/prisma/db";
+import { JoinTeamSchema } from "@/zod/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
-
-        if (!body) {
+        const valid=JoinTeamSchema.safeParse(body)
+        if (!valid.success) {
             return NextResponse.json({success:false,message: "Invalid request body"}, {status: 400});
         }
 
