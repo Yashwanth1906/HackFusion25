@@ -33,7 +33,8 @@ export default  function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className=" mt-4 font-sans text-6xl font-bold"
+        className="text-7xl font-bold mt-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 "
+
       >
         School Of Computing 
       </motion.h1>
@@ -41,7 +42,8 @@ export default  function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className="mt-4 font-sans text-xl"
+        className="font-bold  bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mt-4 font-sans text-xl"
+
       >
         Presents 
       </motion.h1>
@@ -49,7 +51,8 @@ export default  function Hero() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="text-3xl font-sans mt-4 font-bold"
+        className="text-7xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"
+
       >
         HackFusion 2025!
       </motion.h1>
@@ -58,7 +61,8 @@ export default  function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
-        className=" mt-4 font-sans text-xl"
+        className="text-gray-300 mt-4 font-sans text-xl"
+
       >
         Innovate. Create. Collaborate.
       </motion.p>
@@ -68,7 +72,8 @@ export default  function Hero() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
 
-        className="mt-8 px-6 py-3 font-sans bg-white text-blue-600 font-semibold rounded-lg shadow-md"
+        className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-xl px-8 py-2 rounded-2xl shadow-lg shadow-purple-500/20 mt-8 px-6 py-3 font-sans bg-white text-white font-semibold rounded-lg shadow-md"
+
         onClick={handle}
 
        

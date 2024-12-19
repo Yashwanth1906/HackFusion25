@@ -94,7 +94,7 @@ export default function About() {
       >
         <div className="max-w-4xl mx-auto text-center">
           <div className="min-h-[80vh] b rounded-3xl shadow-lg overflow-hidden">
-            <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+            <div className="container rounded-3xl bg-gray-300 mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
               {/* Left Column - Text Content */}
               <motion.div 
                 initial="hidden"
@@ -104,8 +104,8 @@ export default function About() {
               >
                 <motion.h1 
                   variants={itemVariants}
-                  className="text-3xl font-bold text-blue-900 tracking-tight leading-tight"
-                >
+                  className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                
                   Chennai Institute of Technology
                 </motion.h1>
 
@@ -148,13 +148,14 @@ export default function About() {
                     <motion.div 
                       key={index}
                       variants={itemVariants}
-                      className=" p-4 rounded-lg shadow-md hover:shadow-xl transition-all"
+                      className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 p-4 rounded-lg shadow-md hover:shadow-xl transition-all"
                     >
-                      <feature.icon className="w-10 h-10 text-blue-600 mb-3" />
-                      <h3 className="font-bold text-blue-800 mb-2">{feature.title}</h3>
-                      <p className="text-sm text-gray-600">{feature.description}</p>
+                       <feature.icon className="w-10 h-10 text-violet-900 mb-3" />
+                      <h3 className="font-bold text-white mb-2">{feature.title}</h3>
+                      <p className="text-sm text-gray-100">{feature.description}</p>
                     </motion.div>
                   ))}
+
                 </motion.div>
 
                
@@ -206,9 +207,10 @@ export default function About() {
   initial="offscreen"
   whileInView="onscreen"
   viewport={{ once: false, amount: 0.3 }}
-  className="py-8 px-4 md:py-16 md:px-8 "
+  // className="py-8 px-4 md:py-16 md:px-8 "
+  className='py-16 px md:py-16 md:px-2'
 >
-  <div className="max-w-4xl mx-auto">
+  <div className="rounded-3xl bg-gray-300 max-w-4xl mx-auto">
     <motion.h2
       custom={-1}
       variants={scrollVariants}
@@ -240,13 +242,16 @@ export default function About() {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: false, amount: 0.3 }}
-        className="py-16 px-8 "
+        // className="py-16 px-8 "
+        className="py-2 px-8 "
+
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="rounded-3xl bg-gray-300 max-w-4xl mx-auto">
           <motion.h2
             custom={-1}
             variants={scrollVariants}
-            className="text-3xl text-center font-bold mb-6 text-blue-800"
+            className="text-3xl pt-10 text-center font-bold mb-6 text-blue-800"
+
           >
             Event Structure
           </motion.h2>
@@ -309,11 +314,11 @@ export default function About() {
         viewport={{ once: false, amount: 0.3 }}
         className="py-16 px-8 "
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="rounded-3xl bg-gray-300 max-w-4xl mx-auto">
           <motion.h2
             custom={-1}
             variants={scrollVariants}
-            className="text-3xl text-center font-bold mb-6 text-blue-800"
+            className="text-3xl pt-10 text-center font-bold mb-6 text-blue-800"
           >
             Rules and Regulations
           </motion.h2>
@@ -367,7 +372,7 @@ export default function About() {
                   {rule.number}
                 </span>
                 <div>
-                  <h3 className="font-semibold text-blue-700">{rule.title}</h3>
+                  <h3 className="font-semibold text-blue-800">{rule.title}</h3>
                   <p className="text-gray-600">{rule.description}</p>
                 </div>
               </motion.div>
@@ -383,11 +388,11 @@ export default function About() {
   viewport={{ once: false, amount: 0.3 }}
   className="py-8 px-4 md:py-16 md:px-8"
 >
-  <div className="max-w-4xl mx-auto">
+  <div className="rounded-3xl bg-gray-300 max-w-4xl mx-auto">
     <motion.h2
       custom={-1}
       variants={scrollVariants}
-      className="text-2xl md:text-3xl text-center font-bold mb-6 text-blue-800"
+      className="text-2xl pt-10 md:text-3xl text-center font-bold mb-6 text-blue-800"
     >
       What does HackFusion do for Students?
     </motion.h2>
