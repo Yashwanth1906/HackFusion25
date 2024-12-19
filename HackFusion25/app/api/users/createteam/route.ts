@@ -88,6 +88,7 @@ import {prisma} from "../../../../prisma/db"
 export const POST = async(req:NextRequest) =>{
   try{
     const {teamName,teamLead} = await req.json();
+    console.log(teamLead.name,teamLead.email,teamLead.gender,teamLead.regNo)
     const response = await prisma.$transaction(async(tx)=>{
       const newTeam = await tx.team.create({
         data:{
