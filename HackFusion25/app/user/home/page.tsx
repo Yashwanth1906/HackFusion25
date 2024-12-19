@@ -103,18 +103,11 @@ function App() {
     try
     {
       await navigator.clipboard.writeText(teamId)
-      toast({
-        title: "Copied",
-        description: "Team ID copied to clipboard",
-      });
+     
 
     }
     catch{
-      toast({
-        title: "Error",
-        description: "Failed to copy Team ID",
-        variant: "destructive"
-      });
+      
     }
     
 
