@@ -22,6 +22,7 @@ export const GET = async(req:NextRequest) =>{
                             }
                         },
                         name:true,
+                        id:true
                     }
                 }
             }

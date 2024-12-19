@@ -6,13 +6,21 @@ import { useSession } from "next-auth/react";
 import { LampContainer } from "../components/acertinity/lamp";
 import { titleVariants, fadeInVariants, scaleUpVariants } from "../animations/textVariant";
 import { staggerContainerVariants } from "../animations/containerVariant";
+import { Spinner } from "./Spinner";
 
 export default function Hero() {
   const { data, status } = useSession();
   const router = useRouter();
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return(
+      <div className='flex justify-center items-center h-screen'>
+     
+      <Spinner />
+      
+      
+      </div>
+  )
   }
 
   const handle = () => {

@@ -50,7 +50,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
           Join Team
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] text-purple-600">
         <DialogHeader>
           <DialogTitle>Join Team</DialogTitle>
         </DialogHeader>
@@ -116,7 +116,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
             </Label>
             <Input id="phone" className="col-span-3" onChange={(e) => setPhno(e.target.value)} />
           </div>
-          <Button type="submit" className="mt-4" onClick={handleSubmitClick}>
+          <Button type="submit" className="mt-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600" onClick={handleSubmitClick}>
             Join Team
           </Button>
         </div>
