@@ -143,7 +143,7 @@ function App() {
                   <UsersIcon className="mr-3 h-6 w-6" />
                   Join Team
                 </Button> */}
-                <JoinTeamDialog email={data?.user?.email}/>
+                <JoinTeamDialog email={data?.user?.email} setflag={setFlag}/>
               </>
             ) : (
               <div className="text-center mb-16">

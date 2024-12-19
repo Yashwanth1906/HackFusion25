@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Copy } from 'lucide-react';
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 interface CreateTeamDialogProps {
   email: string | undefined;

@@ -10,7 +10,7 @@ interface JoinTeamDialogProps {
   email: string | undefined;
 }
 
-export const JoinTeamDialog  = ({email}:{email:string | undefined | null}) =>{
+export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null,setflag : any}) =>{
   const [name, setName] = useState<string>("");
   const [regNo, setRegNo] = useState<string>("");
   const [dept, setDept] = useState<string>("");
@@ -34,7 +34,7 @@ export const JoinTeamDialog  = ({email}:{email:string | undefined | null}) =>{
           phoneno: phno,
         },
       });
-      console.log(res.data);
+      setflag((flag:boolean)=>!flag);
     } catch (e) {
       alert("Error creating team");
     }
