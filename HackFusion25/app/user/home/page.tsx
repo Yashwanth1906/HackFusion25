@@ -61,13 +61,7 @@ export interface teamDetailsType {
 function App() {
     const [inTeam, setInTeam] = useState(false);
     const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
-    const [name,setName]=useState<string>("");
-    const [regNo,setRegNo]=useState<string>("");
-    const [dept,setDept]=useState<string>("");
-    const [year,setYear]=useState<string>("");
-    const [gender,setGender]=useState<string>("");
-    const [phno,setPhno]=useState<string>("");
-    const [teamName,setTeamName]=useState<string>("");
+    const [flag,setFlag]=useState<boolean>(false);
 
 
   const { data } = useSession();
@@ -104,30 +98,8 @@ function App() {
       console.log("Running");
       getTeam();
     }
-  }, [data]);
+  }, [flag,data]);
 
-  const handleSubmitClick=async ()=>{
-        try{
-            const res=await axios.post('/api/users/createteam',{
-                teamName,
-                teamLead:{
-                    name,
-                    email:data?.user?.email,
-                    gender,
-                    regNo,
-                    dept,
-                    year,
-                    phoneno:phno,
-                }
-            })
-            console.log(res.data)
-          
-        }
-        catch(e)
-        {
-            alert("error")
-        } 
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white w-screen">
@@ -162,7 +134,7 @@ function App() {
             {!inTeam ? (
               <>
                 
-                <CreateTeamDialog email={data?.user?.email} />
+                <CreateTeamDialog email={data?.user?.email} setFlag={setFlag}/>
                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-xl px-8 py-4 sm:px-12 sm:py-8 rounded-2xl shadow-lg shadow-purple-500/20"
