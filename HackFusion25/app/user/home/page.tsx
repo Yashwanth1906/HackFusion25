@@ -9,13 +9,9 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Input } from '@/components/ui/input';
 import CreateTeamDialog from '@/components/CreateTeamDialog';
 import JoinTeamDialog from '@/components/joinTeamDialog';
-import { headers } from 'next/headers';
+
 
 export interface Round {
   id: number;
