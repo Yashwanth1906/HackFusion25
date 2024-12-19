@@ -28,6 +28,11 @@ export const GET = async (req: NextRequest) => {
             id: true,
             solutionTitle: true,
             description: true,
+            problem: {
+              select: {
+                theme: true,
+              }
+            }
           },
         },
       },

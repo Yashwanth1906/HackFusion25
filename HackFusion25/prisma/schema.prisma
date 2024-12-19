@@ -66,6 +66,11 @@ model ProblemStatement {
   teamSubmission TeamSubmission[]
 }
 
+model SelectedTeam {
+  id        String @id @default(uuid())
+  teamId    String @unique
+}
+
 model ContactUs {
   id      String @id @default(uuid())
   name    String
