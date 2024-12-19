@@ -1,37 +1,30 @@
-'use client'
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Copy } from 'lucide-react';
 import axios from "axios";
 
-interface CreateTeamDialogProps {
+interface JoinTeamDialogProps {
   email: string | undefined;
 }
 
-const CreateTeamDialog = ({ email, setFlag }: any) => {
-  const { toast } = useToast();
+export const JoinTeamDialog  = ({email}:{email:string | undefined | null}) =>{
   const [name, setName] = useState<string>("");
   const [regNo, setRegNo] = useState<string>("");
   const [dept, setDept] = useState<string>("");
   const [year, setYear] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [phno, setPhno] = useState<string>("");
-  const [teamName, setTeamName] = useState<string>("");
-  
-  const [isCreateTeamDialogOpen, setIsCreateTeamDialogOpen] = useState(false);
-  const [isTeamIdDialogOpen, setIsTeamIdDialogOpen] = useState(false);
   const [teamId, setTeamId] = useState<string>("");
 
   const handleSubmitClick = async () => {
     try {
-      const res = await axios.post("/api/users/createteam", {
-        teamName,
-        teamLead: {
+        
+      const res = await axios.post("/api/users/jointeam", {
+        teamId,
+        memberdetails: {
           name,
           email,
           gender,
@@ -41,36 +34,10 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
           phoneno: phno,
         },
       });
-      setIsCreateTeamDialogOpen(false);
-      
-      setTeamId(res.data.teamId);
-      setIsTeamIdDialogOpen(true);
+      console.log(res.data);
     } catch (e) {
-      toast({
-        title: "Error",
-        description: "Failed to create team",
-        variant: "destructive"
-      });
+      alert("Error creating team");
     }
-  };
-
-  const handleCopyTeamId = () => {
-    navigator.clipboard.writeText(teamId).then(() => {
-      toast({
-        title: "Copied",
-        description: "Team ID copied to clipboard",
-      });
-      setIsTeamIdDialogOpen(false)
-      setFlag((flag:boolean)=>!flag)
-
-    }).catch(err => {
-      toast({
-        title: "Error",
-        description: "Failed to copy Team ID",
-        variant: "destructive"
-      });
-    });
-
   };
 
   return (
@@ -80,19 +47,19 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
           size="lg"
           className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-xl px-8 py-4 sm:px-12 sm:py-8 rounded-2xl shadow-lg shadow-purple-500/20"
         >
-          Create Team
+          Join Team
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Team</DialogTitle>
+          <DialogTitle>Join Team</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="teamName" className="text-right">
-              Team Name
+            <Label htmlFor="teamId" className="text-right">
+              Team Id
             </Label>
-            <Input id="teamName" className="col-span-3" onChange={(e) => setTeamName(e.target.value)} />
+            <Input id="teamName" className="col-span-3" onChange={(e) => setTeamId(e.target.value)} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
@@ -116,7 +83,7 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
             <Label htmlFor="year" className="text-right">
               Year
             </Label>
-            <Select onValueChange={(val) => setYear(val)} value={year}>
+            <Select onValueChange={(val:any) => setYear(val)} value={year}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select year" />
               </SelectTrigger>
@@ -132,7 +99,7 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
             <Label htmlFor="gender" className="text-right">
               Gender
             </Label>
-            <Select onValueChange={(val) => setGender(val)} value={gender}>
+            <Select onValueChange={(val:any) => setGender(val)} value={gender}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
@@ -150,7 +117,7 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
             <Input id="phone" className="col-span-3" onChange={(e) => setPhno(e.target.value)} />
           </div>
           <Button type="submit" className="mt-4" onClick={handleSubmitClick}>
-            Submit
+            Join Team
           </Button>
         </div>
       </DialogContent>
@@ -158,5 +125,4 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
   );
 };
 
-export default CreateTeamDialog;
-
+export default JoinTeamDialog;

@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label"
 import { Input } from '@/components/ui/input';
 import CreateTeamDialog from '@/components/CreateTeamDialog';
+import JoinTeamDialog from '@/components/joinTeamDialog';
 
 export interface Round {
   id: number;
@@ -135,13 +136,14 @@ function App() {
               <>
                 
                 <CreateTeamDialog email={data?.user?.email} setFlag={setFlag}/>
-                <Button
+                {/* <Button
                   size="lg"
                   className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-xl px-8 py-4 sm:px-12 sm:py-8 rounded-2xl shadow-lg shadow-purple-500/20"
                 >
                   <UsersIcon className="mr-3 h-6 w-6" />
                   Join Team
-                </Button>
+                </Button> */}
+                <JoinTeamDialog email={data?.user?.email}/>
               </>
             ) : (
               <div className="text-center mb-16">
