@@ -14,11 +14,12 @@ export interface teamDetailsType {
   isTeamLead: boolean;
 }
 
+
 function RoundSubmissionPage() {
   const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
   const [teamName, setTeamName] = useState('');
   const [formData, setFormData] = useState({
-    problemStatementId: '',
+    problemId: '',
     solutionTitle: '',
     description: '',
   });
@@ -73,15 +74,15 @@ function RoundSubmissionPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post('/api/round1/submit', formData, {
+      const res = await axios.post('/api/users/submitidea', formData, {
         //@ts-ignore
         headers: { email: session.user.email },
       });
 
-      if (res.status === 200) {
-        alert('Submission Successful!');
-        setFormData({ problemStatementId: '', solutionTitle: '', description: '' });
+      if (res.data.success) {
+        setFormData({ problemId: '', solutionTitle: '', description: '' });
       }
+      alert(res.data.message)
     } catch (error) {
       console.error(error);
       alert('Failed to submit. Please try again.');
@@ -138,8 +139,8 @@ function RoundSubmissionPage() {
                 </label>
                 <input
                   type="text"
-                  name="problemStatementId"
-                  value={formData.problemStatementId}
+                  name="problemId"
+                  value={formData.problemId}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 rounded-md bg-gray-900 text-gray-200 border border-gray-700 focus:ring-blue-500 focus:border-blue-500"
                   required

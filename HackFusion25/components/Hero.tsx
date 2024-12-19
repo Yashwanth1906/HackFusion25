@@ -19,7 +19,7 @@ export default  function Hero() {
       }
       else
       {
-        router.push("/user/register")
+        router.push("/user/home")
       }
     }
 

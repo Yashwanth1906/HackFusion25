@@ -1,48 +1,55 @@
+import { prisma } from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 
-import {prisma} from "../../../../prisma/db"
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+export const POST = async (req: NextRequest) => {
+    try {
+        const body = await req.json();
 
-export const POST = async(req:NextRequest)=>{
-    try{
-      const {solutionTitle,description,problemId}:any = req.body;
-      const session = await getServerSession(authOptions);
-      const userId = session?.user.id;
-      if(!userId){
-        return NextResponse.json({message:"Login first to submit"},{status:500})
-      }
-      const user = await prisma.user.findUnique({
-        where:{
-          id : userId
-        },select:{
-          email:true
+        const { solutionTitle, description, problemId }: any = body;
+        const email = req.headers.get("email");
+
+        if (!solutionTitle || !description || !problemId || !email) {
+            return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
-      })
-      const teamId = await prisma.member.findUnique({
-        where:{
-          email: user?.email
-        },select:{
-          teamId:true
-        }
-      })
-      if(teamId){
-        const teamSubmit = await prisma.teamSubmission.create({
-          data:{
-            teamId:teamId.teamId,
-            solutionTitle:solutionTitle,
-            description:description,
-            problemId:problemId
+
+        const teamData = await prisma.member.findFirst({
+            where: {
+                AND: [
+                    //@ts-ignore
+                    { email: email },
+                    { isTeamLead: true },
+                ],
+            },
+            select: {
+              team:{
+                select:{
+                  members:true
+                }
+              },
+              teamId: true,
+            },
+        });
+
+        if (teamData && teamData.teamId)  {
+          if(teamData.team.members.length !== 5){
+            return NextResponse.json({success:false,message:"Make a team of 5 and then reigster"})
           }
-        })
-        // return res.status(200).json({"message":"Idea successfully submitted"});
-        return NextResponse.json({message:"Idea successfully submitted"},{status:200})
-      } else{
-        // return res.status(500).json({"message":"Only Team leader can submit"})
-        return NextResponse.json({"message":"Only Team leader can submit"},{status:500})
-      }
-    } catch(e){
-    //   return res.status(500).json({"error":e})
-    return NextResponse.json({error:e},{status:500})
+          else{
+            await prisma.teamSubmission.create({
+              data: {
+                  teamId: teamData.teamId,
+                  solutionTitle: solutionTitle,
+                  description: description,
+                  problemId: problemId,
+              },
+            });
+            return NextResponse.json({ success:true,message: "Idea successfully submitted" }, { status: 200 });
+          }    
+        } else {
+            return NextResponse.json({ message: "Only Team leader can submit" }, { status: 403 });
+        }
+    } catch (e) {
+        console.error("Error:", e instanceof Error ? e.message : String(e));
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
-  }
+};

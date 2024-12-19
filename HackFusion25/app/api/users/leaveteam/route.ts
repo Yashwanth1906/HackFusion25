@@ -1,18 +1,18 @@
 import { prisma } from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async(req : NextRequest) =>{
+export const GET = async(req : NextRequest) =>{
     try{
         //@ts-ignore
-        const email = await req.headers['email'];
+        const email = req.headers.get("email");
+        console.log(email)
         const udpatedCancel = await prisma.member.delete({
             where:{
                 email:email
             }
         })
-        return NextResponse.json({message:"Left from date"},{status:200})
+        return NextResponse.json({success:true,message:"Left the team"},{status:200})
     } catch(e){
-        console.log(e);
         return NextResponse.json({error:e},{status:200})
     }
 }

@@ -37,7 +37,7 @@ model Member {
   phoneno    String?
   isTeamLead Boolean
   teamId     String
-  team       Team    @relation(fields: [teamId], references: [id])
+  team       Team    @relation(fields: [teamId], references: [id],onDelete: Cascade)
 }
 
 model Team {
@@ -52,7 +52,7 @@ model TeamSubmission {
   teamId        String           @unique
   solutionTitle String
   description   String
-  team          Team             @relation(fields: [teamId], references: [id])
+  team          Team             @relation(fields: [teamId], references: [id],onDelete: Cascade)
   problemId     String
   problem       ProblemStatement @relation(fields: [problemId], references: [id])
 }

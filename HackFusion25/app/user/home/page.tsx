@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from '@/components/ui/input';
 import CreateTeamDialog from '@/components/CreateTeamDialog';
 import JoinTeamDialog from '@/components/joinTeamDialog';
+import { headers } from 'next/headers';
 
 export interface Round {
   id: number;
@@ -31,7 +32,7 @@ const rounds: Round[] = [
     title: "Round 1: Ideation Phase",
     description: "Submit your innovative idea and initial proposal. Focus on problem identification and solution approach.",
     icon: "rocket",
-    status: "completed",
+    status: "locked",
     deadline: "March 15, 2024"
   },
   {
@@ -39,7 +40,7 @@ const rounds: Round[] = [
     title: "Round 2: Development Phase",
     description: "Build your prototype and demonstrate core functionalities. Show us your technical expertise.",
     icon: "bulb",
-    status: "active",
+    status: "locked",
     deadline: "March 30, 2024"
   },
   {
@@ -61,6 +62,8 @@ export interface teamDetailsType {
 
 function App() {
     const [inTeam, setInTeam] = useState(false);
+    const [reload,setReload] = useState(false);
+    const [isTeamLead,setTeamLead] = useState(false);
     const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
     const [flag,setFlag]=useState<boolean>(false);
 
@@ -76,22 +79,53 @@ function App() {
         headers: { email: data?.user?.email }
       });
 
-      if (res.status === 200) {
+      if (res.data.success) {
         setInTeam(true);
         if(res.data.teamdetails){
+          if(res.data.isTeamLead){
+            rounds[0].status = "active"
+          }
+          setTeamLead(res.data.isTeamLead)
           setTeamDetails(res.data.teamdetails.team.members);
         }
       }
-      setFlag(true)
-      
+      setFlag(true);
     } catch (error) {
+      setFlag(true)
       console.error(error);
-    
-      alert("An error occurred while fetching team details.");
-      // setFlag(true)
     }
     
   };
+
+  const deleteTeam = async() =>{
+    try{
+      await axios.get("/api/users/deleteteam",{
+        headers:{
+          email : data?.user?.email
+        }
+      }).then((res)=>{
+        alert(res.data.message)
+        setReload(reload ? false : true);
+      })
+    } catch(e){
+      console.log(e);
+    }
+  }
+
+  const leaveTeam = async() =>{
+    try{
+      await axios.get("/api/users/leaveteam",{
+        headers:{
+          email : data?.user?.email
+        }
+      }).then((res) =>{
+        alert(res.data.message);
+        setReload(reload ? false : true);
+      })
+    } catch(e){
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -100,11 +134,11 @@ function App() {
     }
     else if(status==='authenticated')
     {
-      getTeam()
+      getTeam();
     }
-  }, [status]);
+  }, [status,reload]);
 
-  if (status === "loading"  || !flag) {
+  if (status === "loading" || !flag) {
     return <div>Loading...</div>;
   }
 
@@ -143,13 +177,6 @@ function App() {
               <>
                 
                 <CreateTeamDialog email={data?.user?.email} setFlag={setFlag}/>
-                {/* <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-xl px-8 py-4 sm:px-12 sm:py-8 rounded-2xl shadow-lg shadow-purple-500/20"
-                >
-                  <UsersIcon className="mr-3 h-6 w-6" />
-                  Join Team
-                </Button> */}
                 <JoinTeamDialog email={data?.user?.email} setflag={setFlag}/>
               </>
             ) : (
@@ -164,6 +191,10 @@ function App() {
                     </div>
                   ))}
                 </div>
+                {isTeamLead ? (
+                  <button onClick={deleteTeam}>Delete Team</button>
+                ):<button onClick={leaveTeam}>Leave Team</button>}
+                
               </div>
             )}
           </motion.div>

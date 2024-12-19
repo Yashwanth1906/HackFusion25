@@ -7,7 +7,7 @@ export const GET = async(req:NextRequest) =>{
     try{
         const session = await getServerSession(authOptions);
         if(!session){
-            return NextResponse.json({message:"Login first"},{status:500})
+            return NextResponse.json({success:false,message:"Login first"})
         }
         console.log(session.user)
         const userId=session.user.id
@@ -38,14 +38,13 @@ export const GET = async(req:NextRequest) =>{
           }
         })
         if(memberinATeam){
-          return NextResponse.json({"team":memberinATeam},{status:200})
+          return NextResponse.json({success:true,"team":memberinATeam},{status:200})
         } else{
-          return NextResponse.json({"message":"Create or join a team"},{status:500});
+          return NextResponse.json({success:false,"message":"Create or join a team"});
         }
       }
-      return NextResponse.json({"message":"User not found"},{status:500})
+      return NextResponse.json({success:false,"message":"User not found"})
     } catch(e){
-      console.log(e);
       return NextResponse.json({"error":e})
     }
   }

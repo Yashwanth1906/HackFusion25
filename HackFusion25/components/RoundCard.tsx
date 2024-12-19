@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { RocketIcon, LightbulbIcon, TrophyIcon, LockIcon, CheckCircleIcon } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
 
 export interface Round {
@@ -75,6 +76,7 @@ export function RoundCard({ round, position }: RoundCardProps) {
                 : 'bg-purple-500 hover:bg-purple-600'
             }`}
             disabled={round.status === 'locked'}
+            onClick={() => redirect("/user/round1submission")}
           >
             {round.status === 'completed' ? 'View Submission' : 'Submit Solution'}
           </Button>

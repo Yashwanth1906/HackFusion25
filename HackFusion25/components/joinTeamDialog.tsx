@@ -34,7 +34,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
           phoneno: phno,
         },
       });
-      setflag((flag:boolean)=>!flag);
+      setflag(true);
     } catch (e) {
       alert("Error creating team");
     }
