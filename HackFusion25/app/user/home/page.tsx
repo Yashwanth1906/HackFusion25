@@ -2,20 +2,20 @@
 
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { UsersIcon } from 'lucide-react';
+import { Copy, CopyIcon, UsersIcon } from 'lucide-react';
 import { RoundCard } from '@/components/RoundCard';
 import { TimelineConnector } from '@/components/TimelineConnector';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Input } from '@/components/ui/input';
 import CreateTeamDialog from '@/components/CreateTeamDialog';
 import JoinTeamDialog from '@/components/joinTeamDialog';
-import { headers } from 'next/headers';
+import { DeleteTeamDialog } from '@/components/DeleteTeamDialog';
+import { LeaveTeamDialog } from '@/components/LeaveTeamDialog';
+import { useToast } from '@/hooks/use-toast';
+import { Spinner } from '@/components/Spinner';
+
 
 export interface Round {
   id: number;
@@ -62,10 +62,11 @@ export interface teamDetailsType {
 
 function App() {
     const [inTeam, setInTeam] = useState(false);
-    const [reload,setReload] = useState(false);
     const [isTeamLead,setTeamLead] = useState(false);
     const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
     const [flag,setFlag]=useState<boolean>(false);
+    const [teamId,setTeamId]=useState<string>("")
+    const toast=useToast()
 
 
   const { data,status } = useSession();
@@ -85,6 +86,7 @@ function App() {
           if(res.data.isTeamLead){
             rounds[0].status = "active"
           }
+          setTeamId(res.data.teamdetails.team.id)
           setTeamLead(res.data.isTeamLead)
           setTeamDetails(res.data.teamdetails.team.members);
         }
@@ -97,36 +99,24 @@ function App() {
     
   };
 
-  const deleteTeam = async() =>{
-    try{
-      await axios.get("/api/users/deleteteam",{
-        headers:{
-          email : data?.user?.email
-        }
-      }).then((res)=>{
-        alert(res.data.message)
-        setReload(reload ? false : true);
-      })
-    } catch(e){
-      console.log(e);
+  const handleCopy= async ()=>{
+    try
+    {
+      await navigator.clipboard.writeText(teamId)
+     
+
     }
+    catch{
+      
+    }
+    
+
+
   }
 
-  const leaveTeam = async() =>{
-    try{
-      await axios.get("/api/users/leaveteam",{
-        headers:{
-          email : data?.user?.email
-        }
-      }).then((res) =>{
-        alert(res.data.message);
-        setReload(reload ? false : true);
-      })
-    } catch(e){
-      console.log(e)
-    }
-  }
+ 
 
+  
   useEffect(() => {
     if (status === "unauthenticated") {
       alert("Login First");
@@ -136,10 +126,18 @@ function App() {
     {
       getTeam();
     }
-  }, [status,reload]);
+  }, [status,flag]);
 
   if (status === "loading" || !flag) {
-    return <div>Loading...</div>;
+    return(
+      <div className='flex justify-center items-center h-screen'>
+     
+      <Spinner />
+      
+      
+      </div>
+  )
+    
   }
 
 
@@ -182,7 +180,18 @@ function App() {
             ) : (
               <div className="text-center mb-16">
                 <h2 className="text-3xl sm:text-4xl font-semibold mb-6">Team Details</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div  className="bg-gray-800 p-6 rounded-lg shadow-lg">
+                      <h3 className="text-xl font-bold mb-2">Team Id</h3>
+                      <div className='flex justify-evenly w-full'>
+                        <p className='text-white'>{teamId}</p>
+                        
+                        <Button  size="icon" onClick={handleCopy}>
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      
+                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
                   {teamDetails?.map((member, index) => (
                     <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-lg">
                       <h3 className="text-xl font-bold mb-2">{member.name}</h3>
@@ -192,9 +201,9 @@ function App() {
                   ))}
                 </div>
                 {isTeamLead ? (
-                  <button onClick={deleteTeam}>Delete Team</button>
-                ):<button onClick={leaveTeam}>Leave Team</button>}
-                
+                  <DeleteTeamDialog email={data?.user?.email?data.user.email :""} setFlag={setFlag} />
+                ): <LeaveTeamDialog email={data?.user?.email?data.user.email :""} setFlag={setFlag} />
+              }
               </div>
             )}
           </motion.div>

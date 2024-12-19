@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { Spinner } from '@/components/Spinner';
 
 export interface teamDetailsType {
   name: string;
@@ -58,7 +59,14 @@ function RoundSubmissionPage() {
   }, [status]);
 
   if (status === "loading"  || !flag) {
-    return <div>Loading...</div>;
+    return(
+      <div className='flex justify-center items-center h-screen'>
+     
+      <Spinner />
+      
+      
+      </div>
+  )
   }
 
   

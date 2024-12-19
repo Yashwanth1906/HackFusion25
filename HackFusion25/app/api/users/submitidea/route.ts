@@ -5,8 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
+
         const valid=SubmitSchema.safeParse(body)
         // const { solutionTitle, description, problemId }: any = body;
+
         const email = req.headers.get("email");
         const valid2=isinaTeamSchema.safeParse(email)
 

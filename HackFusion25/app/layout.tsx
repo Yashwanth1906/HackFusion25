@@ -24,7 +24,7 @@ export default function RootLayout({ children }:{children:React.ReactNode}):JSX.
   return (
     <html lang="en">
       <Providers>
-        <body className="font-mono">
+        <body className="font-sans">
           {pathname === "/" && <Navbar/>}
           {children}
         </body>  
