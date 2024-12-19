@@ -159,92 +159,9 @@ function App() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            {inTeam ? (
+            {!inTeam ? (
               <>
-                {/* <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      size="lg"
-                      className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-xl px-8 py-4 sm:px-12 sm:py-8 rounded-2xl shadow-lg shadow-purple-500/20"
-                    >
-                      <UsersIcon className="mr-3 h-6 w-6" />
-                      Create Team
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Create Team</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="regno" className="text-right">
-                          Team Name
-                        </Label>
-                        <Input id="regno" className="col-span-3" onChange={(e)=>setTeamName(e.target.value)}/>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                          Name
-                        </Label>
-                        <Input id="name" className="col-span-3" onChange={(e)=>setName(e.target.value)}/>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="regno" className="text-right">
-                          Reg No
-                        </Label>
-                        <Input id="regno" className="col-span-3" onChange={(e)=>setRegNo(e.target.value)}/>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="department" className="text-right">
-                          Department
-                        </Label>
-                        <Input id="department" className="col-span-3" onChange={(e)=>setDept(e.target.value)}/>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="year" className="text-right">
-                          Year
-                        </Label>
-                        <Select onValueChange={(val)=>setYear(val)}
-                            value={year}
-                        >
-                          <SelectTrigger className="col-span-3">
-                            <SelectValue placeholder="Select year" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="1">1st Year</SelectItem>
-                            <SelectItem value="2">2nd Year</SelectItem>
-                            <SelectItem value="3">3rd Year</SelectItem>
-                            <SelectItem value="4">4th Year</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="gender" className="text-right">
-                          Gender
-                        </Label>
-                        <Select onValueChange={(val)=>setGender(val)}
-                            value={gender}>
-                          <SelectTrigger className="col-span-3">
-                            <SelectValue placeholder="Select gender" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="male">Male</SelectItem>
-                            <SelectItem value="female">Female</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-                        <Label htmlFor="phone" className="text-right">
-                          Phone No
-                        </Label>
-                        <Input id="phone" className="col-span-3" onChange={(e)=>setPhno(e.target.value)}/>
-                      </div>
-                      <Button type="submit" className="mt-4" onClick={handleSubmitClick}>Submit</Button>
-                    </div>
-                  </DialogContent>
-                </Dialog> */}
+                
                 <CreateTeamDialog email={data?.user?.email} />
                 <Button
                   size="lg"

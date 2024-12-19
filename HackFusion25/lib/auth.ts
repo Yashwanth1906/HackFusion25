@@ -24,9 +24,9 @@ export const authOptions = {
         return true
       }
 
-      if (!profile.email.endsWith("@citchennai.net")) {
-        return false
-      }
+      // if (!profile.email.endsWith("@citchennai.net")) {
+      //   return false
+      // }
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email },
       });
