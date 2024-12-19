@@ -22,17 +22,12 @@ function RoundSubmissionPage() {
     solutionTitle: '',
     description: '',
   });
+  const [flag,setFlag]=useState<boolean>(false)
 
-  const { data: session } = useSession();
+  const { data: session ,status} = useSession();
   const router = useRouter();
 
   const getTeamDetails = async () => {
-    if (!session) {
-      alert("Login First");
-      router.push("/");
-      return;
-    }
-
     try {
       const res = await axios.get("/api/users/isinateam", {
         //@ts-ignore
@@ -43,11 +38,29 @@ function RoundSubmissionPage() {
         setTeamName(res.data.teamdetails.team.name);
         setTeamDetails(res.data.teamdetails.team.members);
       }
+      setFlag(true)
     } catch (error) {
       console.error(error);
       alert("Failed to fetch team details.");
     }
   };
+  
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      alert("Login First");
+      router.push("/");
+    }
+    else if(status==='authenticated')
+    {
+      getTeamDetails()
+    }
+  }, [status]);
+
+  if (status === "loading"  || !flag) {
+    return <div>Loading...</div>;
+  }
+
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -75,11 +88,6 @@ function RoundSubmissionPage() {
     }
   };
 
-  useEffect(() => {
-    if (session) {
-      getTeamDetails();
-    }
-  }, [session]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white w-screen">
@@ -91,7 +99,7 @@ function RoundSubmissionPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          {/* Header */}
+     
           <motion.div
             className="text-center mb-12"
             initial={{ y: -50, opacity: 0 }}
@@ -104,7 +112,7 @@ function RoundSubmissionPage() {
             <h2 className="text-4xl text-gray-300">Round 1 Submission</h2>
           </motion.div>
 
-          {/* Team Details */}
+
           <div className="text-center mb-12">
             <h2 className="text-4xl font-semibold mb-6">{teamName}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -121,7 +129,6 @@ function RoundSubmissionPage() {
             </div>
           </div>
 
-          {/* Submission Form */}
           <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-6">Submit Your Solution</h2>
             <form onSubmit={handleSubmit}>

@@ -65,20 +65,15 @@ function App() {
     const [flag,setFlag]=useState<boolean>(false);
 
 
-  const { data } = useSession();
+  const { data,status } = useSession();
   const router = useRouter();
 
   const getTeam = async () => {
-    if (!data) {
-      alert("Login First");
-      router.push("/");
-      return;
-    }
 
     try {
       const res = await axios.get("/api/users/isinateam", {
-        //@ts-ignore
-        headers: { email: data.user.email }
+
+        headers: { email: data?.user?.email }
       });
 
       if (res.status === 200) {
@@ -87,19 +82,31 @@ function App() {
           setTeamDetails(res.data.teamdetails.team.members);
         }
       }
+      setFlag(true)
+      
     } catch (error) {
       console.error(error);
     
       alert("An error occurred while fetching team details.");
+      // setFlag(true)
     }
+    
   };
 
   useEffect(() => {
-    if (data) {
-      console.log("Running");
-      getTeam();
+    if (status === "unauthenticated") {
+      alert("Login First");
+      router.push("/");
     }
-  }, [flag,data]);
+    else if(status==='authenticated')
+    {
+      getTeam()
+    }
+  }, [status]);
+
+  if (status === "loading"  || !flag) {
+    return <div>Loading...</div>;
+  }
 
 
   return (
