@@ -24,9 +24,9 @@ function RoundSubmissionPage() {
     solutionTitle: '',
     description: '',
   });
-  const [flag,setFlag]=useState<boolean>(false)
+  const [flag, setFlag] = useState<boolean>(false)
 
-  const { data: session ,status} = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const getTeamDetails = async () => {
@@ -46,30 +46,29 @@ function RoundSubmissionPage() {
       alert("Failed to fetch team details.");
     }
   };
-  
+
   useEffect(() => {
     if (status === "unauthenticated") {
       alert("Login First");
       router.push("/");
     }
-    else if(status==='authenticated')
-    {
+    else if (status === 'authenticated') {
       getTeamDetails()
     }
   }, [status]);
 
-  if (status === "loading"  || !flag) {
-    return(
+  if (status === "loading" || !flag) {
+    return (
       <div className='flex justify-center items-center h-screen'>
-     
-      <Spinner />
-      
-      
+
+        <Spinner />
+
+
       </div>
-  )
+    )
   }
 
-  
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -108,7 +107,7 @@ function RoundSubmissionPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-     
+
           <motion.div
             className="text-center mb-12"
             initial={{ y: -50, opacity: 0 }}
