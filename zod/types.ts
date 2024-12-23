@@ -18,7 +18,7 @@ export const getTeamSchema=z.object({email:z.string().email()})
 export const isinaTeamSchema=z.object({email:z.string().email()})
 
 export const JoinTeamSchema=z.object({
-    teamId:z.number(),
+    teamId:z.string(),
     memberDetails:z.object({
         name:z.string(),
         email:z.string().email(),
