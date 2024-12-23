@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Button } from "./ui/button"
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "./ui/dialog"
 import { useState } from "react"
 
 
@@ -15,7 +15,7 @@ export const LeaveTeamDialog =({email,setFlag}:{email:string ,setFlag:any})=>{
             headers:{
               email : email
             }
-          }).then((res) =>{
+          }).then(() =>{
           
             setIsOpen(false)
             setFlag((flag:boolean)=>!flag);

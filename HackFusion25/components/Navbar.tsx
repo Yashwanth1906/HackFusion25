@@ -1,5 +1,6 @@
 
 'use client';
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { Home, Info, Contact, Menu, X } from 'lucide-react';
 
@@ -17,7 +18,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  //@ts-ignore
+  //@ts-expect-error
   const scrollToSection = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -33,14 +34,16 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed font-sans top-0 left-0 right-0 z-50 flex justify-between items-center  transition-all duration-300 ease-in-out ${
-        isScrolled ? 'backdrop-blur-[8px] bg-white/30' : 'bg-transparent'
+        isScrolled ? 'backdrop-blur-[8px] bg-white/20' : 'bg-transparent'
       }`}
     >
       {/* Logo and Mobile Menu Button */}
       <div className="flex items-center justify-between md:w-auto">
-        <img
+        <Image
           src="/cit1.png"
           alt="Logo"
+          width={80} 
+          height={80}
           className="p-2 h-14 w-30 md:h-24 md:w-44"
         />
         <button
@@ -111,9 +114,11 @@ const Navbar = () => {
         </div>
       )}
       <div className="flex items-center justify-between md:w-auto">
-        <img
+        <Image
           src="/hackfusion_logo.png"
           alt="Logo"
+          width={64} 
+          height={48}
           className="p-2 h-12 w-16 md:h-16 md:w-20"
         />
       </div>

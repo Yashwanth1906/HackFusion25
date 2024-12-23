@@ -31,8 +31,11 @@ export const GET = async (req: NextRequest) => {
         });
 
         return NextResponse.json({ success: true, message: "Deleted the team" }, { status: 200 });
-    } catch (e: any) {
-        // console.error("Error deleting team:", e);
-        return NextResponse.json({ success: false, error: e.message || "An error occurred" }, { status: 500 });
-    }
+    } catch(e){
+
+        return NextResponse.json(
+          { error: e instanceof Error ? e.message : "Unknown error" },
+          { status: 500 }
+        );
+      }
 };

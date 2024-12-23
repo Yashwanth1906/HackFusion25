@@ -1,5 +1,7 @@
 'use client'
 import React, { useState } from 'react';
+import {ChangeEvent, FormEvent } from 'react';
+
 import { 
   Phone, 
   MapPin, 
@@ -17,7 +19,7 @@ const Contact = () => {
     message: ''
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -25,7 +27,7 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add your form submission logic here
     console.log(formData);
@@ -169,7 +171,7 @@ const Contact = () => {
                 ease-in-out transform hover:scale-[1.02] flex 
                 items-center justify-center space-x-2 text-sm md:text-base"
             >
-              <Send size={16} md={20} />
+              <Send className="ml-3 text-white " size={16} />
               <span>Send Message</span>
             </button>
           </form>
@@ -192,7 +194,7 @@ const Contact = () => {
           />
 
           <div className="relative z-10">
-            <Smile size={60} md={80} className="mx-auto mb-4 md:mb-6 text-white/90" />
+            <Smile size={60}  className="mx-auto mb-4 md:mb-6 text-white/90" />
             <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">Contact Information</h3>
             <p className="text-white/80 mb-4 md:mb-6 text-sm md:text-base">
               Feel free to reach out. We're here to help!
@@ -200,7 +202,7 @@ const Contact = () => {
 
             <div className="space-y-3 md:space-y-4 text-left w-full">
               <div className="flex items-center space-x-3 md:space-x-4">
-                <Phone className="text-white" size={20} md={24} />
+                <Phone className="text-white" size={20}  />
                 <div>
                   <p className="font-semibold text-sm md:text-base">Phone Numbers</p>
                   <p className="text-white text-xs md:text-sm">Staff Coordinators:</p>
@@ -213,7 +215,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center space-x-3 md:space-x-4">
-                <MapPin className="text-white" size={20} md={24} />
+                <MapPin className="text-white" size={20}  />
                 <div>
                   <p className="font-semibold text-sm md:text-base">Location</p>
                   <p className="text-white/80 text-xs md:text-sm">Kundrathur, Chennai</p>
@@ -221,7 +223,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center space-x-3 md:space-x-4">
-                <Mail className="text-white" size={20} md={24} />
+                <Mail className="text-white" size={20}  />
                 <div>
                   <p className="font-semibold text-sm md:text-base">Email</p>
                   <p className="text-white/80 text-xs md:text-sm">hackerz@citchennai.net</p>

@@ -46,7 +46,7 @@ export const POST = async (req: NextRequest) => {
             }
         }
 
-        const addMember = await prisma.member.create({
+        await prisma.member.create({
             data: {
                 name: memberdetails.name,
                 email: memberdetails.email,
@@ -61,8 +61,11 @@ export const POST = async (req: NextRequest) => {
         });
 
         return NextResponse.json({success:true,message: "Member Added successfully"}, {status: 200});
-    } catch (e) {
-        console.error(e);
-        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    } catch(e){
+
+        return NextResponse.json(
+          { error: e instanceof Error ? e.message : "Unknown error" },
+          { status: 500 }
+        );
+      }
     }
-};

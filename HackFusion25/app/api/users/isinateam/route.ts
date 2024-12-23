@@ -45,8 +45,11 @@ export const GET = async(req:NextRequest) =>{
             }
         })
         return NextResponse.json({success:true,teamdetails:memberteam,isTeamLead:isTeamLead},{status:200});
-    }  catch(e:any){
-        // console.log(e);
-        return NextResponse.json({ message: e.message || "Something went wrong" }, { status: 500 });
-    }
+    }  catch(e){
+
+        return NextResponse.json(
+          { error: e instanceof Error ? e.message : "Unknown error" },
+          { status: 500 }
+        );
+      }
 }

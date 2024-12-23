@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import CountDown from "./CountDown";
 import { useSession } from "next-auth/react";
-import { LampContainer } from "../components/acertinity/lamp";
 import { titleVariants, fadeInVariants, scaleUpVariants } from "../animations/textVariant";
 import { staggerContainerVariants } from "../animations/containerVariant";
 import { Spinner } from "./Spinner";

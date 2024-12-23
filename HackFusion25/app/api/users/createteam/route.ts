@@ -39,7 +39,7 @@ export const POST = async(req:NextRequest) =>{
           name:teamName.teamName,
         }
       })
-      const leaderAdd = await tx.member.create({
+      await tx.member.create({
       
         data:{
           name:teamLead.name, 
@@ -56,7 +56,7 @@ export const POST = async(req:NextRequest) =>{
       return newTeam.id;
     })
     return NextResponse.json({teamId:response,success:true},{status:200})
-  } catch(e:any){
+  } catch(e){
 
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Unknown error" },

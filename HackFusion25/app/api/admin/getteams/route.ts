@@ -3,7 +3,7 @@ import { prisma } from "../../../../prisma/db"; // Adjust the path to match your
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   try {
     const session = await getServerSession(authOptions);
 

@@ -1,19 +1,25 @@
 'use client'
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
-//@ts-ignore
 
-export default function CountDown({ targetDate }) {
+interface CountDownProps {
+  targetDate: string | Date;
+}
 
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+type TimeLeft = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+export default function CountDown({ targetDate }: CountDownProps) {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+
   useEffect(() => {
-
-    const intereval = setInterval(() => {
-
+    const interval = setInterval(() => {
       const now = new Date()
-      //@ts-ignore
-
-      const diff = new Date(targetDate) - now
+      const diff = new Date(targetDate).getTime() - now.getTime()
 
       if (diff > 0) {
         setTimeLeft({
@@ -23,11 +29,11 @@ export default function CountDown({ targetDate }) {
           seconds: Math.floor((diff / 1000) % 60),
         })
       } else {
-        clearInterval(intereval)
+        clearInterval(interval)
       }
     }, 1000)
 
-    return () => clearInterval(intereval)
+    return () => clearInterval(interval)
   }, [targetDate])
 
   const timerAnimations = {
@@ -37,15 +43,13 @@ export default function CountDown({ targetDate }) {
   };
 
   return (
-    <div className="mt-4  text-4xl font-bold">
+    <div className="mt-4 text-4xl font-bold">
       <div className="flex space-x-3 justify-center">
-        {['Days', 'Hours', 'Minutes', 'Seconds'].map((unit, index) => (
+        {(['days', 'hours', 'minutes', 'seconds'] as (keyof TimeLeft)[]).map((unit) => (
           <div key={unit} className="text-center mx-2">
             <AnimatePresence mode="wait">
               <motion.div
-              
-
-                key={timeLeft[Object.keys(timeLeft)[index]]}
+                key={timeLeft[unit]}
                 variants={timerAnimations}
                 initial="initial"
                 animate="animate"
@@ -53,11 +57,10 @@ export default function CountDown({ targetDate }) {
                 transition={{ duration: 0.3, ease: "linear" }}
                 className="font-extrabold"
               >
-                
-                {timeLeft[Object.keys(timeLeft)[index]]}
+                {timeLeft[unit]}
               </motion.div>
             </AnimatePresence>
-            <div className="text-center font-sans text-xl">{unit}</div>
+            <div className="text-center font-sans text-xl">{unit.charAt(0).toUpperCase() + unit.slice(1)}</div>
           </div>
         ))}
       </div>

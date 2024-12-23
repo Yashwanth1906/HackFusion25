@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async(req : NextRequest) =>{
     try{
-        //@ts-ignore
+       
         const email = req.headers.get("email");
         const valid=leaveTeamSchema.safeParse(email)
         if(!valid.success){
@@ -13,13 +13,18 @@ export const GET = async(req : NextRequest) =>{
             )
         }
         console.log(email)
-        const udpatedCancel = await prisma.member.delete({
+        await prisma.member.delete({
             where:{
                 email:valid.data.email
             }
         })
         return NextResponse.json({success:true,message:"Left the team"},{status:200})
-    } catch(e){
-        return NextResponse.json({error:e},{status:200})
-    }
+    } catch (e: unknown) {  
+        if (e instanceof Error) { 
+          console.error(e); 
+          return NextResponse.json({ success: false, error: e.message }, { status: 500 }); 
+        } else { 
+          console.error(e);
+          return NextResponse.json({ success: false, error: "An unknown error occurred" }, { status: 500 }); } 
+        }
 }
