@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
         // const { solutionTitle, description, problemId }: any = body;
 
         const email = req.headers.get("email");
-        const valid2=isinaTeamSchema.safeParse(email)
+        const valid2=isinaTeamSchema.safeParse({email})
 
         if (!valid.success) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });

@@ -11,7 +11,6 @@ export const TeamLeadSchema=z.object({
 export const createTeamSchema=z.object({
     teamName:z.string(),
     teamLead:TeamLeadSchema
-    
 })
 
 export const getTeamSchema=z.object({email:z.string().email()})
