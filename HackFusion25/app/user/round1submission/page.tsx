@@ -32,8 +32,7 @@ function RoundSubmissionPage() {
   const getTeamDetails = async () => {
     try {
       const res = await axios.get("/api/users/isinateam", {
-        //@ts-ignore
-        headers: { email: session.user.email },
+        headers: { email: session?.user?.email },
       });
 
       if (res.status === 200 && res.data.teamdetails) {
@@ -82,8 +81,7 @@ function RoundSubmissionPage() {
 
     try {
       const res = await axios.post('/api/users/submitidea', formData, {
-        //@ts-ignore
-        headers: { email: session.user.email },
+        headers: { email: session?.user?.email },
       });
 
       if (res.data.success) {
