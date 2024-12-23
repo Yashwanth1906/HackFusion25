@@ -18,8 +18,8 @@ export const getTeamSchema=z.object({email:z.string().email()})
 export const isinaTeamSchema=z.object({email:z.string().email()})
 
 export const JoinTeamSchema=z.object({
-    teamId:z.string(),
-    memberdetails:z.object({
+    teamId:z.number(),
+    memberDetails:z.object({
         name:z.string(),
         email:z.string().email(),
         gender:z.string(),
@@ -40,10 +40,4 @@ export const SubmitSchema=z.object({
     problemId:z.string(),
     solutionTitle:z.string(),
     description:z.string()
-})
-
-export const createPS = z.object({
-    title : z.string(),
-    theme : z.string(),
-    description : z.string()
 })
