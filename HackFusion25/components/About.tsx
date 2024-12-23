@@ -26,15 +26,12 @@ export default function About() {
       )
     }, 3000) // Change image every 3 seconds
 
-    // Cleanup interval on component unmount
     return () => clearInterval(interval)
   }, [images.length])
 
-  // Existing animation variants
   
   const scrollVariants = {
-    //@ts-ignore
-    offscreen: (direction) => ({
+    offscreen: (direction: number) => ({
       x: direction < 0 ? -100 : 100,
       opacity: 0
     }),
@@ -114,8 +111,11 @@ export default function About() {
                   className="relative bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600"
                 >
                   <p className="text-xl text-gray-700 leading-relaxed italic">
-                    "HackFusion-25: Where Innovation Meets Opportunity"
-                  </p>
+                 
+			 <div>
+            		  <h1>&quot;HackFusion-25&quot;: Where Innovation Meets Opportunity</h1>
+			</div>
+		</p>
                 </motion.div>
 
                
@@ -229,7 +229,7 @@ export default function About() {
         HackFusion-25 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
       </p>
       <p className="text-lg text-gray-600 leading-relaxed mt-4">
-        Whether it's a software application, a hardware prototype, or a unique tech concept, HackFusion-25 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
+        Whether it&apos;s  a software application, a hardware prototype, or a unique tech concept, HackFusion-25 offers participants a chance to transform their ideas into reality. This event isn&apos;t limited to any one field—it&apos;s open to all departments, embracing diversity in thought, skill, and innovation.
       </p>
     </motion.div>
   </div>

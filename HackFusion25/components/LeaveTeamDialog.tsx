@@ -1,11 +1,16 @@
 import axios from "axios"
 import { Button } from "./ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "./ui/dialog"
-import { useState } from "react"
+
+import { Dispatch, JSX, SetStateAction, useState } from "react"
 
 
+interface DeleteTeamDialogProps {
+  email: string;
+  setFlag: Dispatch<SetStateAction<boolean>>;
+}
 
-export const LeaveTeamDialog =({email,setFlag}:{email:string ,setFlag:any})=>{
+export function LeaveTeamDialog({email,setFlag}:DeleteTeamDialogProps):JSX.Element{
 
     const [isOpen,setIsOpen]=useState<boolean>(false);
 

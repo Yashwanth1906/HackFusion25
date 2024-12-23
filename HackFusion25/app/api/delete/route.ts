@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 
 export const GET=async()=>{
@@ -10,10 +10,13 @@ export const GET=async()=>{
         await prisma.team.deleteMany({});
         return NextResponse.json({msg:"done"})
     }
-    catch(e:any)
-    {
-        return NextResponse.json({msg:e})
-    }
+    catch(e){
+
+        return NextResponse.json(
+          { error: e instanceof Error ? e.message : "Unknown error" },
+          { status: 500 }
+  );
+}
 
 
 }

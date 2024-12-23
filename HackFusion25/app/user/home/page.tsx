@@ -2,18 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Copy, CopyIcon, UsersIcon } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import { RoundCard } from '@/components/RoundCard';
 import { TimelineConnector } from '@/components/TimelineConnector';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import CreateTeamDialog from '@/components/CreateTeamDialog';
-import JoinTeamDialog from '@/components/joinTeamDialog';
+import {CreateTeamDialog} from '@/components/CreateTeamDialog';
+import {JoinTeamDialog} from '@/components/joinTeamDialog';
 import { DeleteTeamDialog } from '@/components/DeleteTeamDialog';
 import { LeaveTeamDialog } from '@/components/LeaveTeamDialog';
-import { useToast } from '@/hooks/use-toast';
 import { Spinner } from '@/components/Spinner';
 
 
@@ -66,7 +65,7 @@ function App() {
     const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
     const [flag,setFlag]=useState<boolean>(false);
     const [teamId,setTeamId]=useState<string>("")
-    const toast=useToast()
+  /*   const toast=useToast() */
 
 
   const { data,status } = useSession();
@@ -174,8 +173,8 @@ function App() {
             {!inTeam ? (
               <>
                 
-                <CreateTeamDialog email={data?.user?.email} setFlag={setFlag}/>
-                <JoinTeamDialog email={data?.user?.email} setflag={setFlag}/>
+                <CreateTeamDialog email={data?.user?.email || " "} setFlag={setFlag}/>
+                <JoinTeamDialog email={data?.user?.email ||""} setflag={setFlag}/>
               </>
             ) : (
               <div className="text-center mb-16">

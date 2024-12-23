@@ -1,13 +1,22 @@
 'use client'
-import { useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { Plus, Trash2, Users, UserPlus, Home, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 
+type Member = {
+  name: string;
+  regNo: string;
+  dept: string;
+  year: string;
+  email: string;
+  phoneno: string;
+};
+
 export default function RegisterPage() {
-  const [teamName, setTeamName] = useState('');
-  const [teamDescription, setTeamDescription] = useState('');
-  const [teamLeader, setTeamLeader] = useState({
+  const [teamName, setTeamName] = useState<string>('');
+  const [teamDescription, setTeamDescription] = useState<string>('');
+  const [teamLeader, setTeamLeader] = useState<Member>({
     name: '',
     regNo: '',
     dept: '',
@@ -16,13 +25,15 @@ export default function RegisterPage() {
     phoneno: '',
   });
 
-  const [members, setMembers] = useState([]);
-  const [isRegistered, setIsRegistered] = useState(false); // Success Message State
+  const [members, setMembers] = useState<Member[]>([]);
+  const [isRegistered, setIsRegistered] = useState<boolean>(false); // Success Message State
 
-  const handleLeaderChange = (e) => {
+
+  const handleLeaderChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
-    setTeamLeader(prev => ({ ...prev, [name]: value }));
+    setTeamLeader((prev) => ({ ...prev, [name]: value }));
   };
+
 
   const addMember = () => {
     if (members.length < 3) {
@@ -35,66 +46,33 @@ export default function RegisterPage() {
     }
   };
 
-  const updateMember = (index, e) => {
+
+  const updateMember = (index: number, e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const updatedMembers = [...members];
-    updatedMembers[index][name] = value;
+    updatedMembers[index][name as keyof Member] = value || "";
     setMembers(updatedMembers);
   };
 
-  const removeMember = (indexToRemove) => {
+  const removeMember = (indexToRemove: number) => {
     setMembers(members.filter((_, index) => index !== indexToRemove));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const payload = {
-  //     teamName,
-  //     teamDescription,
-  //     teamLeader,
-  //     members
-  //   };
-
-  //   try {
-  //     const response = await fetch('http://localhost:6969/api/users/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       credentials: 'include',
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     const data = await response.json();
-  //     console.log(data);
-  //     if (response.ok) {
-  //       setIsRegistered(true); // Show success message
-  //     } else {
-  //       alert(data.message || 'Registration failed');
-  //     }
-  //   } catch (error) {
-  //     console.error('Registration error:', error);
-  //     alert('Something went wrong. Please try again.');
-  //   }
-  // };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check if all required fields are filled
+
     if (!teamName || !teamDescription) {
       alert('Please fill in all required fields');
       return;
     }
 
-    // Validate team leader fields
     const leaderFieldsFilled = Object.values(teamLeader).every(field => field.trim() !== '');
     if (!leaderFieldsFilled) {
       alert('Please fill in all team leader details');
       return;
     }
 
-    // Validate members fields if any members are added
     const membersValid = members.every(member =>
       Object.values(member).every(field => field.trim() !== '')
     );
@@ -103,16 +81,15 @@ export default function RegisterPage() {
       return;
     }
 
-    // If all validations pass, set registered state
     setIsRegistered(true);
   };
 
-
+  // Render input field component
   const renderInputField = (
-    name,
-    value,
-    onChange,
-    placeholder,
+    name: string | undefined,
+    value: string | number | readonly string[] | undefined,
+    onChange: ChangeEventHandler<HTMLInputElement> | undefined,
+    placeholder: string | undefined,
     type = 'text',
     additionalClasses = ''
   ) => (
@@ -211,7 +188,7 @@ export default function RegisterPage() {
                     </label>
                     {renderInputField(
                       field,
-                      teamLeader[field],
+                      teamLeader[field as keyof Member] ,
                       handleLeaderChange,
                       `Enter ${field}`
                     )}
@@ -251,7 +228,7 @@ export default function RegisterPage() {
                         </label>
                         {renderInputField(
                           field,
-                          member[field],
+                          member[field as keyof Member],
                           (e) => updateMember(index, e),
                           `Enter ${field}`
                         )}
@@ -284,7 +261,7 @@ export default function RegisterPage() {
           </form>
         )}
       </div>
-      <button onClick={signOut}>logout</button>
+      <button onClick={()=>signOut()}>logout</button>
     </div>
   );
 }

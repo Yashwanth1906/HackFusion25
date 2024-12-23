@@ -1,5 +1,11 @@
-import AdminPage from "@/pages/AdminPage";
+// import AdminPage from "@/pages/AdminPage";
 
 export default async function Page() {
-  return (<AdminPage />);
+  return (
+    <>
+    
+    
+    </>
+
+  )
 }

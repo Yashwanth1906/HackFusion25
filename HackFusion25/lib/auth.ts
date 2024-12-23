@@ -1,6 +1,22 @@
 import { prisma } from "@/prisma/db";
+import { DefaultSession, DefaultUser } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
 import GoogleProvider from "next-auth/providers/google";
+
+interface User extends DefaultUser {
+  isAdmin: boolean;
+}
+
+interface Session extends DefaultSession {
+  user: User;
+}
+
+interface token extends JWT{
+  isAdmin:boolean
+}
+
+
 
 export const authOptions = {
   providers: [
@@ -11,12 +27,10 @@ export const authOptions = {
   ],
   secret: process.env.JWT_SECRET || "hackfusion",
   callbacks: {
-    //@ts-ignore
-    async signIn({ user, account, profile }) {
+    async signIn({ user,  }:{user:User}) {
 
-      // Check if user is an admin
       const isAdmin = await prisma.admin.findUnique({
-        where: { email: user.email },
+        where: { email: user.email ||"" },
       });
       console.log(isAdmin)
       if (isAdmin) {
@@ -28,7 +42,7 @@ export const authOptions = {
       //   return false
       // }
       const existingUser = await prisma.user.findUnique({
-        where: { email: user.email },
+        where: { email: user.email ||"" },
       });
 
       if (existingUser) {
@@ -36,8 +50,8 @@ export const authOptions = {
       } else {
         const newUser = await prisma.user.create({
           data: {
-            email: user.email,
-            name: user.name,
+            email: user.email ||"",
+            name: user.name ||"",
           },
           select: {
             email: true,
@@ -47,28 +61,30 @@ export const authOptions = {
         user.id = newUser.id;
       }
 
-
+      user.isAdmin=false;
       return true;
     },
-    //@ts-ignore
-    async session({ token, session }) {
-      session.user.id = token.sub
-      session.user.isAdmin = token.isAdmin
+
+    async session({ token, session }:{token:token,session:Session}) {
+      session.user.id = token.sub || ""
+      session.user.isAdmin = token.isAdmin 
       console.log(session)
 
       return session
     },
-    //@ts-ignore
-    async jwt({ token, user }) {
+   
+    async jwt({ token, user }:{token:token,user:User}) {
       if (user) {
         token.sub = user.id;
         token.isAdmin = user.isAdmin || false;
       }
       return token
     },
-    async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
+    async redirect({ baseUrl }: { url: string, baseUrl: string }) {
       return `${baseUrl}/user/home`
     }
 
   },
 }
+
+

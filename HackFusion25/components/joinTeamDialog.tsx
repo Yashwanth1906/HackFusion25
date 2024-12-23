@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, JSX, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,10 +7,11 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 
 interface JoinTeamDialogProps {
-  email: string | undefined;
+  email: string;
+  setflag:Dispatch<SetStateAction<boolean>>;
 }
 
-export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null,setflag : any}) =>{
+export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element {
   const [name, setName] = useState<string>("");
   const [regNo, setRegNo] = useState<string>("");
   const [dept, setDept] = useState<string>("");
@@ -22,7 +23,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
   const handleSubmitClick = async () => {
     try {
         
-      const res = await axios.post("/api/users/jointeam", {
+      await axios.post("/api/users/jointeam", {
         teamId,
         memberdetails: {
           name,
@@ -35,7 +36,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
         },
       });
       setflag(true);
-    } catch (e) {
+    } catch {
       alert("Error creating team");
     }
   };
@@ -83,7 +84,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
             <Label htmlFor="year" className="text-right">
               Year
             </Label>
-            <Select onValueChange={(val:any) => setYear(val)} value={year}>
+            <Select onValueChange={(val:string) => setYear(val)} value={year}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select year" />
               </SelectTrigger>
@@ -99,7 +100,7 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
             <Label htmlFor="gender" className="text-right">
               Gender
             </Label>
-            <Select onValueChange={(val:any) => setGender(val)} value={gender}>
+            <Select onValueChange={(val:string) => setGender(val)} value={gender}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
@@ -121,8 +122,10 @@ export const JoinTeamDialog  = ({email,setflag}:{email:string | undefined | null
           </Button>
         </div>
       </DialogContent>
-    </Dialog>
-  );
-};
+    </Dialog>); }
 
-export default JoinTeamDialog;
+
+
+
+
+

@@ -61,7 +61,8 @@ const Contact = () => {
             >
               Get in Touch
             </h2>
-            <p className="text-gray-500 text-sm md:text-base">We're eager to hear from you!</p>
+            <p className="text-gray-500 text-sm md:text-base">We&apos;re eager to hear from you!</p>
+
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
@@ -197,7 +198,7 @@ const Contact = () => {
             <Smile size={60}  className="mx-auto mb-4 md:mb-6 text-white/90" />
             <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">Contact Information</h3>
             <p className="text-white/80 mb-4 md:mb-6 text-sm md:text-base">
-              Feel free to reach out. We're here to help!
+              Feel free to reach out. We&apos;re here to help!
             </p>
 
             <div className="space-y-3 md:space-y-4 text-left w-full">

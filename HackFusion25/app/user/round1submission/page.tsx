@@ -24,16 +24,15 @@ function RoundSubmissionPage() {
     solutionTitle: '',
     description: '',
   });
-  const [flag,setFlag]=useState<boolean>(false)
+  const [flag, setFlag] = useState<boolean>(false)
 
-  const { data: session ,status} = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const getTeamDetails = async () => {
     try {
       const res = await axios.get("/api/users/isinateam", {
-        //@ts-ignore
-        headers: { email: session.user.email },
+        headers: { email: session?.user?.email },
       });
 
       if (res.status === 200 && res.data.teamdetails) {
@@ -46,30 +45,29 @@ function RoundSubmissionPage() {
       alert("Failed to fetch team details.");
     }
   };
-  
+
   useEffect(() => {
     if (status === "unauthenticated") {
       alert("Login First");
       router.push("/");
     }
-    else if(status==='authenticated')
-    {
+    else if (status === 'authenticated') {
       getTeamDetails()
     }
   }, [status]);
 
-  if (status === "loading"  || !flag) {
-    return(
+  if (status === "loading" || !flag) {
+    return (
       <div className='flex justify-center items-center h-screen'>
-     
-      <Spinner />
-      
-      
+
+        <Spinner />
+
+
       </div>
-  )
+    )
   }
 
-  
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -83,8 +81,7 @@ function RoundSubmissionPage() {
 
     try {
       const res = await axios.post('/api/users/submitidea', formData, {
-        //@ts-ignore
-        headers: { email: session.user.email },
+        headers: { email: session?.user?.email },
       });
 
       if (res.data.success) {
@@ -108,7 +105,7 @@ function RoundSubmissionPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-     
+
           <motion.div
             className="text-center mb-12"
             initial={{ y: -50, opacity: 0 }}
