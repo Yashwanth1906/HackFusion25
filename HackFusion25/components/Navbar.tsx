@@ -18,8 +18,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  //@ts-expect-error
-  const scrollToSection = (elementId) => {
+  const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });

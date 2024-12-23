@@ -10,13 +10,13 @@ export const GET=async()=>{
         await prisma.team.deleteMany({});
         return NextResponse.json({msg:"done"})
     }
-   catch(e){
+    catch(e){
 
         return NextResponse.json(
           { error: e instanceof Error ? e.message : "Unknown error" },
           { status: 500 }
-        );
-      }
+  );
+}
 
 
 }

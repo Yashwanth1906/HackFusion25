@@ -27,7 +27,7 @@ export const authOptions = {
   ],
   secret: process.env.JWT_SECRET || "hackfusion",
   callbacks: {
-    async signIn({ user, profile }:{user:User,profile:any}) {
+    async signIn({ user,  }:{user:User}) {
 
       const isAdmin = await prisma.admin.findUnique({
         where: { email: user.email ||"" },
@@ -38,9 +38,9 @@ export const authOptions = {
         return true
       }
 
-      if (!profile.email.endsWith("@citchennai.net")) {
-        return false
-      }
+      // if (!profile.email.endsWith("@citchennai.net")) {
+      //   return false
+      // }
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email ||"" },
       });
@@ -80,7 +80,7 @@ export const authOptions = {
       }
       return token
     },
-    async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
+    async redirect({ baseUrl }: { url: string, baseUrl: string }) {
       return `${baseUrl}/user/home`
     }
 

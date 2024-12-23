@@ -36,7 +36,7 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
         },
       });
       setflag(true);
-    } catch (e) {
+    } catch {
       alert("Error creating team");
     }
   };
@@ -84,7 +84,7 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
             <Label htmlFor="year" className="text-right">
               Year
             </Label>
-            <Select onValueChange={(val:any) => setYear(val)} value={year}>
+            <Select onValueChange={(val:string) => setYear(val)} value={year}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select year" />
               </SelectTrigger>
@@ -100,7 +100,7 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
             <Label htmlFor="gender" className="text-right">
               Gender
             </Label>
-            <Select onValueChange={(val:any) => setGender(val)} value={gender}>
+            <Select onValueChange={(val:string) => setGender(val)} value={gender}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>

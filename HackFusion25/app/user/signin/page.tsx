@@ -1,6 +1,5 @@
 'use client'
 import { motion } from "framer-motion";
-import { useState } from "react"
 
 import { Meteors } from "@/components/acertinity/meteors"
 import { AnimeatedButton } from "@/components/acertinity/button"

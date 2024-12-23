@@ -35,11 +35,12 @@ export const POST = async(req:NextRequest) =>{
             message: "Teams approved successfully",
             data: newEntries,
         },{status:201});
-    } catch (error) {
-        console.log("Error adding teams to SelectedTeam:", error);
-        return NextResponse.json({
-            message: "Internal Server Error",
-            error: error.message,
-        },{status:500});
     }
+    catch(e){
+
+        return NextResponse.json(
+          { error: e instanceof Error ? e.message : "Unknown error" },
+          { status: 500 }
+        );
+      }
 }

@@ -229,7 +229,7 @@ export default function About() {
         HackFusion-25 is an extraordinary platform designed to inspire innovation, teamwork, and creativity among students. It is an annual hackathon that brings together talented minds across departments, encouraging them to tackle real-world problems through groundbreaking ideas and solutions.
       </p>
       <p className="text-lg text-gray-600 leading-relaxed mt-4">
-        Whether it&apos;s  a software application, a hardware prototype, or a unique tech concept, HackFusion-25 offers participants a chance to transform their ideas into reality. This event isn't limited to any one field—it's open to all departments, embracing diversity in thought, skill, and innovation.
+        Whether it&apos;s  a software application, a hardware prototype, or a unique tech concept, HackFusion-25 offers participants a chance to transform their ideas into reality. This event isn&apos;t limited to any one field—it&apos;s open to all departments, embracing diversity in thought, skill, and innovation.
       </p>
     </motion.div>
   </div>

@@ -13,7 +13,6 @@ import {CreateTeamDialog} from '@/components/CreateTeamDialog';
 import {JoinTeamDialog} from '@/components/joinTeamDialog';
 import { DeleteTeamDialog } from '@/components/DeleteTeamDialog';
 import { LeaveTeamDialog } from '@/components/LeaveTeamDialog';
-import { useToast } from '@/hooks/use-toast';
 import { Spinner } from '@/components/Spinner';
 
 

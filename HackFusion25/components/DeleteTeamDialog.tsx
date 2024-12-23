@@ -1,11 +1,15 @@
 import axios from "axios"
 import { Button } from "./ui/button"
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
-import { useState } from "react"
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "./ui/dialog"
+import { Dispatch, JSX, SetStateAction, useState } from "react"
+
+type deleteTeamDialogProps={
+	email:string,
+	setFlag:Dispatch<SetStateAction<boolean>>
+}
 
 
-
-export const DeleteTeamDialog =({email,setFlag}:{email:string ,setFlag:any})=>{
+export function DeleteTeamDialog({email,setFlag}:deleteTeamDialogProps):JSX.Element{
 
     const [isOpen,setIsOpen]=useState<boolean>(false);
 
@@ -15,7 +19,7 @@ export const DeleteTeamDialog =({email,setFlag}:{email:string ,setFlag:any})=>{
             headers:{
               email : email
             }
-          }).then((res)=>{
+          }).then(()=>{
             setIsOpen(false)
             setFlag((flag:boolean)=>!flag);
           })
