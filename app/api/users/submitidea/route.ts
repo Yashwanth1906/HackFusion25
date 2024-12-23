@@ -7,7 +7,6 @@ export const POST = async (req: NextRequest) => {
         const body = await req.json();
 
         const valid=SubmitSchema.safeParse(body)
-        // const { solutionTitle, description, problemId }: any = body;
 
         const email = req.headers.get("email");
         const valid2=isinaTeamSchema.safeParse({email})
@@ -21,11 +20,7 @@ export const POST = async (req: NextRequest) => {
         }
         const teamData = await prisma.member.findFirst({
             where: {
-                AND: [
-                    
-                    { email: valid2.data.email },
-                    { isTeamLead: true },
-                ],
+                email:valid2.data.email
             },
             select: {
               team:{

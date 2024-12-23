@@ -5,9 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
+        console.log(body)
         const valid=JoinTeamSchema.safeParse(body)
         if (!valid.success) {
-            return NextResponse.json({success:false,message: "Invalid request body"}, {status: 400});
+            return NextResponse.json({success:false,message: valid.error}, {status: 400});
         }
 
         const { teamId, memberdetails } = body;

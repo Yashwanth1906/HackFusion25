@@ -6,7 +6,7 @@ export const GET = async(req : NextRequest) =>{
     try{
        
         const email = req.headers.get("email");
-        const valid=leaveTeamSchema.safeParse(email)
+        const valid=leaveTeamSchema.safeParse({email})
         if(!valid.success){
             return NextResponse.json({message:"Invalid Email"},
                 {status:500}

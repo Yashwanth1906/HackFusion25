@@ -47,18 +47,18 @@ model TeamSubmission {
   solutionTitle String
   description   String
   team          Team             @relation(fields: [teamId], references: [id],onDelete: Cascade)
-  problemId     String
-  problem       ProblemStatement @relation(fields: [problemId], references: [id],onDelete:Cascade)
+  problemId     Int
+  problem       ProblemStatement @relation(fields: [problemId], references: [sno],onDelete:Cascade)
 }
 
 model ProblemStatement {
-  id             String           @id @default(uuid())
-  sno            Int
+  sno            Int @id @default(autoincrement())
   title          String
   theme          String
   description    String
   teamSubmission TeamSubmission[]
 }
+
 
 model SelectedTeam {
   id        String @id @default(uuid())
