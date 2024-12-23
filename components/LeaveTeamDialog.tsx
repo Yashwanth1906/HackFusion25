@@ -20,10 +20,18 @@ export function LeaveTeamDialog({email,setFlag}:DeleteTeamDialogProps):JSX.Eleme
             headers:{
               email : email
             }
-          }).then(() =>{
-          
-            setIsOpen(false)
+          }).then((res) =>{
+            if(res.status === 200){
+              alert("Left the team");
+            }
+            else{
+              alert(res.data.error);
+            }
+            setIsOpen(false);
             setFlag((flag:boolean)=>!flag);
+          }).catch((e)=>{
+            alert(e);
+            setFlag((flag:boolean)=>!flag)
           })
         } catch(e){
           console.log(e)

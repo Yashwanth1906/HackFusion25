@@ -34,13 +34,16 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
           year,
           phoneno: phno,
         },
-      });
-      setflag(true);
+      }).then((res)=>{
+        if(res.status === 200){
+          alert("Joined the team")
+        }
+      })
+      setflag((flag:boolean)=>!flag);
     } catch {
       alert("Error creating team");
     }
   };
-
   return (
     <Dialog>
       <DialogTrigger asChild>
