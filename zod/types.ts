@@ -37,7 +37,7 @@ export const deleteTeamSchema=z.object({email:z.string().email()})
 export const leaveTeamSchema=z.object({email:z.string().email()})
 
 export const SubmitSchema=z.object({
-    problemId:z.number(),
+    problemId:z.string(),
     solutionTitle:z.string(),
     description:z.string()
 })
@@ -45,5 +45,9 @@ export const SubmitSchema=z.object({
 export const createPS = z.object({
     title : z.string(),
     description : z.string(),
+    theme : z.string()
+})
+
+export const themeFilter = z.object({
     theme : z.string()
 })

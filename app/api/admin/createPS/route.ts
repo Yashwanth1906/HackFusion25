@@ -13,7 +13,7 @@ export const POST = async(req : NextRequest) =>{
             data:{
                 title:parsedBody.data.title,
                 description:parsedBody.data.description,
-                theme:parsedBody.data.description
+                theme:parsedBody.data.theme
             }
         });
         return NextResponse.json({success:true,message:"Successfully added PS"},{status:200})

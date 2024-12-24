@@ -21,7 +21,7 @@ export interface Round {
   title: string;
   description: string;
   icon: string;
-  status: 'locked' | 'active' | 'completed';
+  status: 'locked' | 'active' | 'completed' ;
   deadline: string;
 }
 
@@ -75,7 +75,6 @@ function App() {
 
     try {
       const res = await axios.get("/api/users/isinateam", {
-
         headers: { email: data?.user?.email }
       });
 
@@ -85,8 +84,11 @@ function App() {
           if(res.data.isTeamLead){
             rounds[0].status = "active"
           }
-          setTeamId(res.data.teamdetails.team.id)
-          setTeamLead(res.data.isTeamLead)
+          if(res.data.teamdetails.team.teamSubmisison){
+            rounds[0].status = 'completed';
+          }
+          setTeamId(res.data.teamdetails.team.id);
+          setTeamLead(res.data.isTeamLead);
           setTeamDetails(res.data.teamdetails.team.members);
         }
       }
@@ -102,15 +104,10 @@ function App() {
     try
     {
       await navigator.clipboard.writeText(teamId)
-     
-
     }
     catch{
       
     }
-    
-
-
   }
 
  

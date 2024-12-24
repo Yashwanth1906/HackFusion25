@@ -27,9 +27,21 @@ export const GET = async(req:NextRequest) =>{
                             }
                         },
                         name:true,
-                        id:true
+                        id:true,teamSubmisison:{
+                            select:{
+                                solutionTitle:true,
+                                description:true,
+                                problem:{
+                                    select:{
+                                        
+                                        sno:true,
+                                        title:true,theme:true
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
             }
         })
         if (!memberteam) {
