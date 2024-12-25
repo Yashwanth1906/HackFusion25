@@ -256,13 +256,7 @@ export default function About() {
             Event Structure
           </motion.h2>
 
-          <iframe
-            src="https://widgets.commoninja.com/iframe/968e1bee-2abd-404a-b9cc-942607754248"
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            scrolling="no"
-          ></iframe>
+
 
           <div className=" p-6 rounded-lg shadow-md">
             {[
