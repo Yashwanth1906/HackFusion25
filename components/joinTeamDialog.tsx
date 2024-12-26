@@ -76,7 +76,7 @@ export function JoinTeamDialog({
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="teamId" className="text-right">
+            <Label htmlFor="teamId" className="text-left">
               Team Id
             </Label>
             <Input
@@ -86,7 +86,7 @@ export function JoinTeamDialog({
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+            <Label htmlFor="name" className="text-left">
               Name
             </Label>
             <Input
@@ -96,7 +96,7 @@ export function JoinTeamDialog({
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="regno" className="text-right">
+            <Label htmlFor="regno" className="text-left">
               Reg No
             </Label>
             <Input
@@ -106,7 +106,7 @@ export function JoinTeamDialog({
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="department" className="text-right">
+            <Label htmlFor="department" className="text-left">
               Department
             </Label>
             <Input
@@ -116,7 +116,7 @@ export function JoinTeamDialog({
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="year" className="text-right">
+            <Label htmlFor="year" className="text-left">
               Year
             </Label>
             <Select onValueChange={(val: string) => setYear(val)} value={year}>
@@ -132,7 +132,7 @@ export function JoinTeamDialog({
             </Select>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="gender" className="text-right">
+            <Label htmlFor="gender" className="text-left">
               Gender
             </Label>
             <Select
@@ -150,7 +150,7 @@ export function JoinTeamDialog({
             </Select>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="phone" className="text-right">
+            <Label htmlFor="phone" className="text-left">
               Phone No
             </Label>
             <Input
