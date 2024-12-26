@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import {ChangeEvent, FormEvent } from 'react';
-
+import axios from 'axios';
 import { 
   Phone, 
   MapPin, 
@@ -19,25 +19,44 @@ const Contact = () => {
     message: ''
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  // const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     [name]: value
+  //   }));
+  // };
+
+  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   // Add your form submission logic here
+  //   console.log(formData);
+  //   // Reset form after submission
+  //   setFormData({
+  //     name: '',
+  //     email: '',
+  //     phone: '',
+  //     message: ''
+  //   });
+  // };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log(formData);
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: ''
-    });
+    try {
+      const response = await axios.post("/api/contact", formData);
+      if (response.status === 200) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", phone: "", message: "" })
+      } else {
+        alert("Failed to send message.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred.");
+    }
   };
 
   return (
@@ -206,11 +225,12 @@ const Contact = () => {
                 <div>
                   <p className="font-semibold text-sm md:text-base">Phone Numbers</p>
                   <p className="text-white text-xs md:text-sm">Staff Coordinators:</p>
-                  <p className="text-white/80 text-xs md:text-sm">Bavani - +91 77083 77850</p>
+                  <p className=" text-white/80 text-xs md:text-sm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bavani - +91 77083 77850</p>
                   <p className="text-white text-xs md:text-sm ">Student Coordinators:</p>
 
-                  <p className="text-white/80 text-xs md:text-sm">Roopa - +91 86376 25516</p>
-                  <p className="text-white/80 text-xs md:text-sm">Rishikesh - +91 86102 53720</p>
+                  <p className="text-white/80 text-xs md:text-sm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rishikesh - +91 86102 53720</p>
+                  <p className="text-white/80 text-xs md:text-sm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roopa - +91 86376 25516</p>
+
                 </div>
               </div>
 

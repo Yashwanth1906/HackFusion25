@@ -48,9 +48,10 @@ export default function Hero() {
               ease: [0, 0.71, 0.2, 1.01]
             }}
           >
+           
             <motion.h1
               variants={titleVariants}
-              className="bg-gradient-to-r  from-blue-400 via-purple-400 to-pink-400 bg-300% animate-gradient py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+              className="poppins-bold bg-gradient-to-r  from-blue-400 via-purple-400 to-pink-400 bg-300% animate-gradient py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 }
@@ -58,6 +59,7 @@ export default function Hero() {
             >
               School Of Computing
             </motion.h1>
+           
           </motion.div>
 
           <motion.h2
@@ -95,7 +97,7 @@ export default function Hero() {
           <motion.p
             custom={1}
             variants={fadeInVariants}
-            className="text-gray-300 mt-4 font-sans text-xl"
+            className="poppins-regular text-gray-300 mt-4 font-sans text-xl"
             whileHover={{
               scale: 1.05,
               color: "#ffffff",

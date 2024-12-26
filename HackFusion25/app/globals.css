@@ -38,7 +38,24 @@ body, html {
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
+        --font-poppins: 'Poppins', sans-serif;
+
     }
+    body {
+      font-family: var(--font-poppins);
+    }
+    
+    /* Optional: Specific class for different weights */
+    .poppins-regular {
+      font-family: var(--font-poppins);
+      font-weight: 400;
+    }
+    
+    .poppins-bold {
+      font-family: var(--font-poppins);
+      font-weight: 700;
+    }
+    
   .dark {
         --background: 0 0% 3.9%;
         --foreground: 0 0% 98%;
@@ -75,5 +92,6 @@ body, html {
     @apply bg-background text-foreground;
     }
 }
+
   
 
