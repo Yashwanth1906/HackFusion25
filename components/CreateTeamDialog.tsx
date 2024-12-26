@@ -1,21 +1,35 @@
 import React, { Dispatch, JSX, SetStateAction, useState } from 'react';
-import {  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog'; 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '../components/ui/dialog';
 
 import axios from 'axios';
-import { Copy } from 'lucide-react'; 
+import { Copy } from 'lucide-react';
 import { DialogTrigger } from './ui/dialog';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
 interface CreateTeamDialogProps {
   email: string;
   setFlag: Dispatch<SetStateAction<boolean>>;
 }
 
-export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX.Element {
-
+export function CreateTeamDialog({
+  email,
+  setFlag,
+}: CreateTeamDialogProps): JSX.Element {
   const [name, setName] = useState<string>('');
   const [regNo, setRegNo] = useState<string>('');
   const [dept, setDept] = useState<string>('');
@@ -24,7 +38,8 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
   const [phno, setPhno] = useState<string>('');
   const [teamName, setTeamName] = useState<string>('');
 
-  const [isCreateTeamDialogOpen, setIsCreateTeamDialogOpen] = useState<boolean>(false);
+  const [isCreateTeamDialogOpen, setIsCreateTeamDialogOpen] =
+    useState<boolean>(false);
   const [isTeamIdDialogOpen, setIsTeamIdDialogOpen] = useState<boolean>(false);
   const [teamId, setTeamId] = useState<string>('');
 
@@ -47,19 +62,22 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
       setTeamId(res.data.teamId);
       setIsTeamIdDialogOpen(true);
     } catch {
-      alert("error")
+      alert('error');
     }
   };
 
   const handleCopyTeamId = async () => {
     await navigator.clipboard.writeText(teamId);
     setIsTeamIdDialogOpen(false);
-    setFlag((prevFlag: boolean) => !prevFlag); 
+    setFlag((prevFlag: boolean) => !prevFlag);
   };
 
   return (
     <>
-      <Dialog open={isCreateTeamDialogOpen} onOpenChange={setIsCreateTeamDialogOpen}>
+      <Dialog
+        open={isCreateTeamDialogOpen}
+        onOpenChange={setIsCreateTeamDialogOpen}
+      >
         <DialogTrigger asChild>
           <Button
             size="lg"
@@ -81,7 +99,9 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
                 id="teamName"
                 className="col-span-3"
                 value={teamName}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTeamName(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setTeamName(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
@@ -92,7 +112,9 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
                 id="name"
                 className="col-span-3"
                 value={name}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setName(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
@@ -103,7 +125,9 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
                 id="regno"
                 className="col-span-3"
                 value={regNo}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setRegNo(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setRegNo(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
@@ -114,14 +138,19 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
                 id="department"
                 className="col-span-3"
                 value={dept}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setDept(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setDept(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="year" className="text-right">
                 Year
               </Label>
-              <Select onValueChange={(val:string) => setYear(val)} value={year}>
+              <Select
+                onValueChange={(val: string) => setYear(val)}
+                value={year}
+              >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Select year" />
                 </SelectTrigger>
@@ -137,7 +166,10 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
               <Label htmlFor="gender" className="text-right">
                 Gender
               </Label>
-              <Select onValueChange={(val:string) => setGender(val)} value={gender}>
+              <Select
+                onValueChange={(val: string) => setGender(val)}
+                value={gender}
+              >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
@@ -156,7 +188,9 @@ export function CreateTeamDialog({ email, setFlag }: CreateTeamDialogProps): JSX
                 id="phone"
                 className="col-span-3"
                 value={phno}
-                onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPhno(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setPhno(e.target.value)}
               />
             </div>
             <Button

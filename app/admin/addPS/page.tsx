@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useState } from 'react';
@@ -20,7 +20,11 @@ function CreateProblemStatementPage() {
   const { data: session, status } = useSession();
   // const router = useRouter();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -32,9 +36,13 @@ function CreateProblemStatementPage() {
     setLoading(true);
 
     try {
-      const res = await axios.post('/api/admin/createproblemstatement', formData, {
-        headers: { email: session?.user?.email },
-      });
+      const res = await axios.post(
+        '/api/admin/createproblemstatement',
+        formData,
+        {
+          headers: { email: session?.user?.email },
+        }
+      );
 
       if (res.data.success) {
         alert(res.data.message);
@@ -53,17 +61,17 @@ function CreateProblemStatementPage() {
 
   if (status === 'loading') {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
     );
   }
 
-//   if (status === 'unauthenticated') {
-//     alert('Login First');
-//     router.push('/');
-//     return null;
-//   }
+  //   if (status === 'unauthenticated') {
+  //     alert('Login First');
+  //     router.push('/');
+  //     return null;
+  //   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white w-screen">
@@ -98,7 +106,9 @@ function CreateProblemStatementPage() {
 
           {showForm && (
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-6">Problem Statement Form</h2>
+              <h2 className="text-3xl font-bold mb-6">
+                Problem Statement Form
+              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="block text-gray-300 text-sm font-medium mb-2">
@@ -124,7 +134,9 @@ function CreateProblemStatementPage() {
                     className="w-full px-4 py-2 rounded-md bg-gray-900 text-gray-200 border border-gray-700 focus:ring-blue-500 focus:border-blue-500"
                     required
                   >
-                    <option value="" disabled>Select a theme</option>
+                    <option value="" disabled>
+                      Select a theme
+                    </option>
                     <option value="Technology">Technology</option>
                     <option value="Environment">Environment</option>
                     <option value="Healthcare">Healthcare</option>

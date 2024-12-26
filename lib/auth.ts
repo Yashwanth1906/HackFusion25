@@ -1,8 +1,8 @@
-import { prisma } from "@/prisma/db";
-import { DefaultSession, DefaultUser } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { prisma } from '@/prisma/db';
+import { DefaultSession, DefaultUser } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
 
-import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider from 'next-auth/providers/google';
 
 interface User extends DefaultUser {
   isAdmin: boolean;
@@ -12,37 +12,34 @@ interface Session extends DefaultSession {
   user: User;
 }
 
-interface token extends JWT{
-  isAdmin:boolean
+interface token extends JWT {
+  isAdmin: boolean;
 }
-
-
 
 export const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
-    })
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    }),
   ],
-  secret: process.env.JWT_SECRET || "hackfusion",
+  secret: process.env.JWT_SECRET || 'hackfusion',
   callbacks: {
-    async signIn({ user,  }:{user:User}) {
-
+    async signIn({ user }: { user: User }) {
       const isAdmin = await prisma.admin.findUnique({
-        where: { email: user.email ||"" },
+        where: { email: user.email || '' },
       });
-      console.log(isAdmin)
+      console.log(isAdmin);
       if (isAdmin) {
-        user.isAdmin = true
-        return true
+        user.isAdmin = true;
+        return true;
       }
 
       // if (!profile.email.endsWith("@citchennai.net")) {
       //   return false
       // }
       const existingUser = await prisma.user.findUnique({
-        where: { email: user.email ||"" },
+        where: { email: user.email || '' },
       });
 
       if (existingUser) {
@@ -50,8 +47,8 @@ export const authOptions = {
       } else {
         const newUser = await prisma.user.create({
           data: {
-            email: user.email ||"",
-            name: user.name ||"",
+            email: user.email || '',
+            name: user.name || '',
           },
           select: {
             email: true,
@@ -61,30 +58,27 @@ export const authOptions = {
         user.id = newUser.id;
       }
 
-      user.isAdmin=false;
+      user.isAdmin = false;
       return true;
     },
 
-    async session({ token, session }:{token:token,session:Session}) {
-      session.user.id = token.sub || ""
-      session.user.isAdmin = token.isAdmin 
-      console.log(session)
+    async session({ token, session }: { token: token; session: Session }) {
+      session.user.id = token.sub || '';
+      session.user.isAdmin = token.isAdmin;
+      console.log(session);
 
-      return session
+      return session;
     },
-   
-    async jwt({ token, user }:{token:token,user:User}) {
+
+    async jwt({ token, user }: { token: token; user: User }) {
       if (user) {
         token.sub = user.id;
         token.isAdmin = user.isAdmin || false;
       }
-      return token
+      return token;
     },
-    async redirect({ baseUrl }: { url: string, baseUrl: string }) {
-      return `${baseUrl}/user/home`
-    }
-
+    async redirect({ baseUrl }: { url: string; baseUrl: string }) {
+      return `${baseUrl}/user/home`;
+    },
   },
-}
-
-
+};

@@ -176,7 +176,7 @@
 //             </button>
 //         </div>
 //     );
-// 
+//
 //
 //
 //
@@ -185,11 +185,6 @@
 //
 //
 //
-export default function temp(){
-	return(
-		<div>
-		</div>
-
-
-	)
+export default function temp() {
+  return <div></div>;
 }

@@ -53,7 +53,7 @@
 //         }
 //         setTeamName(res.data.teamdetails.team.name);
 //         setTeamDetails(res.data.teamdetails.team.members);
-        
+
 //       }
 //       setFlag(true);
 //     } catch (error) {
@@ -286,7 +286,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -300,13 +300,17 @@ export interface teamDetailsType {
   isTeamLead: boolean;
 }
 
-const Themes = ["Med-Tech", "Fin-Tech", "Cyber Security", "Generative AI"];
+const Themes = ['Med-Tech', 'Fin-Tech', 'Cyber Security', 'Generative AI'];
 
 function RoundSubmissionPage() {
-  const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
+  const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(
+    undefined
+  );
   const [teamName, setTeamName] = useState('');
   const [selectedTheme, setSelectedTheme] = useState<string>('');
-  const [problems, setProblems] = useState<{ sno: string, title: string }[]>([]);
+  const [problems, setProblems] = useState<{ sno: string; title: string }[]>(
+    []
+  );
   const [formData, setFormData] = useState({
     problemId: '',
     solutionTitle: '',
@@ -321,7 +325,7 @@ function RoundSubmissionPage() {
 
   const getTeamDetails = async () => {
     try {
-      const res = await axios.get("/api/users/isinateam", {
+      const res = await axios.get('/api/users/isinateam', {
         headers: { email: session?.user?.email },
       });
 
@@ -334,7 +338,12 @@ function RoundSubmissionPage() {
             description: teamSubmission.description,
           });
           setSelectedTheme(teamSubmission.problem.theme);
-          setProblems([{ sno: teamSubmission.problem.sno, title: teamSubmission.problem.title }]);
+          setProblems([
+            {
+              sno: teamSubmission.problem.sno,
+              title: teamSubmission.problem.title,
+            },
+          ]);
           setIsTeamSubmitted(true);
         }
         setTeamName(res.data.teamdetails.team.name);
@@ -343,7 +352,7 @@ function RoundSubmissionPage() {
       setFlag(true);
     } catch (error) {
       console.error(error);
-      alert("Failed to fetch team details.");
+      alert('Failed to fetch team details.');
     }
   };
 
@@ -355,14 +364,14 @@ function RoundSubmissionPage() {
       }
     } catch (error) {
       console.error(error);
-      alert("Failed to fetch problems.");
+      alert('Failed to fetch problems.');
     }
   };
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      alert("Login First");
-      router.push("/");
+    if (status === 'unauthenticated') {
+      alert('Login First');
+      router.push('/');
     } else if (status === 'authenticated') {
       getTeamDetails();
     }
@@ -373,7 +382,9 @@ function RoundSubmissionPage() {
     getProblemsForTheme(e.target.value);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -391,11 +402,11 @@ function RoundSubmissionPage() {
         setIsTeamSubmitted(true);
         setShowForm(false);
       } else {
-        alert("Failed to submit your solution.");
+        alert('Failed to submit your solution.');
       }
     } catch (error) {
       console.error(error);
-      alert("Failed to submit. Please try again.");
+      alert('Failed to submit. Please try again.');
     }
   };
 
@@ -403,9 +414,9 @@ function RoundSubmissionPage() {
     setShowForm(true);
   };
 
-  if (status === "loading" || !flag) {
+  if (status === 'loading' || !flag) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
     );
@@ -437,7 +448,10 @@ function RoundSubmissionPage() {
             <h2 className="text-4xl font-semibold mb-6">{teamName}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamDetails?.map((member, index) => (
-                <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <div
+                  key={index}
+                  className="bg-gray-800 p-6 rounded-lg shadow-lg"
+                >
                   <h3 className="text-xl font-bold mb-2">{member.name}</h3>
                   <p className="text-gray-400">{member.year}</p>
                   <p className="text-gray-400">{member.dept}</p>
@@ -470,20 +484,28 @@ function RoundSubmissionPage() {
               </h2>
               <div className="space-y-4">
                 <p className="text-lg">
-                  <strong className="text-blue-400">Theme:</strong> 
+                  <strong className="text-blue-400">Theme:</strong>
                   <span className="ml-2 text-gray-300">{selectedTheme}</span>
                 </p>
                 <p className="text-lg">
-                  <strong className="text-purple-400">Problem Statement:</strong> 
-                  <span className="ml-2 text-gray-300">{problems[0]?.title}</span>
+                  <strong className="text-purple-400">
+                    Problem Statement:
+                  </strong>
+                  <span className="ml-2 text-gray-300">
+                    {problems[0]?.title}
+                  </span>
                 </p>
                 <p className="text-lg">
-                  <strong className="text-pink-400">Solution Title:</strong> 
-                  <span className="ml-2 text-gray-300">{formData.solutionTitle}</span>
+                  <strong className="text-pink-400">Solution Title:</strong>
+                  <span className="ml-2 text-gray-300">
+                    {formData.solutionTitle}
+                  </span>
                 </p>
                 <p className="text-lg">
-                  <strong className="text-yellow-400">Description:</strong> 
-                  <span className="ml-2 text-gray-300">{formData.description}</span>
+                  <strong className="text-yellow-400">Description:</strong>
+                  <span className="ml-2 text-gray-300">
+                    {formData.description}
+                  </span>
                 </p>
               </div>
               <div className="mt-8 text-center">
@@ -498,7 +520,11 @@ function RoundSubmissionPage() {
             </div>
           ) : (
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-6">{isTeamSubmitted ? "Update Your Solution" : "Submit Your Solution"}</h2>
+              <h2 className="text-3xl font-bold mb-6">
+                {isTeamSubmitted
+                  ? 'Update Your Solution'
+                  : 'Submit Your Solution'}
+              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="block text-gray-300 text-sm font-medium mb-2">
@@ -513,7 +539,9 @@ function RoundSubmissionPage() {
                   >
                     <option value="">Select a theme</option>
                     {Themes.map((theme, index) => (
-                      <option key={index} value={theme}>{theme}</option>
+                      <option key={index} value={theme}>
+                        {theme}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -574,7 +602,7 @@ function RoundSubmissionPage() {
                   size="lg"
                   className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-xl px-6 py-3 rounded-lg shadow-lg shadow-purple-500/20"
                 >
-                  {isTeamSubmitted ? "Update Submission" : "Submit"}
+                  {isTeamSubmitted ? 'Update Submission' : 'Submit'}
                 </Button>
               </form>
             </div>

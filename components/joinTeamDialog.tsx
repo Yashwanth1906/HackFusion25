@@ -1,47 +1,63 @@
-import { Dispatch, JSX, SetStateAction, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import axios from "axios";
+import { Dispatch, JSX, SetStateAction, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import axios from 'axios';
 
 interface JoinTeamDialogProps {
   email: string;
-  setflag:Dispatch<SetStateAction<boolean>>;
+  setflag: Dispatch<SetStateAction<boolean>>;
 }
 
-export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element {
-  const [name, setName] = useState<string>("");
-  const [regNo, setRegNo] = useState<string>("");
-  const [dept, setDept] = useState<string>("");
-  const [year, setYear] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
-  const [phno, setPhno] = useState<string>("");
-  const [teamId, setTeamId] = useState<string>("");
+export function JoinTeamDialog({
+  email,
+  setflag,
+}: JoinTeamDialogProps): JSX.Element {
+  const [name, setName] = useState<string>('');
+  const [regNo, setRegNo] = useState<string>('');
+  const [dept, setDept] = useState<string>('');
+  const [year, setYear] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const [phno, setPhno] = useState<string>('');
+  const [teamId, setTeamId] = useState<string>('');
 
   const handleSubmitClick = async () => {
     try {
-        
-      await axios.post("/api/users/jointeam", {
-        teamId,
-        memberdetails: {
-          name,
-          email,
-          gender,
-          regNo,
-          dept,
-          year,
-          phoneno: phno,
-        },
-      }).then((res)=>{
-        if(res.status === 200){
-          alert("Joined the team")
-        }
-      })
-      setflag((flag:boolean)=>!flag);
+      await axios
+        .post('/api/users/jointeam', {
+          teamId,
+          memberdetails: {
+            name,
+            email,
+            gender,
+            regNo,
+            dept,
+            year,
+            phoneno: phno,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            alert('Joined the team');
+          }
+        });
+      setflag((flag: boolean) => !flag);
     } catch {
-      alert("Error creating team");
+      alert('Error creating team');
     }
   };
   return (
@@ -63,31 +79,47 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
             <Label htmlFor="teamId" className="text-right">
               Team Id
             </Label>
-            <Input id="teamName" className="col-span-3" onChange={(e) => setTeamId(e.target.value)} />
+            <Input
+              id="teamName"
+              className="col-span-3"
+              onChange={(e) => setTeamId(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input id="name" className="col-span-3" onChange={(e) => setName(e.target.value)} />
+            <Input
+              id="name"
+              className="col-span-3"
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
             <Label htmlFor="regno" className="text-right">
               Reg No
             </Label>
-            <Input id="regno" className="col-span-3" onChange={(e) => setRegNo(e.target.value)} />
+            <Input
+              id="regno"
+              className="col-span-3"
+              onChange={(e) => setRegNo(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
             <Label htmlFor="department" className="text-right">
               Department
             </Label>
-            <Input id="department" className="col-span-3" onChange={(e) => setDept(e.target.value)} />
+            <Input
+              id="department"
+              className="col-span-3"
+              onChange={(e) => setDept(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
             <Label htmlFor="year" className="text-right">
               Year
             </Label>
-            <Select onValueChange={(val:string) => setYear(val)} value={year}>
+            <Select onValueChange={(val: string) => setYear(val)} value={year}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select year" />
               </SelectTrigger>
@@ -103,7 +135,10 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
             <Label htmlFor="gender" className="text-right">
               Gender
             </Label>
-            <Select onValueChange={(val:string) => setGender(val)} value={gender}>
+            <Select
+              onValueChange={(val: string) => setGender(val)}
+              value={gender}
+            >
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
@@ -118,17 +153,21 @@ export function JoinTeamDialog ({email,setflag}:JoinTeamDialogProps):JSX.Element
             <Label htmlFor="phone" className="text-right">
               Phone No
             </Label>
-            <Input id="phone" className="col-span-3" onChange={(e) => setPhno(e.target.value)} />
+            <Input
+              id="phone"
+              className="col-span-3"
+              onChange={(e) => setPhno(e.target.value)}
+            />
           </div>
-          <Button type="submit" className="mt-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600" onClick={handleSubmitClick}>
+          <Button
+            type="submit"
+            className="mt-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600"
+            onClick={handleSubmitClick}
+          >
             Join Team
           </Button>
         </div>
       </DialogContent>
-    </Dialog>); }
-
-
-
-
-
-
+    </Dialog>
+  );
+}

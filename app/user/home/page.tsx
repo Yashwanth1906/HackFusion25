@@ -1,13 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { Copy, LogOut } from 'lucide-react';
 import { RoundCard } from '@/components/RoundCard';
 import { TimelineConnector } from '@/components/TimelineConnector';
 import { useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import axios from "axios";
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { CreateTeamDialog } from '@/components/CreateTeamDialog';
 import { JoinTeamDialog } from '@/components/joinTeamDialog';
@@ -20,35 +20,38 @@ export interface Round {
   title: string;
   description: string;
   icon: string;
-  status: 'locked' | 'active' | 'completed' ;
+  status: 'locked' | 'active' | 'completed';
   deadline: string;
 }
 
 const rounds: Round[] = [
   {
     id: 1,
-    title: "Round 1: Ideation Phase",
-    description: "Submit your innovative idea and initial proposal. Focus on problem identification and solution approach.",
-    icon: "rocket",
-    status: "locked",
-    deadline: "March 15, 2024"
+    title: 'Round 1: Ideation Phase',
+    description:
+      'Submit your innovative idea and initial proposal. Focus on problem identification and solution approach.',
+    icon: 'rocket',
+    status: 'locked',
+    deadline: 'March 15, 2024',
   },
   {
     id: 2,
-    title: "Round 2: Development Phase",
-    description: "Build your prototype and demonstrate core functionalities. Show us your technical expertise.",
-    icon: "bulb",
-    status: "locked",
-    deadline: "March 30, 2024"
+    title: 'Round 2: Development Phase',
+    description:
+      'Build your prototype and demonstrate core functionalities. Show us your technical expertise.',
+    icon: 'bulb',
+    status: 'locked',
+    deadline: 'March 30, 2024',
   },
   {
     id: 3,
-    title: "Round 3: Final Presentation",
-    description: "Present your complete solution to our panel of industry experts and compete for the grand prize.",
-    icon: "trophy",
-    status: "locked",
-    deadline: "April 15, 2024"
-  }
+    title: 'Round 3: Final Presentation',
+    description:
+      'Present your complete solution to our panel of industry experts and compete for the grand prize.',
+    icon: 'trophy',
+    status: 'locked',
+    deadline: 'April 15, 2024',
+  },
 ];
 
 export interface teamDetailsType {
@@ -61,26 +64,28 @@ export interface teamDetailsType {
 function App() {
   const [inTeam, setInTeam] = useState(false);
   const [isTeamLead, setTeamLead] = useState(false);
-  const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(undefined);
+  const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(
+    undefined
+  );
   const [flag, setFlag] = useState<boolean>(false);
-  const [teamId, setTeamId] = useState<string>("");
+  const [teamId, setTeamId] = useState<string>('');
 
   const { data, status } = useSession();
   const router = useRouter();
 
   const getTeam = async () => {
     try {
-      const res = await axios.get("/api/users/isinateam", {
-        headers: { email: data?.user?.email }
+      const res = await axios.get('/api/users/isinateam', {
+        headers: { email: data?.user?.email },
       });
 
       if (res.data.success) {
         setInTeam(true);
         if (res.data.teamdetails) {
           if (res.data.isTeamLead) {
-            rounds[0].status = "active"
+            rounds[0].status = 'active';
           }
-          if(res.data.teamdetails.team.teamSubmisison){
+          if (res.data.teamdetails.team.teamSubmisison) {
             rounds[0].status = 'completed';
           }
           setTeamId(res.data.teamdetails.team.id);
@@ -90,42 +95,39 @@ function App() {
       }
       setFlag(true);
     } catch (error) {
-      setFlag(true)
+      setFlag(true);
       console.error(error);
     }
   };
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(teamId)
+      await navigator.clipboard.writeText(teamId);
+    } catch (error) {
+      console.error('Failed to copy team ID', error);
     }
-
-     catch (error) {
-      console.error("Failed to copy team ID", error);
-    }
- 
-  }
+  };
 
   const handleLogout = async () => {
-    await signOut()
-    router.push("/")
-  }
+    await signOut();
+    router.push('/');
+  };
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      alert("Login First");
-      router.push("/");
+    if (status === 'unauthenticated') {
+      alert('Login First');
+      router.push('/');
     } else if (status === 'authenticated') {
       getTeam();
     }
   }, [status, flag]);
 
-  if (status === "loading" || !flag) {
+  if (status === 'loading' || !flag) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
-    )
+    );
   }
 
   return (
@@ -161,7 +163,8 @@ function App() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              Join our premier hackathon and transform your innovative ideas into reality
+              Join our premier hackathon and transform your innovative ideas
+              into reality
             </motion.p>
           </motion.div>
 
@@ -173,16 +176,24 @@ function App() {
           >
             {!inTeam ? (
               <>
-                <CreateTeamDialog email={data?.user?.email || " "} setFlag={setFlag} />
-                <JoinTeamDialog email={data?.user?.email || ""} setflag={setFlag} />
+                <CreateTeamDialog
+                  email={data?.user?.email || ' '}
+                  setFlag={setFlag}
+                />
+                <JoinTeamDialog
+                  email={data?.user?.email || ''}
+                  setflag={setFlag}
+                />
               </>
             ) : (
               <div className="text-center mb-16 ">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-6">Team Details</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-6">
+                  Team Details
+                </h2>
                 <div className="bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg mb-4">
                   <h3 className="text-lg sm:text-xl font-bold mb-2">Team ID</h3>
-                  <div className='flex justify-evenly items-center gap-2 w-full'>
-                    <p className='text-white break-all'>{teamId}</p>
+                  <div className="flex justify-evenly items-center gap-2 w-full">
+                    <p className="text-white break-all">{teamId}</p>
                     <Button size="icon" onClick={handleCopy}>
                       <Copy className="h-4 w-4" />
                     </Button>
@@ -190,18 +201,33 @@ function App() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mt-4">
                   {teamDetails?.map((member, index) => (
-                    <div key={index} className="bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg">
-                      <h3 className="text-lg sm:text-xl font-bold mb-2">{member.name}</h3>
-                      <p>{member.year} - {member.dept}</p>
-                      {member.isTeamLead && <p className="text-green-500 mt-2">Team Lead</p>}
+                    <div
+                      key={index}
+                      className="bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg"
+                    >
+                      <h3 className="text-lg sm:text-xl font-bold mb-2">
+                        {member.name}
+                      </h3>
+                      <p>
+                        {member.year} - {member.dept}
+                      </p>
+                      {member.isTeamLead && (
+                        <p className="text-green-500 mt-2">Team Lead</p>
+                      )}
                     </div>
                   ))}
                 </div>
                 <div className="mt-6">
                   {isTeamLead ? (
-                    <DeleteTeamDialog email={data?.user?.email || ""} setFlag={setFlag} />
+                    <DeleteTeamDialog
+                      email={data?.user?.email || ''}
+                      setFlag={setFlag}
+                    />
                   ) : (
-                    <LeaveTeamDialog email={data?.user?.email || ""} setFlag={setFlag} />
+                    <LeaveTeamDialog
+                      email={data?.user?.email || ''}
+                      setFlag={setFlag}
+                    />
                   )}
                 </div>
               </div>
@@ -211,7 +237,9 @@ function App() {
             {rounds.map((round, index) => (
               <div key={round.id} className="relative">
                 {index < rounds.length - 1 && (
-                  <TimelineConnector isCompleted={round.status === 'completed'} />
+                  <TimelineConnector
+                    isCompleted={round.status === 'completed'}
+                  />
                 )}
                 <RoundCard
                   round={round}
@@ -227,5 +255,3 @@ function App() {
 }
 
 export default App;
-
-

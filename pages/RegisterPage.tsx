@@ -1,8 +1,8 @@
-'use client'
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { Plus, Trash2, Users, UserPlus, Home, CheckCircle } from "lucide-react";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+'use client';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { Plus, Trash2, Users, UserPlus, Home, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 type Member = {
   name: string;
@@ -28,29 +28,26 @@ export default function RegisterPage() {
   const [members, setMembers] = useState<Member[]>([]);
   const [isRegistered, setIsRegistered] = useState<boolean>(false); // Success Message State
 
-
   const handleLeaderChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setTeamLeader((prev) => ({ ...prev, [name]: value }));
   };
 
-
   const addMember = () => {
     if (members.length < 3) {
       setMembers([
         ...members,
-        { name: '', regNo: '', dept: '', year: '', email: '', phoneno: '' }
+        { name: '', regNo: '', dept: '', year: '', email: '', phoneno: '' },
       ]);
     } else {
       alert('Maximum 3 team members allowed');
     }
   };
 
-
   const updateMember = (index: number, e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const updatedMembers = [...members];
-    updatedMembers[index][name as keyof Member] = value || "";
+    updatedMembers[index][name as keyof Member] = value || '';
     setMembers(updatedMembers);
   };
 
@@ -61,20 +58,21 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-
     if (!teamName || !teamDescription) {
       alert('Please fill in all required fields');
       return;
     }
 
-    const leaderFieldsFilled = Object.values(teamLeader).every(field => field.trim() !== '');
+    const leaderFieldsFilled = Object.values(teamLeader).every(
+      (field) => field.trim() !== ''
+    );
     if (!leaderFieldsFilled) {
       alert('Please fill in all team leader details');
       return;
     }
 
-    const membersValid = members.every(member =>
-      Object.values(member).every(field => field.trim() !== '')
+    const membersValid = members.every((member) =>
+      Object.values(member).every((field) => field.trim() !== '')
     );
     if (members.length > 0 && !membersValid) {
       alert('Please fill in all team member details');
@@ -134,9 +132,13 @@ export default function RegisterPage() {
               Team Registered Successfully!
             </h2>
             <p className="text-gray-700 mt-2">
-              Your team has been successfully registered. Check your email for further instructions.
+              Your team has been successfully registered. Check your email for
+              further instructions.
             </p>
-            <Link href="/" className="mt-6 text-blue-600 font-semibold hover:underline">
+            <Link
+              href="/"
+              className="mt-6 text-blue-600 font-semibold hover:underline"
+            >
               Go back to Home
             </Link>
           </div>
@@ -188,7 +190,7 @@ export default function RegisterPage() {
                     </label>
                     {renderInputField(
                       field,
-                      teamLeader[field as keyof Member] ,
+                      teamLeader[field as keyof Member],
                       handleLeaderChange,
                       `Enter ${field}`
                     )}
@@ -209,7 +211,10 @@ export default function RegisterPage() {
               </div>
 
               {members.map((member, index) => (
-                <div key={index} className="relative mb-4 bg-gray-50 p-4 rounded-lg border">
+                <div
+                  key={index}
+                  className="relative mb-4 bg-gray-50 p-4 rounded-lg border"
+                >
                   <button
                     type="button"
                     onClick={() => removeMember(index)}
@@ -261,7 +266,7 @@ export default function RegisterPage() {
           </form>
         )}
       </div>
-      <button onClick={()=>signOut()}>logout</button>
+      <button onClick={() => signOut()}>logout</button>
     </div>
   );
 }

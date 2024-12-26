@@ -1,5 +1,5 @@
-import {  NextResponse } from "next/server";
-import { prisma } from "../../../../prisma/db"; // Adjust the path to match your project structure
+import { NextResponse } from 'next/server';
+import { prisma } from '../../../../prisma/db'; // Adjust the path to match your project structure
 // import { getServerSession } from "next-auth";
 // import { authOptions } from "@/lib/auth";
 //
@@ -31,8 +31,8 @@ export const GET = async () => {
             problem: {
               select: {
                 theme: true,
-              }
-            }
+              },
+            },
           },
         },
       },
@@ -40,11 +40,20 @@ export const GET = async () => {
 
     return NextResponse.json({ teams }, { status: 200 });
   } catch (error: unknown) {
-    console.log("Error fetching teams:", error);
+    console.log('Error fetching teams:', error);
     if (error instanceof Error) {
-      return NextResponse.json({ message: "Failed to fetch teams", error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { message: 'Failed to fetch teams', error: error.message },
+        { status: 500 }
+      );
     } else {
-      return NextResponse.json({ message: "Failed to fetch teams", error: "An unknown error occurred" }, { status: 500 });
+      return NextResponse.json(
+        {
+          message: 'Failed to fetch teams',
+          error: 'An unknown error occurred',
+        },
+        { status: 500 }
+      );
     }
   }
 };

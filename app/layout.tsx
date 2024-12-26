@@ -1,10 +1,10 @@
-'use client'
+'use client';
 /* import { Geist, Geist_Mono } from "next/font/google"; */
-import Navbar from "@/components/Navbar";
-import "./globals.css";
-import { usePathname } from "next/navigation";
-import { Providers } from "@/providers";
-import React, { JSX } from "react";
+import Navbar from '@/components/Navbar';
+import './globals.css';
+import { usePathname } from 'next/navigation';
+import { Providers } from '@/providers';
+import React, { JSX } from 'react';
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -17,19 +17,21 @@ import React, { JSX } from "react";
 // });
 //
 
-export default function RootLayout({ children }:{children:React.ReactNode}):JSX.Element {
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const pathname = usePathname();
 
   return (
     <html lang="en">
       <Providers>
         <body className="font-sans">
-          {pathname === "/" && <Navbar/>}
+          {pathname === '/' && <Navbar />}
           {children}
-        </body>  
+        </body>
       </Providers>
-      
     </html>
   );
 }

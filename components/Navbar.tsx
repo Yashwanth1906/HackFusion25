@@ -1,4 +1,3 @@
-
 'use client';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
@@ -41,7 +40,7 @@ const Navbar = () => {
         <Image
           src="/cit1.png"
           alt="Logo"
-          width={80} 
+          width={80}
           height={80}
           className="p-2 h-14 w-30 md:h-24 md:w-44"
         />
@@ -116,7 +115,7 @@ const Navbar = () => {
         <Image
           src="/hackfusion_logo.png"
           alt="Logo"
-          width={64} 
+          width={64}
           height={48}
           className="p-2 h-12 w-16 md:h-16 md:w-20"
         />

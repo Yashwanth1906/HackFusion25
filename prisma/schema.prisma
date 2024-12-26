@@ -1,11 +1,16 @@
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  pending
+  approved
+  rejected
 }
 
 model User {
@@ -31,14 +36,15 @@ model Member {
   phoneno    String?
   isTeamLead Boolean
   teamId     String
-  team       Team    @relation(fields: [teamId], references: [id],onDelete: Cascade)
+  team       Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
 }
 
 model Team {
-  id               String          @id @default(uuid())
-  name             String
-  members          Member[]
-  teamSubmisison   TeamSubmission?
+  id             String          @id @default(uuid())
+  name           String
+  members        Member[]
+  status         Status          @default(pending)
+  teamSubmisison TeamSubmission?
 }
 
 model TeamSubmission {
@@ -46,23 +52,17 @@ model TeamSubmission {
   teamId        String           @unique
   solutionTitle String
   description   String
-  team          Team             @relation(fields: [teamId], references: [id],onDelete: Cascade)
+  team          Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
   problemId     Int
-  problem       ProblemStatement @relation(fields: [problemId], references: [sno],onDelete:Cascade)
+  problem       ProblemStatement @relation(fields: [problemId], references: [sno], onDelete: Cascade)
 }
 
 model ProblemStatement {
-  sno            Int @id @default(autoincrement())
+  sno            Int              @id @default(autoincrement())
   title          String
   theme          String
   description    String
   teamSubmission TeamSubmission[]
-}
-
-
-model SelectedTeam {
-  id        String @id @default(uuid())
-  teamId    String @unique
 }
 
 model ContactUs {
@@ -71,11 +71,11 @@ model ContactUs {
   message String
   email   String
   replyId String @unique
-  reply   Reply?  
+  reply   Reply?
 }
 
 model Reply {
-  id      String     @id @default(uuid())
+  id      String    @id @default(uuid())
   message String
-  contact ContactUs @relation(fields: [id], references: [id],onDelete: Cascade)
+  contact ContactUs @relation(fields: [id], references: [id], onDelete: Cascade)
 }
