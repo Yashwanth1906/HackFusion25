@@ -2,22 +2,21 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-// Named export for the POST method
 export async function POST(req:Request) {
   const { name, email, phone, message } =await req.json() ;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "hackerz1cit@gmail.com", // Replace with your email
-      pass: "wppj dxmk kpig efle",   // Replace with your email password or app-specific password
+      user: process.env.EMAIL_USER, 
+      pass:process.env.EMAIL_PASS,   
     },
   });
 
   try {
     await transporter.sendMail({
       from: email,
-      to: "hackerz1cit@gmail.com", // The recipient's email address
+      to: "hackerz1cit@gmail.com", 
       replyTo: email,
   
       subject: `New Message from ${name}`,
