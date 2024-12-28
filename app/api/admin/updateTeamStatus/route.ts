@@ -1,71 +1,128 @@
-import { prisma } from "@/prisma/db";
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from '@/prisma/db';
+import { NextRequest, NextResponse } from 'next/server';
+import { randomUUID } from 'crypto';
+
+// Define allowed status values as a const for type safety and reusability
+const ALLOWED_STATUSES = ['pending', 'approved', 'rejected'] as const;
+type TeamStatus = typeof ALLOWED_STATUSES[number];
+
+// Define expected request body type
+interface UpdateTeamsRequest {
+  teamIds: string[];
+  status: TeamStatus;
+}
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { teamIds, status } = await req.json();
-    if (!Array.isArray(teamIds) || !["pending", "approved", "rejected"].includes(status)) {
-      console.error("Invalid input:", { teamIds, status });
+    const body = await req.json();
+    
+    // Validate request body against expected type
+    if (!isValidUpdateTeamsRequest(body)) {
       return NextResponse.json(
-        { message: "Invalid input. Ensure teamIds is an array and status is valid." },
+        { message: 'Invalid request body format' },
         { status: 400 }
       );
     }
 
-    console.log("Processing update for teams:", { teamIds, status });
+    const { teamIds, status } = body;
 
-    const updatedTeams = [];
-    const newEntries = [];
-    const removedEntries = [];
+    if (teamIds.length === 0) {
+      return NextResponse.json(
+        { message: 'teamIds must be a non-empty array.' },
+        { status: 400 }
+      );
+    }
 
-    for (const teamId of teamIds) {
-      try {
-        const team = await prisma.team.findUnique({ where: { id: teamId } });
-        if (!team) {
-          console.warn(`Team with ID ${teamId} not found. Skipping.`);
-          continue;
+    // Process teams in a transaction to ensure data consistency
+    const result = await prisma.$transaction(async (tx) => {
+      const updatedTeams = [];
+      const newEntries = [];
+      const removedEntries = [];
+      const skippedTeams: string[] = [];
+
+      // Fetch all teams at once for better performance
+      const existingTeams = await tx.team.findMany({
+        where: { id: { in: teamIds } },
+      });
+
+      const existingTeamIds = new Set(existingTeams.map(team => team.id));
+
+      // Track skipped teams
+      teamIds.forEach(id => {
+        if (!existingTeamIds.has(id)) {
+          skippedTeams.push(id);
         }
+      });
 
-        const updatedTeam = await prisma.team.update({
-          where: { id: teamId },
+      // Log skipped teams
+      if (skippedTeams.length > 0) {
+        console.warn(`Skipped teams (not found in the database): ${skippedTeams.join(', ')}`);
+      }
+
+      // Update existing teams
+      for (const team of existingTeams) {
+        const updatedTeam = await tx.team.update({
+          where: { id: team.id },
           data: { status },
         });
         updatedTeams.push(updatedTeam);
 
-        if (status === "approved") {
-          const existingEntry = await prisma.roundOneWinners.findUnique({ where: { teamId } });
-          if (!existingEntry) {
-            const newEntry = await prisma.roundOneWinners.create({ data: { teamId } });
-            newEntries.push(newEntry);
-          }
-        } else if (status === "rejected") {
-          const existingEntry = await prisma.roundOneWinners.findUnique({ where: { teamId } });
-          if (existingEntry) {
-            const removedEntry = await prisma.roundOneWinners.delete({ where: { teamId } });
+        if (status === 'approved') {
+          const newEntry = await tx.roundOneWinners.upsert({
+            where: { teamId: team.id },
+            update: {},
+            create: { id: randomUUID(), teamId: team.id },
+          });
+          newEntries.push(newEntry);
+        } else if (status === 'rejected') {
+          try {
+            const removedEntry = await tx.roundOneWinners.delete({
+              where: { teamId: team.id },
+            });
             removedEntries.push(removedEntry);
+          } catch (err) {
+            if (!(err instanceof Error && err.message.includes('Record to delete does not exist'))) {
+              throw err;
+            }
           }
         }
-      } catch (teamError) {
-        console.error(`Error processing team ID ${teamId}:`, teamError);
       }
-    }
 
-    console.log("Update summary:", { updatedTeams, newEntries, removedEntries });
+      return {
+        updatedTeams,
+        newEntries,
+        removedEntries,
+        skippedTeams,
+      };
+    });
 
     return NextResponse.json(
       {
-        message: "Teams updated successfully.",
-        updatedTeams,
-        addedToWinners: newEntries,
-        removedFromWinners: removedEntries,
+        message: `Successfully processed teams: ${result.updatedTeams.length} updated, ${result.newEntries.length} added to winners, ${result.removedEntries.length} removed from winners, ${result.skippedTeams.length} skipped.`,
+        updatedTeams: result.updatedTeams,
+        addedToWinners: result.newEntries,
+        removedFromWinners: result.removedEntries,
+        skippedTeams: result.skippedTeams,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unhandled API Error:", error);
-    return NextResponse.json(
-      { error: "An unexpected error occurred." },
-      { status: 500 }
-    );
+    // console.log('API Error:', error);
+    return NextResponse.json({
+      message: 'Internal server error',
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
+    }, { status: 500 });
   }
 };
+
+// Type guard for request body validation
+function isValidUpdateTeamsRequest(body: any): body is UpdateTeamsRequest {
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    Array.isArray(body.teamIds) &&
+    body.teamIds.every((id: unknown) => typeof id === 'string') &&
+    typeof body.status === 'string' &&
+    ALLOWED_STATUSES.includes(body.status as TeamStatus)
+  );
+}

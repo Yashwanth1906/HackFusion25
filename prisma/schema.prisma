@@ -76,20 +76,20 @@ model Reply {
 }
 
 model RoundOneWinners {
-  id     String @id
+  id     String @id @default(uuid())
   teamId String @unique
   status Status @default(pending)
   Team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
 }
 
 model RoundThreeWinners {
-  id     String @id
+  id     String @id @default(uuid())
   teamId String @unique
   status Status @default(pending)
 }
 
 model RoundTwoWinners {
-  id     String @id
+  id     String @id @default(uuid())
   teamId String @unique
   status Status @default(pending)
 }

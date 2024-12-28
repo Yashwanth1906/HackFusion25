@@ -2,11 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Crown } from "lucide-react";
 
 type Member = {
   id: string;
   name: string;
   email: string;
+  isTeamLead?: boolean;
 };
 
 type Problem = {
@@ -27,6 +29,13 @@ type Team = {
   teamSubmisison?: TeamSubmission;
 };
 
+const LeaderIcon = () => (
+  <Crown 
+    size={20}
+    className="inline-block text-yellow-500 mr-1"
+  />
+);
+
 export default function AdminPage() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<Set<string>>(new Set());
@@ -34,7 +43,7 @@ export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState<
     "pending" | "approved" | "rejected"
   >("pending");
-  const [selectedTheme, setSelectedTheme] = useState<string>(""); // Theme filter
+  const [selectedTheme, setSelectedTheme] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -70,41 +79,37 @@ export default function AdminPage() {
     setActionLoading(true);
     try {
       const selectedTeamArray = Array.from(selectedTeams);
-  
-      console.log("Sending payload:", { teamIds: selectedTeamArray, status });
+      console.log("Selected Team IDs:", selectedTeamArray);
   
       const response = await axios.post("/api/admin/updateTeamStatus", {
         teamIds: selectedTeamArray,
         status,
       });
   
-      if (response.status === 200) {
-        console.log("Response from server:", response.data);
+      console.log("Response from server:", response.data);
   
-        setTeams((prevTeams) =>
-          prevTeams.map((team) =>
-            selectedTeams.has(team.id) ? { ...team, status } : team,
-          ),
-        );
+      setTeams((prevTeams) =>
+        prevTeams.map((team) =>
+          selectedTeams.has(team.id) ? { ...team, status } : team,
+        ),
+      );
   
-        alert(`Teams ${status} successfully!`);
-        setSelectedTeams(new Set());
-      } else {
-        console.error("Unexpected response:", response);
-        alert(`Partial success: ${response.data.message}`);
-      }
+      alert(`Teams ${status} successfully!`);
+      setSelectedTeams(new Set());
     } catch (error) {
-      console.error("Error in handleAction:", error);
-  
       if (axios.isAxiosError(error)) {
-        alert(`Error: ${error.response?.data?.error || "An unexpected error occurred."}`);
+        console.log("Axios error details:", error.response?.data);
+        alert(
+          `Failed to ${status} teams. Server responded with: ${error.response?.data?.message || "Unknown error"}.`
+        );
       } else {
-        alert("Failed to process the request.");
+        console.log("Unexpected error:", error);
+        alert("An unexpected error occurred. Check the console for details.");
       }
     } finally {
       setActionLoading(false);
     }
-  };    
+  };      
 
   const handleApprove = async () => {
     await handleAction("approved");
@@ -182,7 +187,7 @@ export default function AdminPage() {
           {filteredTeams.map((team) => (
             <div
               key={team.id}
-              className={`$ {
+              className={`${
                 selectedTab === "approved"
                   ? "bg-green-200 hover:border-green-800"
                   : selectedTab === "rejected"
@@ -199,7 +204,8 @@ export default function AdminPage() {
                   <p className="text-gray-600 font-medium">Members:</p>
                   <ol className="list-disc list-inside ml-4">
                     {team.members.map((member) => (
-                      <li key={member.id} className="text-gray-700">
+                      <li key={member.id} className="text-gray-700 flex items-center gap-2">
+                        {member.isTeamLead && <LeaderIcon />}
                         {member.name} ({member.email})
                       </li>
                     ))}

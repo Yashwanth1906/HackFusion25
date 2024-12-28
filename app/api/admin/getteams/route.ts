@@ -21,6 +21,7 @@ export const GET = async () => {
             id: true,
             email: true,
             name: true,
+            isTeamLead: true,
           },
         },
         status: true,
