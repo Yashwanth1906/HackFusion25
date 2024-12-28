@@ -13,7 +13,7 @@ export const LeaveTeamDialog = ({
   setFlag,
 }: {
   email: string;
-  setFlag: any;
+  setFlag: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

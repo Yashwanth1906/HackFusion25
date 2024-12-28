@@ -50,7 +50,7 @@ export const POST = async (req: NextRequest) => {
             teamId: teamData.teamId,
             solutionTitle: valid.data.solutionTitle,
             description: valid.data.description,
-            problemId: valid.data.problemId,
+            problemId: parseInt(valid.data.problemId),
           },
         });
         return NextResponse.json(

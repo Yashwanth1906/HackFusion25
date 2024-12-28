@@ -24,7 +24,7 @@ import axios from "axios";
 
 import { useToast } from "@/hooks/use-toast";
 
-const CreateTeamDialog = ({ email, setFlag }: any) => {
+const CreateTeamDialog = ({ email, setFlag }: { email: string, setFlag: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const { toast } = useToast();
   const [name, setName] = useState<string>("");
   const [regNo, setRegNo] = useState<string>("");
@@ -56,7 +56,8 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
 
       setTeamId(res.data.teamId);
       setIsTeamIdDialogOpen(true);
-    } catch (e) {
+    } catch (error) {
+      console.log(error);
       toast({
         title: "Error",
         description: "Failed to create team",
@@ -76,7 +77,8 @@ const CreateTeamDialog = ({ email, setFlag }: any) => {
         setIsTeamIdDialogOpen(false);
         setFlag((flag: boolean) => !flag);
       })
-      .catch((err) => {
+      .catch((error) => {
+        console.log(error);
         toast({
           title: "Error",
           description: "Failed to copy Team ID",

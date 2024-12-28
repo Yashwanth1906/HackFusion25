@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
@@ -7,7 +7,7 @@ export const GET = async () => {
     await prisma.teamSubmission.deleteMany({});
     await prisma.team.deleteMany({});
     return NextResponse.json({ msg: "done" });
-  } catch (e: any) {
-    return NextResponse.json({ msg: e });
+  } catch (error) {
+    return NextResponse.json({ msg: error });
   }
 };

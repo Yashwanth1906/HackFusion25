@@ -115,8 +115,13 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-// Type guard for request body validation
-function isValidUpdateTeamsRequest(body: any): body is UpdateTeamsRequest {
+// Define the shape of a potential request body
+interface PotentialUpdateTeamsRequest {
+  teamIds?: string[];
+  status?: string;
+}
+
+function isValidUpdateTeamsRequest(body: PotentialUpdateTeamsRequest): body is UpdateTeamsRequest {
   return (
     typeof body === 'object' &&
     body !== null &&

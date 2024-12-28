@@ -31,8 +31,7 @@ export default function About() {
   // Existing animation variants
 
   const scrollVariants = {
-    //@ts-ignore
-    offscreen: (direction) => ({
+    offscreen: (direction: number) => ({ // Explicitly typing 'direction' as a number
       x: direction < 0 ? -100 : 100,
       opacity: 0,
     }),
@@ -45,7 +44,7 @@ export default function About() {
         duration: 0.9,
       },
     },
-  };
+  };  
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -112,7 +111,7 @@ export default function About() {
                   className="relative bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600"
                 >
                   <p className="text-xl text-gray-700 leading-relaxed italic">
-                    "HackFusion-25: Where Innovation Meets Opportunity"
+                  &ldquo;HackFusion-25: Where Innovation Meets Opportunity&rdquo;
                   </p>
                 </motion.div>
 
@@ -233,10 +232,10 @@ export default function About() {
                   through groundbreaking ideas and solutions.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed mt-4">
-                  Whether it's a software application, a hardware prototype, or
+                  Whether it&lsquo;s a software application, a hardware prototype, or
                   a unique tech concept, HackFusion-25 offers participants a
-                  chance to transform their ideas into reality. This event isn't
-                  limited to any one field—it's open to <b>all departments</b>,
+                  chance to transform their ideas into reality. This event isn&lsquo;t
+                  limited to any one field—it&lsquo;s open to <b>all departments</b>,
                   embracing diversity in thought, skill, and innovation.
                 </p>
               </motion.div>

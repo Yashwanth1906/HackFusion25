@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/Spinner";
 
@@ -30,10 +30,11 @@ function RoundSubmissionPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const getTeamDetails = async () => {
+  // Memoize the getTeamDetails function to prevent re-creating it on each render
+  const getTeamDetails = useCallback(async () => {
     try {
       const res = await axios.get("/api/users/isinateam", {
-        //@ts-ignore
+        //@ts-expect-error We are using email directly from session, which could cause type issues.
         headers: { email: session.user.email },
       });
 
@@ -46,7 +47,7 @@ function RoundSubmissionPage() {
       console.error(error);
       alert("Failed to fetch team details.");
     }
-  };
+  }, [session?.user?.email]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -55,7 +56,7 @@ function RoundSubmissionPage() {
     } else if (status === "authenticated") {
       getTeamDetails();
     }
-  }, [status]);
+  }, [status, getTeamDetails, router]);
 
   if (status === "loading" || !flag) {
     return (
@@ -79,7 +80,7 @@ function RoundSubmissionPage() {
 
     try {
       const res = await axios.post("/api/users/submitidea", formData, {
-        //@ts-ignore
+        //@ts-expect-error We are using email directly from session, which could cause type issues.
         headers: { email: session.user.email },
       });
 

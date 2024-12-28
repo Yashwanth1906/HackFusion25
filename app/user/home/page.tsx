@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Copy, CopyIcon, UsersIcon } from "lucide-react";
+// import { Copy, CopyIcon, UsersIcon } from "lucide-react";
+import { Copy } from "lucide-react";
 import { RoundCard } from "@/components/RoundCard";
 import { TimelineConnector } from "@/components/TimelineConnector";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ import CreateTeamDialog from "@/components/CreateTeamDialog";
 import JoinTeamDialog from "@/components/joinTeamDialog";
 import { DeleteTeamDialog } from "@/components/DeleteTeamDialog";
 import { LeaveTeamDialog } from "@/components/LeaveTeamDialog";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
 import { Spinner } from "@/components/Spinner";
 
 export interface Round {
@@ -70,12 +71,13 @@ function App() {
   );
   const [flag, setFlag] = useState<boolean>(false);
   const [teamId, setTeamId] = useState<string>("");
-  const toast = useToast();
+  // const toast = useToast();
 
   const { data, status } = useSession();
   const router = useRouter();
 
-  const getTeam = async () => {
+  // Memoizing getTeam function using useCallback
+  const getTeam = useCallback(async () => {
     try {
       const res = await axios.get("/api/users/isinateam", {
         headers: { email: data?.user?.email },
@@ -97,7 +99,7 @@ function App() {
       setFlag(true);
       console.error(error);
     }
-  };
+  }, [data?.user?.email]);
 
   const handleCopy = async () => {
     try {
@@ -112,7 +114,7 @@ function App() {
     } else if (status === "authenticated") {
       getTeam();
     }
-  }, [status, flag]);
+  }, [status, flag, getTeam, router]);
 
   if (status === "loading" || !flag) {
     return (
@@ -155,8 +157,8 @@ function App() {
           >
             {!inTeam ? (
               <>
-                <CreateTeamDialog email={data?.user?.email} setFlag={setFlag} />
-                <JoinTeamDialog email={data?.user?.email} setflag={setFlag} />
+                <CreateTeamDialog email={data?.user?.email || ""} setFlag={setFlag} />
+                <JoinTeamDialog email={data?.user?.email || ""} setflag={setFlag} />
               </>
             ) : (
               <div className="text-center mb-16">

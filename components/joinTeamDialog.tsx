@@ -18,16 +18,16 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 
-interface JoinTeamDialogProps {
-  email: string | undefined;
-}
+// interface JoinTeamDialogProps {
+//   email: string | undefined;
+// }
 
 export const JoinTeamDialog = ({
   email,
   setflag,
 }: {
   email: string | undefined | null;
-  setflag: any;
+  setflag: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [name, setName] = useState<string>("");
   const [regNo, setRegNo] = useState<string>("");
@@ -51,8 +51,10 @@ export const JoinTeamDialog = ({
           phoneno: phno,
         },
       });
+      console.log(res.data);
       setflag(true);
-    } catch (e) {
+    } catch (error) {
+      console.log(error);
       alert("Error creating team");
     }
   };
@@ -116,7 +118,7 @@ export const JoinTeamDialog = ({
             <Label htmlFor="year" className="text-right">
               Year
             </Label>
-            <Select onValueChange={(val: any) => setYear(val)} value={year}>
+            <Select onValueChange={(val: string) => setYear(val)} value={year}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select year" />
               </SelectTrigger>
@@ -132,7 +134,7 @@ export const JoinTeamDialog = ({
             <Label htmlFor="gender" className="text-right">
               Gender
             </Label>
-            <Select onValueChange={(val: any) => setGender(val)} value={gender}>
+            <Select onValueChange={(val: string) => setGender(val)} value={gender}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>

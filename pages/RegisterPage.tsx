@@ -16,10 +16,19 @@ export default function RegisterPage() {
     phoneno: "",
   });
 
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState([
+    {
+      name: "",
+      regNo: "",
+      dept: "",
+      year: "",
+      email: "",
+      phoneno: "",
+    },
+  ]);
   const [isRegistered, setIsRegistered] = useState(false); // Success Message State
 
-  const handleLeaderChange = (e) => {
+  const handleLeaderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setTeamLeader((prev) => ({ ...prev, [name]: value }));
   };
@@ -35,50 +44,18 @@ export default function RegisterPage() {
     }
   };
 
-  const updateMember = (index, e) => {
+  const updateMember = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const updatedMembers = [...members];
-    updatedMembers[index][name] = value;
+    updatedMembers[index][name as keyof typeof updatedMembers[0]] = value;
     setMembers(updatedMembers);
   };
 
-  const removeMember = (indexToRemove) => {
+  const removeMember = (indexToRemove: number) => {
     setMembers(members.filter((_, index) => index !== indexToRemove));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const payload = {
-  //     teamName,
-  //     teamDescription,
-  //     teamLeader,
-  //     members
-  //   };
-
-  //   try {
-  //     const response = await fetch('http://localhost:6969/api/users/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       credentials: 'include',
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     const data = await response.json();
-  //     console.log(data);
-  //     if (response.ok) {
-  //       setIsRegistered(true); // Show success message
-  //     } else {
-  //       alert(data.message || 'Registration failed');
-  //     }
-  //   } catch (error) {
-  //     console.error('Registration error:', error);
-  //     alert('Something went wrong. Please try again.');
-  //   }
-  // };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Check if all required fields are filled
@@ -108,14 +85,13 @@ export default function RegisterPage() {
     // If all validations pass, set registered state
     setIsRegistered(true);
   };
-
   const renderInputField = (
-    name,
-    value,
-    onChange,
-    placeholder,
-    type = "text",
-    additionalClasses = "",
+    name: string,
+    value: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    placeholder: string,
+    type: string = "text",
+    additionalClasses: string = "",
   ) => (
     <input
       type={type}
@@ -209,7 +185,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="grid md:grid-cols-3 gap-4">
-                {Object.keys(teamLeader).map((field) => (
+                {(Object.keys(teamLeader) as Array<keyof typeof teamLeader>).map((field) => (
                   <div key={field}>
                     <label className="block text-gray-600 mb-1 capitalize">
                       {field.replace(/([A-Z])/g, " $1")}
@@ -252,7 +228,7 @@ export default function RegisterPage() {
                     Member {index + 1}
                   </h3>
                   <div className="grid md:grid-cols-3 gap-4">
-                    {Object.keys(member).map((field) => (
+                    {(Object.keys(member) as Array<keyof typeof member>).map((field) => (
                       <div key={field}>
                         <label className="block text-gray-600 mb-1 capitalize">
                           {field.replace(/([A-Z])/g, " $1")}
@@ -292,7 +268,7 @@ export default function RegisterPage() {
           </form>
         )}
       </div>
-      <button onClick={signOut}>logout</button>
+      <button onClick={() => signOut()}>logout</button>
     </div>
   );
 }

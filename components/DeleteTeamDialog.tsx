@@ -4,8 +4,8 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
+  // DialogHeader,
+  // DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
 import { useState } from "react";
@@ -15,7 +15,7 @@ export const DeleteTeamDialog = ({
   setFlag,
 }: {
   email: string;
-  setFlag: any;
+  setFlag: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -28,6 +28,7 @@ export const DeleteTeamDialog = ({
           },
         })
         .then((res) => {
+          console.log(res.data);
           setIsOpen(false);
           setFlag((flag: boolean) => !flag);
         });

@@ -17,7 +17,7 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  //@ts-expect-error
+  //@ts-expect-error: Suppressing type error for document.getElementById; elementId is assumed to exist in the DOM.
   const scrollToSection = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {

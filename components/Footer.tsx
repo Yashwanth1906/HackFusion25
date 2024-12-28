@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="mb-4">
           <p className="text-sm md:text-lg mb-2">
             We encourage all students to seize this opportunity to innovate and
-            showcase their talents. Let's code, collaborate, and create!
+            showcase their talents. Let&lsquo;s code, collaborate, and create!
           </p>
         </div>
         <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-4 md:mb-0">

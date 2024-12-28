@@ -1,16 +1,16 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+// import { useState } from "react";
 
 import { Meteors } from "@/components/acertinity/meteors";
 import { AnimeatedButton } from "@/components/acertinity/button";
 import { StarsBackground } from "@/components/acertinity/stars-background";
 import { ShootingStars } from "@/components/acertinity/shooting-stars";
 
-import { AuroraBackground } from "@/components/acertinity/aurora-backgorund";
+// import { AuroraBackground } from "@/components/acertinity/aurora-backgorund";
 export default function Signin() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  // const [email, setEmail] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function Signin() {
           <div className="w-full max-w-md px-4 sm:px-0">
             <div className="relative shadow-xl bg-gray-900/60 bg-gray-500 border-blue-500  border-4 px-4 py-8 overflow-hidden rounded-2xl flex flex-col justify-end items-start">
               <h1 className="font-bold text-xl text-white mb-4 relative z-50 w-full text-center">
-                HACK FUSION'25
+                HACK FUSION&apos;25
               </h1>
 
               <h2 className="font-bold text-xl text-white w-full text-center">

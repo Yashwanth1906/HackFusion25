@@ -34,7 +34,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   className,
 }) => {
   const [stars, setStars] = useState<StarProps[]>([]);
-  //@ts-ignore
+  //@ts-expect-error: Canvas ref used in the component, which may be undefined initially.
   const canvasRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
 
@@ -81,15 +81,17 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     };
 
     updateStars();
-
+    
     const resizeObserver = new ResizeObserver(updateStars);
     if (canvasRef.current) {
-      resizeObserver.observe(canvasRef.current);
+      const canvas = canvasRef.current;
+      resizeObserver.observe(canvas);
     }
 
     return () => {
       if (canvasRef.current) {
-        resizeObserver.unobserve(canvasRef.current);
+        const canvas = canvasRef.current;
+        resizeObserver.unobserve(canvas);
       }
     };
   }, [
@@ -104,12 +106,12 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
+  
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
+  
     let animationFrameId: number;
-
+  
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       stars.forEach((star) => {
@@ -117,24 +119,24 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
         ctx.fill();
-
+  
         if (star.twinkleSpeed !== null) {
           star.opacity =
             0.5 +
             Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
         }
       });
-
+  
       animationFrameId = requestAnimationFrame(render);
     };
-
+  
     render();
-
+  
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
   }, [stars]);
-
+  
   return (
     <canvas
       ref={canvasRef}
