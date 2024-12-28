@@ -130,12 +130,16 @@ export default function AdminPage() {
   const filteredTeams = teams.filter(
     (team) =>
       team.status === selectedTab &&
+      team.teamSubmisison &&
       (!selectedTheme || team.teamSubmisison?.problem?.theme === selectedTheme),
   );
 
   const uniqueThemes = Array.from(
     new Set(
-      teams.map((team) => team.teamSubmisison?.problem?.theme).filter(Boolean),
+      teams
+        .filter((team) => team.teamSubmisison)
+        .map((team) => team.teamSubmisison?.problem?.theme)
+        .filter(Boolean),
     ),
   ) as string[];
 
