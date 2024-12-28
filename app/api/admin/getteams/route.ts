@@ -23,6 +23,7 @@ export const GET = async () => {
             name: true,
           },
         },
+        status: true,
         teamSubmisison: {
           select: {
             id: true,

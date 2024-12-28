@@ -70,26 +70,41 @@ export default function AdminPage() {
     setActionLoading(true);
     try {
       const selectedTeamArray = Array.from(selectedTeams);
-      await axios.post("/api/admin/updateTeamsStatus", {
+  
+      console.log("Sending payload:", { teamIds: selectedTeamArray, status });
+  
+      const response = await axios.post("/api/admin/updateTeamStatus", {
         teamIds: selectedTeamArray,
         status,
       });
-
-      setTeams((prevTeams) =>
-        prevTeams.map((team) =>
-          selectedTeams.has(team.id) ? { ...team, status } : team,
-        ),
-      );
-
-      alert(`Teams ${status} successfully!`);
-      setSelectedTeams(new Set());
+  
+      if (response.status === 200) {
+        console.log("Response from server:", response.data);
+  
+        setTeams((prevTeams) =>
+          prevTeams.map((team) =>
+            selectedTeams.has(team.id) ? { ...team, status } : team,
+          ),
+        );
+  
+        alert(`Teams ${status} successfully!`);
+        setSelectedTeams(new Set());
+      } else {
+        console.error("Unexpected response:", response);
+        alert(`Partial success: ${response.data.message}`);
+      }
     } catch (error) {
-      alert(`Failed to ${status} selected teams.`);
-      console.log(error);
+      console.error("Error in handleAction:", error);
+  
+      if (axios.isAxiosError(error)) {
+        alert(`Error: ${error.response?.data?.error || "An unexpected error occurred."}`);
+      } else {
+        alert("Failed to process the request.");
+      }
     } finally {
       setActionLoading(false);
     }
-  };
+  };    
 
   const handleApprove = async () => {
     await handleAction("approved");
