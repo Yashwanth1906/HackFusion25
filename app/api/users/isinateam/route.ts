@@ -32,11 +32,10 @@ export const GET = async (req: NextRequest) => {
               select: {
                 solutionTitle: true,
                 description: true,
-                problem: {
+                domain: {
                   select: {
-                    sno: true,
-                    title: true,
-                    theme: true,
+                    id: true,
+                    name: true,
                   },
                 },
               },

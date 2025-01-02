@@ -30,9 +30,9 @@ export const GET = async () => {
             id: true,
             solutionTitle: true,
             description: true,
-            problem: {
+            domain: {
               select: {
-                theme: true,
+                name: true,
               },
             },
           },

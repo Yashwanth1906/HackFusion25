@@ -35,7 +35,7 @@ model Member {
 
 model Team {
   id              String           @id @default(uuid())
-  name            String
+  name            String           @unique
   status          Status           @default(pending)
   members         Member[]
   RoundOneWinners RoundOneWinners?
@@ -43,21 +43,19 @@ model Team {
 }
 
 model TeamSubmission {
-  id            String           @id @default(uuid())
-  teamId        String           @unique
+  id            String @id @default(uuid())
+  teamId        String @unique
   solutionTitle String
   description   String
-  problemId     Int
-  problem       ProblemStatement @relation(fields: [problemId], references: [sno], onDelete: Cascade)
-  team          Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  domainId      String
+  domain        Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  team          Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
 }
 
-model ProblemStatement {
-  sno            Int              @id @default(autoincrement())
-  title          String
-  theme          String
-  description    String
-  teamSubmission TeamSubmission[]
+model Domain {
+  id       String           @id @default(uuid())
+  name     String
+  teamsubs TeamSubmission[]
 }
 
 model ContactUs {

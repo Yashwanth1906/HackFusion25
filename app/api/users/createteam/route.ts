@@ -22,22 +22,20 @@ export const POST = async (req: NextRequest) => {
     }
     const teamName = teamNameparse.data;
     const teamLead = teamLeadParse.data;
-
-    console.log(teamLead.name, teamLead.email, teamLead.gender, teamLead.regNo);
-    const user = await prisma.member.findFirst({
-      where: {
-        OR: [{ email: teamLead.email }, { regNo: teamLead.regNo }],
-      },
+    const name = teamName.teamName.toLowerCase();
+    const teams = await prisma.team.findMany({
       select: {
-        team: true,
+        name: true,
       },
     });
-    if (user) {
-      return NextResponse.json({
-        success: false,
-        message: "You have already in a team",
-      });
-    }
+    teams.map((team) => {
+      if (team.name.toLowerCase() === name) {
+        return NextResponse.json({
+          success: false,
+          message: "The team name is already taken",
+        });
+      }
+    });
     const response = await prisma.$transaction(async (tx) => {
       const newTeam = await tx.team.create({
         data: {

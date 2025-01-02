@@ -53,7 +53,7 @@ export const POST = async (req: NextRequest) => {
           teamId: teamData.teamId,
           solutionTitle: valid.data.solutionTitle,
           description: valid.data.description,
-          problemId: parseInt(valid.data.problemId, 10),
+          domainId: valid.data.domainId,
         },
       });
       return NextResponse.json(

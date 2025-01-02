@@ -14,6 +14,10 @@ export interface teamDetailsType {
   dept: string;
   isTeamLead: boolean;
 }
+export interface Domain {
+  id: string;
+  name: string;
+}
 
 function RoundSubmissionPage() {
   const [teamDetails, setTeamDetails] = useState<teamDetailsType[] | undefined>(
@@ -21,16 +25,17 @@ function RoundSubmissionPage() {
   );
   const [teamName, setTeamName] = useState("");
   const [formData, setFormData] = useState({
-    problemId: "",
+    domainId: "",
+    problemDescription: "",
     solutionTitle: "",
     description: "",
   });
   const [flag, setFlag] = useState<boolean>(false);
+  const [domains, setDomains] = useState<Domain[]>([]);
 
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // Memoize the getTeamDetails function to prevent re-creating it on each render
   const getTeamDetails = useCallback(async () => {
     try {
       const res = await axios.get("/api/users/isinateam", {
@@ -49,12 +54,26 @@ function RoundSubmissionPage() {
     }
   }, [session?.user?.email]);
 
+  const fetchDomains = async () => {
+    try {
+      const res = await axios.get("/api/users/getdomain");
+      console.log(res.data);
+      if (res.status === 200 && Array.isArray(res.data.domains)) {
+        setDomains(res.data.domains);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to fetch domains.");
+    }
+  };
+
   useEffect(() => {
     if (status === "unauthenticated") {
       alert("Login First");
       router.push("/");
     } else if (status === "authenticated") {
       getTeamDetails();
+      fetchDomains();
     }
   }, [status, getTeamDetails, router]);
 
@@ -67,7 +86,9 @@ function RoundSubmissionPage() {
   }
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     setFormData({
       ...formData,
@@ -79,13 +100,19 @@ function RoundSubmissionPage() {
     e.preventDefault();
 
     try {
+      console.log(formData);
       const res = await axios.post("/api/users/submitidea", formData, {
         //@ts-expect-error We are using email directly from session, which could cause type issues.
         headers: { email: session.user.email },
       });
 
       if (res.data.success) {
-        setFormData({ problemId: "", solutionTitle: "", description: "" });
+        setFormData({
+          domainId: "",
+          problemDescription: "",
+          solutionTitle: "",
+          description: "",
+        });
       }
       alert(res.data.message);
     } catch (error) {
@@ -140,13 +167,34 @@ function RoundSubmissionPage() {
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-300 text-sm font-medium mb-2">
-                  Problem Statement ID
+                  Domain
                 </label>
-                <input
-                  type="text"
-                  name="problemId"
-                  value={formData.problemId}
+                <select
+                  name="domainId"
+                  value={formData.domainId}
                   onChange={handleInputChange}
+                  className="w-full px-4 py-2 rounded-md bg-gray-900 text-gray-200 border border-gray-700 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                >
+                  <option value="" disabled>
+                    Select a Domain
+                  </option>
+                  {domains.map((domain, index) => (
+                    <option key={index} value={domain.id}>
+                      {domain.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-300 text-sm font-medium mb-2">
+                  Problem Description
+                </label>
+                <textarea
+                  name="problemDescription"
+                  value={formData.problemDescription}
+                  onChange={handleInputChange}
+                  rows={4}
                   className="w-full px-4 py-2 rounded-md bg-gray-900 text-gray-200 border border-gray-700 focus:ring-blue-500 focus:border-blue-500"
                   required
                 />

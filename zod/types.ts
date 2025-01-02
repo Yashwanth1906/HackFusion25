@@ -47,7 +47,11 @@ export const deleteTeamSchema = z.object({ email: z.string().email() });
 export const leaveTeamSchema = z.object({ email: z.string().email() });
 
 export const SubmitSchema = z.object({
-  problemId: z.string(),
+  domainId: z.string(),
   solutionTitle: z.string(),
   description: z.string(),
+});
+
+export const addDomain = z.object({
+  name: z.string(),
 });
