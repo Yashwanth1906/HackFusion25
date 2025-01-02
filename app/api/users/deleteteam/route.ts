@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req: NextRequest) => {
   try {
     const email = req.headers.get("email");
-    const valid = deleteTeamSchema.safeParse(email);
+    const valid = deleteTeamSchema.safeParse({ email });
     if (!valid.success) {
       return NextResponse.json(
         { success: false, message: "Email header is missing" },

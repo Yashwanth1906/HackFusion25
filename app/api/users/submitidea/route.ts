@@ -5,18 +5,13 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
-
+    console.log(body);
     const valid = SubmitSchema.safeParse(body);
-    // const { solutionTitle, description, problemId }: any = body;
-
     const email = req.headers.get("email");
-    const valid2 = isinaTeamSchema.safeParse(email);
+    const valid2 = isinaTeamSchema.safeParse({ email });
 
     if (!valid.success) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: valid.error }, { status: 400 });
     }
     if (!valid2.success) {
       return NextResponse.json(
@@ -26,12 +21,13 @@ export const POST = async (req: NextRequest) => {
     }
     const teamData = await prisma.member.findFirst({
       where: {
-        AND: [{ email: valid2.data.email }, { isTeamLead: true }],
+        email: valid2.data.email,
       },
       select: {
         team: {
           select: {
             members: true,
+            teamSubmisison: true,
           },
         },
         teamId: true,
@@ -44,20 +40,26 @@ export const POST = async (req: NextRequest) => {
           success: false,
           message: "Make a team of 5 and then reigster",
         });
-      } else {
-        await prisma.teamSubmission.create({
-          data: {
-            teamId: teamData.teamId,
-            solutionTitle: valid.data.solutionTitle,
-            description: valid.data.description,
-            problemId: parseInt(valid.data.problemId),
+      }
+      if (teamData.team.teamSubmisison) {
+        await prisma.teamSubmission.delete({
+          where: {
+            id: teamData.team.teamSubmisison.id,
           },
         });
-        return NextResponse.json(
-          { success: true, message: "Idea successfully submitted" },
-          { status: 200 },
-        );
       }
+      await prisma.teamSubmission.create({
+        data: {
+          teamId: teamData.teamId,
+          solutionTitle: valid.data.solutionTitle,
+          description: valid.data.description,
+          problemId: parseInt(valid.data.problemId, 10),
+        },
+      });
+      return NextResponse.json(
+        { success: true, message: "Idea successfully submitted" },
+        { status: 200 },
+      );
     } else {
       return NextResponse.json(
         { message: "Only Team leader can submit" },

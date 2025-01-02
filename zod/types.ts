@@ -17,9 +17,21 @@ export const getTeamSchema = z.object({ email: z.string().email() });
 
 export const isinaTeamSchema = z.object({ email: z.string().email() });
 
+// export const JoinTeamSchema = z.object({
+//   teamId: z.number(),
+//   memberDetails: z.object({
+//     name: z.string(),
+//     email: z.string().email(),
+//     gender: z.string(),
+//     regNo: z.string(),
+//     dept: z.string(),
+//     year: z.string(),
+//     phoneno: z.string(),
+//   }),
+// });
 export const JoinTeamSchema = z.object({
-  teamId: z.number(),
-  memberDetails: z.object({
+  teamId: z.string(),
+  memberdetails: z.object({
     name: z.string(),
     email: z.string().email(),
     gender: z.string(),

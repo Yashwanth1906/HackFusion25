@@ -5,7 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req: NextRequest) => {
   try {
     const email = req.headers.get("email");
-    const valid = isinaTeamSchema.safeParse(email);
+    const valid = isinaTeamSchema.safeParse({ email });
+    console.log(email);
     if (!valid.success) {
       return NextResponse.json({ message: "Invalid Email" }, { status: 500 });
     }
@@ -27,6 +28,19 @@ export const GET = async (req: NextRequest) => {
             },
             name: true,
             id: true,
+            teamSubmisison: {
+              select: {
+                solutionTitle: true,
+                description: true,
+                problem: {
+                  select: {
+                    sno: true,
+                    title: true,
+                    theme: true,
+                  },
+                },
+              },
+            },
           },
         },
       },

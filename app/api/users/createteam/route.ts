@@ -4,7 +4,9 @@ import { createTeamSchema, TeamLeadSchema } from "@/zod/types";
 export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
-    const teamNameparse = createTeamSchema.safeParse(body.teamName);
+    console.log(body);
+    const teamNameparse = createTeamSchema.safeParse(body);
+    console.log(teamNameparse.error);
     if (!teamNameparse.success) {
       return NextResponse.json(
         { message: "Invalid Team Name" },
