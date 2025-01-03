@@ -2,7 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Crown } from "lucide-react";
+import { Crown, Search, UserSearch, Users } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 type Member = {
   id: string;
@@ -33,6 +36,18 @@ const LeaderIcon = () => (
   <Crown size={20} className="inline-block text-yellow-500 mr-1" />
 );
 
+const StatusBadge = ({ status }: { status: Team["status"] }) => {
+  const statusStyles = {
+    pending: "bg-blue-100 text-blue-800",
+    approved: "bg-green-100 text-green-800",
+    rejected: "bg-red-100 text-red-800",
+  };
+
+  return (
+    <Badge className={`${statusStyles[status]} capitalize`}>{status}</Badge>
+  );
+};
+
 export default function AdminPage() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<Set<string>>(new Set());
@@ -43,6 +58,8 @@ export default function AdminPage() {
   const [selectedTheme, setSelectedTheme] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState<"team" | "member">("team");
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -50,7 +67,11 @@ export default function AdminPage() {
         const response = await axios.get<{ teams: Team[] }>(
           "/api/admin/getteams",
         );
-        setTeams(response.data.teams);
+        // Only keep teams with submissions
+        const teamsWithSubmissions = response.data.teams.filter(
+          (team) => team.teamSubmisison,
+        );
+        setTeams(teamsWithSubmissions);
       } catch (error) {
         setError("Error fetching Teams");
         console.log(error);
@@ -76,14 +97,10 @@ export default function AdminPage() {
     setActionLoading(true);
     try {
       const selectedTeamArray = Array.from(selectedTeams);
-      console.log("Selected Team IDs:", selectedTeamArray);
-
       const response = await axios.post("/api/admin/updateTeamStatus", {
         teamIds: selectedTeamArray,
         status,
       });
-
-      console.log("Response from server:", response.data);
 
       setTeams((prevTeams) =>
         prevTeams.map((team) =>
@@ -91,180 +108,229 @@ export default function AdminPage() {
         ),
       );
 
-      alert(`Teams ${status} successfully!`);
       setSelectedTeams(new Set());
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("Axios error details:", error.response?.data);
         alert(
-          `Failed to ${status} teams. Server responded with: ${error.response?.data?.message || "Unknown error"}.`,
+          `Failed to ${status} teams: ${error.response?.data?.message || "Unknown error"}`,
         );
       } else {
-        console.log("Unexpected error:", error);
-        alert("An unexpected error occurred. Check the console for details.");
+        alert("An unexpected error occurred");
       }
     } finally {
       setActionLoading(false);
     }
   };
 
-  const handleApprove = async () => {
-    await handleAction("approved");
-  };
+  const filteredTeams = teams.filter((team) => {
+    const matchesTab = team.status === selectedTab;
+    const matchesTheme =
+      !selectedTheme || team.teamSubmisison?.domain?.name === selectedTheme;
 
-  const handleReject = async () => {
-    await handleAction("rejected");
-  };
+    if (!searchQuery) return matchesTab && matchesTheme;
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+    const query = searchQuery.toLowerCase();
 
-  if (error) {
-    return <p className="text-red-500">{error}</p>;
-  }
-
-  const filteredTeams = teams.filter(
-    (team) =>
-      team.status === selectedTab &&
-      team.teamSubmisison &&
-      (!selectedTheme || team.teamSubmisison?.domain?.name === selectedTheme),
-  );
+    if (searchType === "team") {
+      return (
+        matchesTab && matchesTheme && team.name.toLowerCase().includes(query)
+      );
+    } else {
+      return (
+        matchesTab &&
+        matchesTheme &&
+        team.members.some((member) => member.name.toLowerCase().includes(query))
+      );
+    }
+  });
 
   const uniqueThemes = Array.from(
     new Set(
-      teams
-        .filter((team) => team.teamSubmisison)
-        .map((team) => team.teamSubmisison?.domain?.name)
-        .filter(Boolean),
+      teams.map((team) => team.teamSubmisison?.domain?.name).filter(Boolean),
     ),
   ) as string[];
 
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+        {error}
+      </div>
+    );
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Admin Page</h1>
-
-      {/* Tabs */}
-      <div className="flex mb-6">
-        {["pending", "approved", "rejected"].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setSelectedTab(tab as typeof selectedTab)}
-            className={`px-4 py-2 border-b-2 ${
-              selectedTab === tab
-                ? tab === "approved"
-                  ? "border-green-500 text-green-500"
-                  : tab === "rejected"
-                    ? "border-red-500 text-red-500"
-                    : "border-blue-500 text-blue-500"
-                : "border-transparent text-gray-500"
-            }`}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      {/* Theme Filter */}
-      <div className="mb-6">
-        <label className="font-medium text-gray-700">Filter by Theme:</label>
-        <select
-          value={selectedTheme}
-          onChange={(e) => setSelectedTheme(e.target.value)}
-          className="ml-2 px-4 py-2 border rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">All Themes</option>
-          {uniqueThemes.map((theme, index) => (
-            <option key={index} value={theme}>
-              {theme}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Team List */}
-      {filteredTeams.length > 0 ? (
-        <div className="flex flex-col gap-4">
-          {filteredTeams.map((team) => (
-            <div
-              key={team.id}
-              className={`${
-                selectedTab === "approved"
-                  ? "bg-green-200 hover:border-green-800"
-                  : selectedTab === "rejected"
-                    ? "bg-red-200 hover:border-red-500"
-                    : "bg-slate-50 hover:border-blue-800"
-              } border-2 p-4 rounded-lg shadow-md shadow-slate-400 hover:shadow-lg hover:shadow-slate-400 transition-shadow flex justify-between items-center`}
-            >
-              <div>
-                <h2 className="text-lg font-semibold mb-2">{team.name}</h2>
-                <p className="text-gray-600 font-medium">
-                  Theme: {team.teamSubmisison?.domain?.name || "N/A"}
-                </p>
-                <div className="mb-2">
-                  <p className="text-gray-600 font-medium">Members:</p>
-                  <ol className="list-disc list-inside ml-4">
-                    {team.members.map((member) => (
-                      <li
-                        key={member.id}
-                        className="text-gray-700 flex items-center gap-2"
-                      >
-                        {member.isTeamLead && <LeaderIcon />}
-                        {member.name} ({member.email})
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                {team.teamSubmisison && (
-                  <div className="mt-4">
-                    <p className="text-gray-600 font-medium">Submission:</p>
-                    <p className="text-gray-700">
-                      <strong>Title:</strong>{" "}
-                      {team.teamSubmisison.solutionTitle}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Description:</strong>{" "}
-                      {team.teamSubmisison.description}
-                    </p>
-                  </div>
-                )}
-              </div>
-              <input
-                type="checkbox"
-                className="w-6 h-6"
-                checked={selectedTeams.has(team.id)}
-                onChange={() => handleSelectTeam(team.id)}
-              />
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">Round One</h1>
+          <div className="flex items-center gap-4">
+            <StatusBadge status={selectedTab} />
+            <div className="text-sm text-gray-500">
+              {filteredTeams.length} submissions found
             </div>
-          ))}
+          </div>
         </div>
-      ) : (
-        <p>No teams found in this category.</p>
-      )}
 
-      {/* Approve & Reject Buttons */}
-      <div className="flex gap-4 mt-6">
-        {(selectedTab === "pending" || selectedTab === "rejected") && (
-          <button
-            className="px-4 py-2 bg-blue-500 text-white font-medium rounded-md shadow hover:bg-blue-600 disabled:opacity-50"
-            onClick={handleApprove}
-            disabled={actionLoading || selectedTeams.size === 0}
-          >
-            {actionLoading && selectedTeams.size > 0
-              ? "Processing..."
-              : "Approve Selected Teams"}
-          </button>
-        )}
-        {(selectedTab === "pending" || selectedTab === "approved") && (
-          <button
-            className="px-4 py-2 bg-red-500 text-white font-medium rounded-md shadow hover:bg-red-600 disabled:opacity-50"
-            onClick={handleReject}
-            disabled={actionLoading || selectedTeams.size === 0}
-          >
-            {actionLoading && selectedTeams.size > 0
-              ? "Processing..."
-              : "Reject Selected Teams"}
-          </button>
+        {/* Search and Filter Section */}
+        <div className="bg-white p-4 rounded-lg shadow mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Search Input */}
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Input
+                  type="text"
+                  placeholder={`Search by ${searchType === "team" ? "team name" : "member name"}...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              </div>
+              <button
+                onClick={() =>
+                  setSearchType(searchType === "team" ? "member" : "team")
+                }
+                className="p-2 rounded-md hover:bg-gray-100"
+                title={`Switch to ${searchType === "team" ? "member" : "team"} search`}
+              >
+                {searchType === "team" ? (
+                  <Users size={20} />
+                ) : (
+                  <UserSearch size={20} />
+                )}
+              </button>
+            </div>
+
+            {/* Theme Filter */}
+            <select
+              value={selectedTheme}
+              onChange={(e) => setSelectedTheme(e.target.value)}
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">All Themes</option>
+              {uniqueThemes.map((theme, index) => (
+                <option key={index} value={theme}>
+                  {theme}
+                </option>
+              ))}
+            </select>
+
+            {/* Status Tabs */}
+            <div className="flex gap-2">
+              {["pending", "approved", "rejected"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setSelectedTab(tab as typeof selectedTab)}
+                  className={`flex-1 px-4 py-2 rounded-md transition-colors ${
+                    selectedTab === tab
+                      ? `bg-${tab === "approved" ? "green" : tab === "rejected" ? "red" : "blue"}-100 text-${tab === "approved" ? "green" : tab === "rejected" ? "red" : "blue"}-800`
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Team List */}
+        <div className="space-y-4">
+          {filteredTeams.length > 0 ? (
+            filteredTeams.map((team) => (
+              <Card key={team.id} className="hover:shadow-md transition-shadow">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-xl font-semibold">{team.name}</h2>
+                    <Badge variant="outline">
+                      {team.teamSubmisison?.domain?.name}
+                    </Badge>
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5 rounded border-gray-300 focus:ring-blue-500"
+                    checked={selectedTeams.has(team.id)}
+                    onChange={() => handleSelectTeam(team.id)}
+                  />
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-medium text-gray-700 mb-2">
+                        Team Members
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {team.members.map((member) => (
+                          <div
+                            key={member.id}
+                            className="flex items-center gap-2"
+                          >
+                            {member.isTeamLead && <LeaderIcon />}
+                            <span>{member.name}</span>
+                            <span className="text-gray-500 text-sm">
+                              ({member.email})
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-700 mb-2">
+                        Project Details
+                      </h3>
+                      <div className="bg-gray-50 p-3 rounded-md">
+                        <p className="font-medium">
+                          {team.teamSubmisison?.solutionTitle}
+                        </p>
+                        <p className="text-gray-600 mt-1">
+                          {team.teamSubmisison?.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <div className="text-center py-8 bg-white rounded-lg">
+              <p className="text-gray-500">
+                No submissions found matching your criteria.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        {selectedTeams.size > 0 && (
+          <div className="fixed bottom-6 right-6 flex gap-4 bg-white p-4 rounded-lg shadow-lg">
+            <div className="text-sm text-gray-500 mr-2 self-center">
+              {selectedTeams.size} submission(s) selected
+            </div>
+            {(selectedTab === "pending" || selectedTab === "rejected") && (
+              <button
+                className="px-4 py-2 bg-green-500 text-white font-medium rounded-md hover:bg-green-600 disabled:opacity-50 transition-colors"
+                onClick={() => handleAction("approved")}
+                disabled={actionLoading}
+              >
+                {actionLoading ? "Processing..." : "Approve Selected"}
+              </button>
+            )}
+            {(selectedTab === "pending" || selectedTab === "approved") && (
+              <button
+                className="px-4 py-2 bg-red-500 text-white font-medium rounded-md hover:bg-red-600 disabled:opacity-50 transition-colors"
+                onClick={() => handleAction("rejected")}
+                disabled={actionLoading}
+              >
+                {actionLoading ? "Processing..." : "Reject Selected"}
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>
