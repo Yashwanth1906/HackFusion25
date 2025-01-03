@@ -97,7 +97,7 @@ export default function AdminPage() {
     setActionLoading(true);
     try {
       const selectedTeamArray = Array.from(selectedTeams);
-      const response = await axios.post("/api/admin/updateTeamStatus", {
+      await axios.post("/api/admin/updateTeamStatus", {
         teamIds: selectedTeamArray,
         status,
       });

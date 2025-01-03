@@ -31,7 +31,8 @@ export default function About() {
   // Existing animation variants
 
   const scrollVariants = {
-    offscreen: (direction: number) => ({ // Explicitly typing 'direction' as a number
+    offscreen: (direction: number) => ({
+      // Explicitly typing 'direction' as a number
       x: direction < 0 ? -100 : 100,
       opacity: 0,
     }),
@@ -44,7 +45,7 @@ export default function About() {
         duration: 0.9,
       },
     },
-  };  
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -111,7 +112,7 @@ export default function About() {
                   className="relative bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600"
                 >
                   <p className="text-xl text-gray-700 leading-relaxed italic">
-                  &ldquo;HackFusion: Where Innovation Meets Opportunity&rdquo;
+                    &ldquo;HackFusion: Where Innovation Meets Opportunity&rdquo;
                   </p>
                 </motion.div>
 
@@ -226,17 +227,19 @@ export default function About() {
               >
                 <p className="text-lg text-gray-600 leading-relaxed">
                   HackFusion is an extraordinary platform designed to inspire
-                  innovation, teamwork, and creativity among students. It is an <b>intra</b> college
+                  innovation, teamwork, and creativity among students. It is an{" "}
+                  <b>Intra College </b>
                   annual hackathon that brings together talented minds across
                   departments, encouraging them to tackle real-world problems
                   through groundbreaking ideas and solutions.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed mt-4">
-                  Whether it&lsquo;s a software application, a hardware prototype, or
-                  a unique tech concept, HackFusion offers participants a
-                  chance to transform their ideas into reality. This event isn&lsquo;t
-                  limited to any one field-it&lsquo;s open to <b>all departments</b>,
-                  embracing diversity in thought, skill, and innovation.
+                  Whether it&lsquo;s a software application, a hardware
+                  prototype, or a unique tech concept, HackFusion offers
+                  participants a chance to transform their ideas into reality.
+                  This event isn&lsquo;t limited to any one field-it&lsquo;s
+                  open to <b>all departments</b>, embracing diversity in
+                  thought, skill, and innovation.
                 </p>
               </motion.div>
             </div>
@@ -412,8 +415,8 @@ export default function About() {
             className=" p-6 md:p-8 rounded-xl shadow-md"
           >
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
-              HackFusion is a transformative experience that equips students
-              to excel academically and professionally:
+              HackFusion is a transformative experience that equips students to
+              excel academically and professionally:
             </p>
 
             {[

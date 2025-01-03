@@ -1,7 +1,7 @@
 import { prisma } from "@/prisma/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   try {
     await prisma.teamSubmission.deleteMany({});
     return NextResponse.json({ success: true });
