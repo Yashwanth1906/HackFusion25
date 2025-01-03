@@ -11,14 +11,14 @@ type Member = {
   isTeamLead?: boolean;
 };
 
-type Problem = {
-  theme: string;
+type Domain = {
+  name: string;
 };
 
 type TeamSubmission = {
   solutionTitle: string;
   description: string;
-  problem?: Problem;
+  domain?: Domain;
 };
 
 type Team = {
@@ -30,10 +30,7 @@ type Team = {
 };
 
 const LeaderIcon = () => (
-  <Crown 
-    size={20}
-    className="inline-block text-yellow-500 mr-1"
-  />
+  <Crown size={20} className="inline-block text-yellow-500 mr-1" />
 );
 
 export default function AdminPage() {
@@ -80,27 +77,27 @@ export default function AdminPage() {
     try {
       const selectedTeamArray = Array.from(selectedTeams);
       console.log("Selected Team IDs:", selectedTeamArray);
-  
+
       const response = await axios.post("/api/admin/updateTeamStatus", {
         teamIds: selectedTeamArray,
         status,
       });
-  
+
       console.log("Response from server:", response.data);
-  
+
       setTeams((prevTeams) =>
         prevTeams.map((team) =>
           selectedTeams.has(team.id) ? { ...team, status } : team,
         ),
       );
-  
+
       alert(`Teams ${status} successfully!`);
       setSelectedTeams(new Set());
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("Axios error details:", error.response?.data);
         alert(
-          `Failed to ${status} teams. Server responded with: ${error.response?.data?.message || "Unknown error"}.`
+          `Failed to ${status} teams. Server responded with: ${error.response?.data?.message || "Unknown error"}.`,
         );
       } else {
         console.log("Unexpected error:", error);
@@ -109,7 +106,7 @@ export default function AdminPage() {
     } finally {
       setActionLoading(false);
     }
-  };      
+  };
 
   const handleApprove = async () => {
     await handleAction("approved");
@@ -131,14 +128,14 @@ export default function AdminPage() {
     (team) =>
       team.status === selectedTab &&
       team.teamSubmisison &&
-      (!selectedTheme || team.teamSubmisison?.problem?.theme === selectedTheme),
+      (!selectedTheme || team.teamSubmisison?.domain?.name === selectedTheme),
   );
 
   const uniqueThemes = Array.from(
     new Set(
       teams
         .filter((team) => team.teamSubmisison)
-        .map((team) => team.teamSubmisison?.problem?.theme)
+        .map((team) => team.teamSubmisison?.domain?.name)
         .filter(Boolean),
     ),
   ) as string[];
@@ -195,20 +192,23 @@ export default function AdminPage() {
                 selectedTab === "approved"
                   ? "bg-green-200 hover:border-green-800"
                   : selectedTab === "rejected"
-                  ? "bg-red-200 hover:border-red-500"
-                  : "bg-slate-50 hover:border-blue-800"
+                    ? "bg-red-200 hover:border-red-500"
+                    : "bg-slate-50 hover:border-blue-800"
               } border-2 p-4 rounded-lg shadow-md shadow-slate-400 hover:shadow-lg hover:shadow-slate-400 transition-shadow flex justify-between items-center`}
             >
               <div>
                 <h2 className="text-lg font-semibold mb-2">{team.name}</h2>
                 <p className="text-gray-600 font-medium">
-                  Theme: {team.teamSubmisison?.problem?.theme || "N/A"}
+                  Theme: {team.teamSubmisison?.domain?.name || "N/A"}
                 </p>
                 <div className="mb-2">
                   <p className="text-gray-600 font-medium">Members:</p>
                   <ol className="list-disc list-inside ml-4">
                     {team.members.map((member) => (
-                      <li key={member.id} className="text-gray-700 flex items-center gap-2">
+                      <li
+                        key={member.id}
+                        className="text-gray-700 flex items-center gap-2"
+                      >
                         {member.isTeamLead && <LeaderIcon />}
                         {member.name} ({member.email})
                       </li>
