@@ -1,8 +1,8 @@
 import { prisma } from "@/prisma/db";
-import { NextApiRequest } from "next";
+// import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: NextApiRequest) => {
+export const GET = async () => {
   try {
     await prisma.team.deleteMany({});
     return NextResponse.json({ success: true });
