@@ -84,7 +84,7 @@ const Contact = () => {
             <div className="relative">
               <label
                 htmlFor="name"
-                className="absolute -top-2 left-3 bg-white 
+                className="absolute -top-6 left-3 
                   px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Name
@@ -97,7 +97,7 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-2 py-2 md:px-3 md:py-3 pl-2 rounded-lg 
+                  className="w-full px-2 py-2 md:px-3 md:py-3 ml-2 pl-2 rounded-lg 
                     focus:outline-none focus:ring-2 focus:ring-blue-500 
                     text-sm md:text-base"
                   placeholder="John Doe"
@@ -109,7 +109,7 @@ const Contact = () => {
             <div className="relative">
               <label
                 htmlFor="email"
-                className="absolute -top-2 left-3 bg-white 
+                className="absolute -top-6 left-3 
                   px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Email
@@ -122,7 +122,7 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-2 py-2 md:px-3 md:py-3 pl-2 rounded-lg 
+                  className="w-full px-2 py-2 md:px-3 md:py-3 ml-2 pl-2 rounded-lg 
                     focus:outline-none focus:ring-2 focus:ring-blue-500 
                     text-sm md:text-base"
                   placeholder="you@example.com"
@@ -134,7 +134,7 @@ const Contact = () => {
             <div className="relative">
               <label
                 htmlFor="phone"
-                className="absolute -top-2 left-3 bg-white 
+                className="absolute -top-6 left-3
                   px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Phone Number
@@ -147,7 +147,7 @@ const Contact = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-2 py-2 md:px-3 md:py-3 pl-2 rounded-lg 
+                  className="w-full px-2 py-2 md:px-3 md:py-3 ml-2 pl-2 rounded-lg 
                     focus:outline-none focus:ring-2 focus:ring-blue-500 
                     text-sm md:text-base"
                   placeholder="+0123456789"
@@ -159,7 +159,7 @@ const Contact = () => {
             <div className="relative">
               <label
                 htmlFor="message"
-                className="absolute -top-2 left-3 bg-white 
+                className="absolute -top-6 left-3
                   px-1 text-xs md:text-sm text-violet-900"
               >
                 Your Message

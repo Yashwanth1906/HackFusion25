@@ -43,7 +43,7 @@ const Navbar = () => {
           alt="Logo"
           width={80}
           height={80}
-          className="p-2 h-14 w-30 md:h-24 md:w-44"
+          className="p-2 h-14 w-30 md:h-32 md:w-36"
         />
         <button
           onClick={toggleMobileMenu}
@@ -118,7 +118,7 @@ const Navbar = () => {
           alt="Logo"
           width={64}
           height={48}
-          className="p-2 h-12 w-16 md:h-16 md:w-20"
+          className="p-1 h-12 w-16 md:h-20 md:w-28"
         />
       </div>
     </nav>

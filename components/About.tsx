@@ -111,7 +111,7 @@ export default function About() {
                   className="relative bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600"
                 >
                   <p className="text-xl text-gray-700 leading-relaxed italic">
-                  &ldquo;HackFusion-25: Where Innovation Meets Opportunity&rdquo;
+                  &ldquo;HackFusion: Where Innovation Meets Opportunity&rdquo;
                   </p>
                 </motion.div>
 
@@ -225,17 +225,17 @@ export default function About() {
                 className=" p-6 md:p-8 rounded-xl shadow-md text-left"
               >
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  HackFusion-25 is an extraordinary platform designed to inspire
-                  innovation, teamwork, and creativity among students. It is an
+                  HackFusion is an extraordinary platform designed to inspire
+                  innovation, teamwork, and creativity among students. It is an <b>intra</b> college
                   annual hackathon that brings together talented minds across
                   departments, encouraging them to tackle real-world problems
                   through groundbreaking ideas and solutions.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed mt-4">
                   Whether it&lsquo;s a software application, a hardware prototype, or
-                  a unique tech concept, HackFusion-25 offers participants a
+                  a unique tech concept, HackFusion offers participants a
                   chance to transform their ideas into reality. This event isn&lsquo;t
-                  limited to any one field—it&lsquo;s open to <b>all departments</b>,
+                  limited to any one field-it&lsquo;s open to <b>all departments</b>,
                   embracing diversity in thought, skill, and innovation.
                 </p>
               </motion.div>
@@ -412,7 +412,7 @@ export default function About() {
             className=" p-6 md:p-8 rounded-xl shadow-md"
           >
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
-              HackFusion-25 is a transformative experience that equips students
+              HackFusion is a transformative experience that equips students
               to excel academically and professionally:
             </p>
 
@@ -435,7 +435,7 @@ export default function About() {
               {
                 title: "Bridges Academia and Industry",
                 description:
-                  "The structured format introduces students to industry practices such as brainstorming, project design, prototyping, and evaluation—skills critical for future endeavors.",
+                  "The structured format introduces students to industry practices such as brainstorming, project design, prototyping, and evaluation-skills critical for future endeavors.",
               },
               {
                 title: "Prepares Future Leaders",
